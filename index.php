@@ -6,6 +6,15 @@ require_once __DIR__ . '/shared/layout.php';
 
 $LANG = get_lang();
 
+$games = [
+    ['key' => 'cards',       'url' => '/games/cards/', 'active' => true],
+    ['key' => '2048',        'active' => false],
+    ['key' => 'snake',       'active' => false],
+    ['key' => 'memory',      'active' => false],
+    ['key' => 'minesweeper', 'active' => false],
+    ['key' => 'flappy',      'active' => false],
+];
+
 render_header(
     t('site_title'),
     'page-index',
@@ -17,27 +26,54 @@ render_header(
 );
 ?>
 
+        <div class="stats-bar">
+            <span class="stats-item">👥 <strong class="stats-number"><?= number_format($totalSessions, 0, ',', ' ') ?></strong> <?= t('stat_players') ?></span>
+            <span class="stats-dot" aria-hidden="true">·</span>
+            <span class="stats-item">💰 <strong class="stats-number"><?= number_format($totalPln, 4, ',', ' ') ?></strong> <?= t('currency') ?> <?= t('stat_raised') ?></span>
+        </div>
+
+        <section class="game-selector">
+            <h2 class="game-selector-title"><?= t('games_section_title') ?></h2>
+            <div class="game-tiles">
+
+<?php foreach ($games as $g):
+    $tag    = $g['active'] ? 'a' : 'div';
+    $href   = $g['active'] ? ' href="' . htmlspecialchars($g['url']) . '"' : '';
+    $cls    = 'game-tile' . ($g['active'] ? '' : ' game-tile--coming-soon');
+    $nameKey = 'game_' . $g['key'] . '_name';
+?>
+                <<?= $tag ?><?= $href ?> class="<?= $cls ?>">
+                    <div class="game-tile-preview">
+<?php if ($g['key'] === 'cards'): ?>
+                        <svg viewBox="0 0 60 60" width="56" height="56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <text class="tile-suit" x="7"  y="27" font-size="22" fill="#E53935">♥</text>
+                            <text class="tile-suit" x="31" y="27" font-size="22" fill="#1565C0">♦</text>
+                            <text class="tile-suit" x="7"  y="54" font-size="22" fill="#0D1117">♣</text>
+                            <text class="tile-suit" x="31" y="54" font-size="22" fill="#0D1117">♠</text>
+                        </svg>
+<?php else: ?>
+                        <svg viewBox="0 0 60 60" width="48" height="48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="30" cy="30" r="22" fill="#E2E8F0"/>
+                            <text x="30" y="39" text-anchor="middle" font-size="26" font-weight="700" fill="#9CA3AF">?</text>
+                        </svg>
+<?php endif; ?>
+                    </div>
+                    <div class="game-tile-info">
+                        <span class="game-tile-name"><?= t($nameKey) ?></span>
+                        <span class="game-tile-action"><?= $g['active'] ? t('btn_play_game') : t('coming_soon') ?></span>
+                    </div>
+                </<?= $tag ?>>
+<?php endforeach; ?>
+
+            </div>
+        </section>
+
         <section class="foundation-card">
             <?php if (FOUNDATION_LOGO): ?>
                 <img src="<?= htmlspecialchars(FOUNDATION_LOGO) ?>" alt="<?= htmlspecialchars(FOUNDATION_NAME) ?>" class="foundation-logo">
             <?php endif; ?>
-            <h1 class="foundation-name"><?= htmlspecialchars(FOUNDATION_NAME) ?></h1>
+            <h2 class="foundation-name"><?= htmlspecialchars(FOUNDATION_NAME) ?></h2>
             <p class="foundation-desc"><?= htmlspecialchars(FOUNDATION_DESC) ?></p>
-        </section>
-
-        <section class="global-counter">
-            <p class="counter-label"><?= t('global_counter_label') ?></p>
-            <p class="counter-value"><?= number_format($totalPln, 4, ',', ' ') ?> <?= t('currency') ?></p>
-            <p class="sessions-value"><?= number_format($totalSessions, 0, ',', ' ') ?> <?= t('sessions_label') ?></p>
-        </section>
-
-        <section class="game-selector">
-            <h2 class="game-selector-title"><?= t('games_section_title') ?></h2>
-            <div class="game-card">
-                <h3 class="game-card-name"><?= t('game_cards_name') ?></h3>
-                <p class="game-card-desc"><?= t('game_cards_desc') ?></p>
-                <a href="/games/cards/" class="btn-play"><?= t('btn_play') ?></a>
-            </div>
         </section>
 
         <p class="about-blurb">

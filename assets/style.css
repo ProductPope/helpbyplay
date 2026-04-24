@@ -1,12 +1,137 @@
 /* Index-page-specific styles. Shared styles are in /shared/assets/shared.css. */
 
+/* ===== Stats bar ===== */
+.stats-bar {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    flex-wrap:       wrap;
+    gap:             4px var(--space-sm);
+    background:      var(--color-surface);
+    box-shadow:      var(--shadow-sm);
+    border-radius:   var(--radius-md);
+    padding:         12px var(--space-md);
+    font-size:       14px;
+    color:           var(--color-text-muted);
+    text-align:      center;
+}
+
+.stats-number {
+    color:       var(--color-primary);
+    font-weight: 700;
+}
+
+.stats-dot {
+    color: var(--color-border);
+}
+
+/* ===== Game selector ===== */
+.game-selector-title {
+    font-size:     18px;
+    font-weight:   700;
+    color:         var(--color-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.game-tiles {
+    display:               grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:                   var(--space-sm);
+}
+
+/* ===== Game tile ===== */
+.game-tile {
+    aspect-ratio:    1;
+    background:      var(--color-surface);
+    border-radius:   var(--radius-lg);
+    box-shadow:      var(--shadow-sm);
+    display:         flex;
+    flex-direction:  column;
+    overflow:        hidden;
+    text-decoration: none;
+    color:           inherit;
+    transition:      transform 0.15s, box-shadow 0.15s;
+}
+
+a.game-tile:hover {
+    transform:  translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+a.game-tile:focus-visible {
+    outline:        2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.game-tile--coming-soon {
+    opacity: 0.5;
+    cursor:  not-allowed;
+}
+
+.game-tile-preview {
+    flex:            1;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    background:      var(--color-background);
+}
+
+.game-tile-info {
+    padding:        8px var(--space-sm);
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    gap:            2px;
+    border-top:     1px solid var(--color-border);
+}
+
+.game-tile-name {
+    font-size:   12px;
+    font-weight: 700;
+    color:       var(--color-text);
+    text-align:  center;
+    line-height: 1.2;
+}
+
+.game-tile-action {
+    font-size:      11px;
+    font-weight:    600;
+    color:          var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.game-tile--coming-soon .game-tile-action {
+    color: var(--color-text-muted);
+}
+
+/* ===== Suit animation (cards game tile) ===== */
+@keyframes tile-suit-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-4px); }
+}
+
+.tile-suit {
+    animation:        tile-suit-float 2s ease-in-out infinite;
+    transform-box:    fill-box;
+    transform-origin: center;
+}
+
+.tile-suit:nth-child(2) { animation-delay: 0.5s; }
+.tile-suit:nth-child(3) { animation-delay: 1.0s; }
+.tile-suit:nth-child(4) { animation-delay: 1.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .tile-suit { animation: none; }
+}
+
 /* ===== Foundation card ===== */
 .foundation-card {
     text-align:    center;
     background:    var(--color-surface);
     border-radius: var(--radius-lg);
     box-shadow:    var(--shadow-sm);
-    padding:       var(--space-xl) var(--space-md);
+    padding:       var(--space-lg) var(--space-md);
 }
 
 .foundation-logo {
@@ -17,88 +142,19 @@
 }
 
 .foundation-name {
-    font-size:      28px;
+    font-size:      24px;
     font-weight:    700;
     color:          var(--color-primary);
     line-height:    1.2;
-    letter-spacing: -0.5px;
-    margin-bottom:  var(--space-sm);
+    letter-spacing: -0.3px;
+    margin-bottom:  var(--space-xs);
 }
 
 .foundation-desc {
     color:     var(--color-text-muted);
-    font-size: 15px;
+    font-size: 14px;
     max-width: 480px;
     margin:    0 auto;
-}
-
-/* ===== Global counter ===== */
-.global-counter {
-    text-align:    center;
-    background:    var(--color-primary);
-    color:         #fff;
-    border-radius: var(--radius-lg);
-    padding:       var(--space-lg) var(--space-md);
-}
-
-.counter-label {
-    font-size:      13px;
-    font-weight:    500;
-    opacity:        0.8;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-    margin-bottom:  var(--space-xs);
-}
-
-.counter-value {
-    font-size:      32px;
-    font-weight:    700;
-    letter-spacing: -0.5px;
-    line-height:    1.2;
-    word-break:     break-all;
-}
-
-.sessions-value {
-    font-size:  13px;
-    opacity:    0.7;
-    margin-top: var(--space-xs);
-}
-
-/* ===== Game selector ===== */
-.game-selector {
-    display:        flex;
-    flex-direction: column;
-    gap:            var(--space-md);
-}
-
-.game-selector-title {
-    font-size:   18px;
-    font-weight: 700;
-    color:       var(--color-primary);
-}
-
-.game-card {
-    background:     var(--color-surface);
-    border-radius:  var(--radius-lg);
-    box-shadow:     var(--shadow-sm);
-    padding:        var(--space-lg) var(--space-md);
-    display:        flex;
-    flex-direction: column;
-    align-items:    center;
-    gap:            var(--space-sm);
-    text-align:     center;
-}
-
-.game-card-name {
-    font-size:   20px;
-    font-weight: 700;
-    color:       var(--color-primary);
-}
-
-.game-card-desc {
-    color:     var(--color-text-muted);
-    font-size: 14px;
-    max-width: 360px;
 }
 
 /* ===== About blurb ===== */
@@ -145,6 +201,11 @@
 
 /* ===== min-width: 480px ===== */
 @media (min-width: 480px) {
-    .foundation-name { font-size: 32px; }
-    .counter-value   { font-size: 40px; }
+    .foundation-name { font-size: 28px; }
+    .game-tile-name  { font-size: 13px; }
+}
+
+/* ===== min-width: 600px ===== */
+@media (min-width: 600px) {
+    .game-tiles { grid-template-columns: repeat(3, 1fr); }
 }

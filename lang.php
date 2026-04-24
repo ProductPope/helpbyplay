@@ -18,10 +18,21 @@ $TRANSLATIONS = [
         'how_it_works_2'       => 'Reklamy finansują fundację',
         'how_it_works_3'       => 'Razem pomagamy',
 
+        // Stats bar
+        'stat_players'         => 'graczy',
+        'stat_raised'          => 'zebrano',
+
         // Game selector (index)
+        'games_section_title'  => 'Wybierz grę',
+        'btn_play_game'        => 'Zagraj',
+        'coming_soon'          => 'Wkrótce',
         'game_cards_name'      => 'Łącz i pomagaj',
         'game_cards_desc'      => 'Klasyczna gra match-3. Łącz kolorowe symbole i pomagaj fundacji.',
-        'games_section_title'  => 'Wybierz grę',
+        'game_2048_name'       => '2048',
+        'game_snake_name'      => 'Wąż',
+        'game_memory_name'     => 'Memory',
+        'game_minesweeper_name'=> 'Saper',
+        'game_flappy_name'     => 'Flappy Bird',
 
         // Game screen
         'game_title'           => 'Graj i pomagaj!',
@@ -88,10 +99,21 @@ $TRANSLATIONS = [
         'how_it_works_2'       => 'Ads fund the charity',
         'how_it_works_3'       => 'Together we help',
 
+        // Stats bar
+        'stat_players'         => 'players',
+        'stat_raised'          => 'raised',
+
         // Game selector (index)
+        'games_section_title'  => 'Choose a game',
+        'btn_play_game'        => 'Play',
+        'coming_soon'          => 'Coming soon',
         'game_cards_name'      => 'Match & Help',
         'game_cards_desc'      => 'Classic match-3 game. Match colorful symbols and help the charity.',
-        'games_section_title'  => 'Choose a game',
+        'game_2048_name'       => '2048',
+        'game_snake_name'      => 'Snake',
+        'game_memory_name'     => 'Memory',
+        'game_minesweeper_name'=> 'Minesweeper',
+        'game_flappy_name'     => 'Flappy Bird',
 
         // Game screen
         'game_title'           => 'Play and help!',
