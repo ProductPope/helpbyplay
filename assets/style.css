@@ -363,9 +363,11 @@ main.container {
     font-size:  12px;
 }
 
-.footer-about {
-    font-size: 12px;
-    max-width: 480px;
+.footer-opensource {
+    font-size: 13px;
+    color:      var(--color-text-muted);
+    text-align: center;
+    margin:     0;
     line-height: 1.5;
 }
 

@@ -60,6 +60,10 @@ $TRANSLATIONS = [
         // Header stats
         'header_stats'         => 'graczy zebrało',
 
+        // Footer
+        'footer_opensource'    => 'HelpByPlay to projekt open source.',
+        'footer_about_link'    => 'O projekcie',
+
         // Ad wait message
         'ad_wait_msg'          => 'Oczekiwanie na reklamę',
     ],
@@ -120,6 +124,10 @@ $TRANSLATIONS = [
 
         // Header stats
         'header_stats'         => 'players raised',
+
+        // Footer
+        'footer_opensource'    => 'HelpByPlay is an open source project.',
+        'footer_about_link'    => 'About the project',
 
         // Ad wait message
         'ad_wait_msg'          => 'Waiting for ad',

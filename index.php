@@ -103,12 +103,16 @@ try {
 
     <footer class="site-footer">
         <div class="container">
+            <p class="footer-opensource">
+                <?= t('footer_opensource') ?>
+                <a href="https://helpbyplay.com" target="_blank" rel="noopener"><?= t('footer_about_link') ?></a>
+                &middot;
+                <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener">GitHub</a>
+            </p>
             <div class="lang-switcher">
                 <button onclick="switchLang('pl')" class="<?= $LANG === 'pl' ? 'active' : '' ?>"><?= t('lang_pl') ?></button>
                 <button onclick="switchLang('en')" class="<?= $LANG === 'en' ? 'active' : '' ?>"><?= t('lang_en') ?></button>
             </div>
-            <p class="footer-about"><?= htmlspecialchars(t('about_text')) ?> <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener"><?= t('about_link') ?></a></p>
-            <p><?= t('site_title') ?> &mdash; <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener">GPL v3</a></p>
         </div>
     </footer>
 
