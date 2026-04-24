@@ -43,8 +43,8 @@
     --touch-min: 48px;
 
     /* Game grid — fills 360px container minus 2×16px padding = 328px */
-    --grid-gap:  4px;
-    --grid-cols: 6;
+    --grid-gap:  3px;
+    --grid-cols: 7;
 }
 
 /* ===== Reset ===== */
@@ -81,10 +81,18 @@ body {
 
 .site-header .container {
     display:         flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items:     center;
     gap:             var(--space-sm);
     min-height:      var(--touch-min);
+}
+
+.header-stats {
+    margin:     0;
+    font-size:  13px;
+    color:      var(--color-text-muted);
+    text-align: right;
+    white-space: nowrap;
 }
 
 .header-home {

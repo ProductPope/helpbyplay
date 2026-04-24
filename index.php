@@ -43,6 +43,7 @@ try {
     <header class="site-header">
         <div class="container">
             <a href="index.php" class="header-home">Help By <span class="logo-play">Play</span></a>
+            <p class="header-stats"><?= number_format($totalSessions, 0, ',', ' ') ?> <?= t('header_stats') ?> <?= number_format($totalPln, 4, ',', ' ') ?> <?= t('currency') ?></p>
         </div>
     </header>
 
@@ -68,7 +69,7 @@ try {
 
         <p class="about-blurb">
             <?= htmlspecialchars(t('about_text')) ?>
-            <a href="https://helpbyplay.com" target="_blank" rel="noopener"><?= t('about_link') ?></a>
+            <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener"><?= t('about_link') ?></a>
         </p>
 
         <!-- ADSENSE_PLACEHOLDER -->
@@ -106,7 +107,7 @@ try {
                 <button onclick="switchLang('pl')" class="<?= $LANG === 'pl' ? 'active' : '' ?>"><?= t('lang_pl') ?></button>
                 <button onclick="switchLang('en')" class="<?= $LANG === 'en' ? 'active' : '' ?>"><?= t('lang_en') ?></button>
             </div>
-            <p class="footer-about"><?= htmlspecialchars(t('about_text')) ?> <a href="https://helpbyplay.com" target="_blank" rel="noopener"><?= t('about_link') ?></a></p>
+            <p class="footer-about"><?= htmlspecialchars(t('about_text')) ?> <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener"><?= t('about_link') ?></a></p>
             <p><?= t('site_title') ?> &mdash; <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener">GPL v3</a></p>
         </div>
     </footer>

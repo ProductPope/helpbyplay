@@ -62,13 +62,27 @@ try {
     $stmt->execute([':dur' => $durationSec, ':earned' => $earnedPln, ':id' => $sessionId]);
 
     if ($stmt->rowCount() > 0) {
+        // Increment total_sessions only if this is the device's first completed session
+        $isNewPlayer = false;
+        $row2 = $pdo->prepare('SELECT device_id FROM sessions WHERE id = :id');
+        $row2->execute([':id' => $sessionId]);
+        $deviceId = $row2->fetchColumn();
+
+        if ($deviceId) {
+            $chk = $pdo->prepare(
+                'SELECT COUNT(*) FROM sessions WHERE device_id = :did AND ended_at IS NOT NULL'
+            );
+            $chk->execute([':did' => $deviceId]);
+            $isNewPlayer = ((int) $chk->fetchColumn() === 1);
+        }
+
         $stmt = $pdo->prepare(
             'UPDATE stats
-                SET total_sessions = total_sessions + 1,
+                SET total_sessions = total_sessions + :new_player,
                     total_pln      = total_pln + :earned
               WHERE id = 1'
         );
-        $stmt->execute([':earned' => $earnedPln]);
+        $stmt->execute([':new_player' => $isNewPlayer ? 1 : 0, ':earned' => $earnedPln]);
     }
 
     $row = $pdo->query('SELECT total_sessions, total_pln FROM stats WHERE id = 1')

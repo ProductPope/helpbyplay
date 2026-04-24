@@ -2,12 +2,14 @@
 -- Run once via phpMyAdmin on Cyberfolks
 
 CREATE TABLE IF NOT EXISTS sessions (
-    id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    started_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    ended_at     DATETIME     NULL,
-    duration_sec INT UNSIGNED NOT NULL DEFAULT 0,
+    id           INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    device_id    VARCHAR(36)   NULL,
+    started_at   DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ended_at     DATETIME      NULL,
+    duration_sec INT UNSIGNED  NOT NULL DEFAULT 0,
     earned_pln   DECIMAL(10,4) NOT NULL DEFAULT 0.0000,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX idx_device_id (device_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS stats (

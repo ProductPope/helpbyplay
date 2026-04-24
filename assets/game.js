@@ -1,7 +1,7 @@
-// Candy Crush — 6x6 grid, match-3, gravity, cascade
+// Candy Crush — 7x7 grid, match-3, gravity, cascade
 // Rate: 0.001 PLN per 10 seconds (handled by counter.js)
 
-const GRID_SIZE     = 6;
+const GRID_SIZE     = 7;
 const CANDY_TYPES   = 6;
 const CANDY_SYMBOLS = ['♥', '♦', '♣', '♠', '★', '●'];
 const HS_KEY        = 'hbp_highscore';

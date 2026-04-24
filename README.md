@@ -58,13 +58,13 @@ Designed mobile-first — works on any screen size.
 
 The idea is over 11 years old. Online games, ad revenue, charities — the model made sense. Early prototypes with developer friends showed promise, but advertisers had no interest in a project with zero traffic. A vicious circle. We spent family savings, hired a developer, paid out over 3,500 PLN across a dozen organisations — every single złoty. But without an advertiser the money kept running out. The project died.
 
-April 2026: AI tools changed what one person can build. And one more thing changed: Google AdSense now pays charities directly — no intermediary needed. Help By Play is back, this time as open source.
+April 2026: AI tools changed what one person can build. And one more thing changed: Google AdSense now pays charities directly — no intermediary needed. Help By Play is back, this time as [open source](https://github.com/ProductPope/helpbyplay).
 
 ---
 
 ## Contact
 
-Want to join the platform or self-host an instance? Open an issue or visit [helpbyplay.com](https://helpbyplay.com).
+Want to join the platform or self-host an instance? [Open an issue](https://github.com/ProductPope/helpbyplay/issues) or visit [helpbyplay.com](https://helpbyplay.com).
 
 ---
 

@@ -3,6 +3,25 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/lang.php';
 
 $LANG = get_lang();
+
+$totalSessions = 0;
+$totalPln      = 0.0;
+
+try {
+    $pdo = new PDO(
+        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
+        DB_USER,
+        DB_PASS,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+    $row = $pdo->query('SELECT total_sessions, total_pln FROM stats WHERE id = 1')->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+        $totalSessions = (int)   $row['total_sessions'];
+        $totalPln      = (float) $row['total_pln'];
+    }
+} catch (PDOException $e) {
+    // Silently degrade — counter shows 0
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?= htmlspecialchars($LANG) ?>">
@@ -23,6 +42,7 @@ $LANG = get_lang();
     <header class="site-header">
         <div class="container">
             <a href="index.php" class="header-home">Help By <span class="logo-play">Play</span></a>
+            <p class="header-stats"><?= number_format($totalSessions, 0, ',', ' ') ?> <?= t('header_stats') ?> <?= number_format($totalPln, 4, ',', ' ') ?> <?= t('currency') ?></p>
         </div>
     </header>
 
@@ -144,7 +164,7 @@ $LANG = get_lang();
                 <button onclick="switchLang('pl')" class="<?= $LANG === 'pl' ? 'active' : '' ?>"><?= t('lang_pl') ?></button>
                 <button onclick="switchLang('en')" class="<?= $LANG === 'en' ? 'active' : '' ?>"><?= t('lang_en') ?></button>
             </div>
-            <p class="footer-about"><?= htmlspecialchars(t('about_text')) ?> <a href="https://helpbyplay.com" target="_blank" rel="noopener"><?= t('about_link') ?></a></p>
+            <p class="footer-about"><?= htmlspecialchars(t('about_text')) ?> <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener"><?= t('about_link') ?></a></p>
             <p><?= t('site_title') ?> &mdash; <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener">GPL v3</a></p>
         </div>
     </footer>
@@ -157,6 +177,23 @@ $LANG = get_lang();
     const LANG_CURRENCY = <?= json_encode(t('currency')) ?>;
     const LANG_SECONDS  = <?= json_encode(t('seconds_short')) ?>;
 
+    // --- device identity (persists across sessions) ---
+    function getDeviceId() {
+        let id = localStorage.getItem('hbp_device_id');
+        if (!id) {
+            if (crypto.randomUUID) {
+                id = crypto.randomUUID();
+            } else {
+                id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+                    const r = crypto.getRandomValues(new Uint8Array(1))[0] % 16;
+                    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                });
+            }
+            localStorage.setItem('hbp_device_id', id);
+        }
+        return id;
+    }
+
     // --- session state ---
     let sessionId = null;
 
@@ -167,7 +204,11 @@ $LANG = get_lang();
 
     async function startSession() {
         try {
-            const res  = await fetch('api/session_start.php', { method: 'POST' });
+            const res  = await fetch('api/session_start.php', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ device_id: getDeviceId() }),
+            });
             const data = await res.json();
             if (!data.session_id) throw new Error('no session_id');
             sessionId = data.session_id;

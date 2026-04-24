@@ -57,6 +57,9 @@ $TRANSLATIONS = [
         'about_text'           => 'Help By Play to inicjatywa społecznościowa która łączy granie z pomaganiem. Grasz bezpłatnie, wyświetlają się reklamy, przychód trafia bezpośrednio na konto tej fundacji przez Google AdSense. Projekt jest open source — kod jest publiczny i każdy może sprawdzić jak działa.',
         'about_link'           => 'Więcej o projekcie →',
 
+        // Header stats
+        'header_stats'         => 'graczy zebrało',
+
         // Ad wait message
         'ad_wait_msg'          => 'Oczekiwanie na reklamę',
     ],
@@ -114,6 +117,9 @@ $TRANSLATIONS = [
         // About blurb
         'about_text'           => 'Help By Play is a community initiative that connects gaming with helping others. You play for free, ads are displayed, and the revenue goes directly to this charity\'s account via Google AdSense. The project is open source — the code is public and anyone can see how it works.',
         'about_link'           => 'More about the project →',
+
+        // Header stats
+        'header_stats'         => 'players raised',
 
         // Ad wait message
         'ad_wait_msg'          => 'Waiting for ad',
