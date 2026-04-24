@@ -1,16 +1,23 @@
 // Candy Crush — 7x7 grid, match-3, gravity, cascade
 // Rate: 0.001 PLN per 10 seconds (handled by counter.js)
 
+const GAME_CONFIG = {
+    id:          'cards',
+    nameKey:     'game_cards_name',
+    hasEndState: false,
+    scoringType: 'squared',
+};
+
 const GRID_SIZE     = 7;
 const CANDY_TYPES   = 6;
 const CANDY_SYMBOLS = ['♥', '♦', '♣', '♠', '★', '●'];
-const HS_KEY        = 'hbp_highscore';
+const HS_KEY        = 'hbp_highscore_' + GAME_CONFIG.id;
 
-let grid                    = [];
-let selected                = null;
-let busy                    = false;
-let touchOrigin             = null;
-let sessionScore            = 0;
+let grid                      = [];
+let selected                  = null;
+let busy                      = false;
+let touchOrigin               = null;
+let sessionScore              = 0;
 let newRecordShownThisSession = false;
 
 // ---------- Init ----------
@@ -338,3 +345,7 @@ function applyGravity() {
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+// ---------- Input wiring ----------
+
+document.getElementById('btn-restart').addEventListener('click', restartGame);

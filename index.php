@@ -1,53 +1,21 @@
 <?php
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/lang.php';
+require_once __DIR__ . '/shared/session.php';
+require_once __DIR__ . '/shared/layout.php';
 
 $LANG = get_lang();
 
-// Fetch global stats directly from DB
-$totalSessions = 0;
-$totalPln      = 0.0;
-
-try {
-    $pdo = new PDO(
-        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
-        DB_USER,
-        DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-    $row = $pdo->query('SELECT total_sessions, total_pln FROM stats WHERE id = 1')->fetch(PDO::FETCH_ASSOC);
-    if ($row) {
-        $totalSessions = (int)   $row['total_sessions'];
-        $totalPln      = (float) $row['total_pln'];
-    }
-} catch (PDOException $e) {
-    // Silently degrade — counter shows 0
-}
+render_header(
+    t('site_title'),
+    'page-index',
+    $totalSessions,
+    $totalPln,
+    $LANG,
+    '/assets/style.css',
+    filemtime(__DIR__ . '/assets/style.css')
+);
 ?>
-<!DOCTYPE html>
-<html lang="<?= htmlspecialchars($LANG) ?>">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= t('site_title') ?></title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css?v=<?php echo filemtime(__DIR__.'/assets/style.css'); ?>">
-    <?php if (defined('ADSENSE_CLIENT') && ADSENSE_CLIENT !== ''): ?>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<?php echo htmlspecialchars(ADSENSE_CLIENT); ?>" crossorigin="anonymous"></script>
-    <?php endif; ?>
-</head>
-<body class="page-index">
-
-    <header class="site-header">
-        <div class="container">
-            <a href="index.php" class="header-home">Help By <span class="logo-play">Play</span></a>
-            <p class="header-stats"><?= number_format($totalSessions, 0, ',', ' ') ?> <?= t('header_stats') ?> <?= number_format($totalPln, 4, ',', ' ') ?> <?= t('currency') ?></p>
-        </div>
-    </header>
-
-    <main class="container">
 
         <section class="foundation-card">
             <?php if (FOUNDATION_LOGO): ?>
@@ -63,8 +31,13 @@ try {
             <p class="sessions-value"><?= number_format($totalSessions, 0, ',', ' ') ?> <?= t('sessions_label') ?></p>
         </section>
 
-        <section class="cta">
-            <a href="game.php" class="btn-play"><?= t('btn_play') ?></a>
+        <section class="game-selector">
+            <h2 class="game-selector-title"><?= t('games_section_title') ?></h2>
+            <div class="game-card">
+                <h3 class="game-card-name"><?= t('game_cards_name') ?></h3>
+                <p class="game-card-desc"><?= t('game_cards_desc') ?></p>
+                <a href="/games/cards/" class="btn-play"><?= t('btn_play') ?></a>
+            </div>
         </section>
 
         <p class="about-blurb">
@@ -99,23 +72,8 @@ try {
             </ol>
         </section>
 
-    </main>
+<?php render_footer($LANG); ?>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p class="footer-opensource">
-                <?= t('footer_opensource') ?>
-                <a href="https://helpbyplay.com" target="_blank" rel="noopener"><?= t('footer_about_link') ?></a>
-                &middot;
-                <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener">GitHub</a>
-            </p>
-            <div class="lang-switcher">
-                <button onclick="switchLang('pl')" class="<?= $LANG === 'pl' ? 'active' : '' ?>"><?= t('lang_pl') ?></button>
-                <button onclick="switchLang('en')" class="<?= $LANG === 'en' ? 'active' : '' ?>"><?= t('lang_en') ?></button>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/lang.js?v=<?php echo filemtime(__DIR__.'/assets/lang.js'); ?>"></script>
+<script src="/shared/assets/lang.js?v=<?= filemtime(__DIR__ . '/shared/assets/lang.js') ?>"></script>
 </body>
 </html>

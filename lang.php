@@ -18,6 +18,11 @@ $TRANSLATIONS = [
         'how_it_works_2'       => 'Reklamy finansują fundację',
         'how_it_works_3'       => 'Razem pomagamy',
 
+        // Game selector (index)
+        'game_cards_name'      => 'Łącz i pomagaj',
+        'game_cards_desc'      => 'Klasyczna gra match-3. Łącz kolorowe symbole i pomagaj fundacji.',
+        'games_section_title'  => 'Wybierz grę',
+
         // Game screen
         'game_title'           => 'Graj i pomagaj!',
         'game_story'           => 'Pomysł ma ponad 11 lat. Gry online, reklamy, fundacje — byliśmy blisko. Zabrakło reklamodawcy, projekt upadł. Kwiecień 2026: AI zmienił zasady. AdSense płaci bezpośrednio fundacji — bez pośrednika. Help By Play wraca, tym razem inaczej.',
@@ -82,6 +87,11 @@ $TRANSLATIONS = [
         'how_it_works_1'       => 'You play for free',
         'how_it_works_2'       => 'Ads fund the charity',
         'how_it_works_3'       => 'Together we help',
+
+        // Game selector (index)
+        'game_cards_name'      => 'Match & Help',
+        'game_cards_desc'      => 'Classic match-3 game. Match colorful symbols and help the charity.',
+        'games_section_title'  => 'Choose a game',
 
         // Game screen
         'game_title'           => 'Play and help!',
