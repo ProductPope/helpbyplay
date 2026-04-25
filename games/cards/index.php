@@ -72,20 +72,7 @@ render_header(
 
             <div id="game-grid" class="game-grid" role="grid" aria-label="<?= t('game_cards_name') ?>"></div>
 
-            <div class="game-foundation-info">
-                <p class="game-story-text"><?= htmlspecialchars(t('game_story')) ?></p>
-            </div>
-
-            <section class="foundation-section">
-                <h2><?= htmlspecialchars(t('playing_for')) ?> <?= htmlspecialchars(FOUNDATION_NAME) ?></h2>
-                <p><?= htmlspecialchars(FOUNDATION_DESC) ?></p>
-            </section>
-
-            <section class="recommend-section">
-                <h2><?= htmlspecialchars(t('recommend_title')) ?></h2>
-                <p><?= htmlspecialchars(t('recommend_text')) ?></p>
-                <a href="https://helpbyplay.com" target="_blank" rel="noopener noreferrer"><?= htmlspecialchars(t('recommend_link')) ?></a>
-            </section>
+            <?php render_below_game(); ?>
 
         </section>
 

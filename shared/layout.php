@@ -43,6 +43,25 @@ function render_header(
 <?php
 }
 
+function render_below_game(): void {
+?>
+    <section class="game-info-card">
+        <h2><?= htmlspecialchars(t('playing_for')) ?> <?= htmlspecialchars(FOUNDATION_NAME) ?></h2>
+        <p><?= htmlspecialchars(FOUNDATION_DESC) ?></p>
+    </section>
+
+    <section class="game-info-card">
+        <h2><?= htmlspecialchars(t('recommend_title')) ?></h2>
+        <p><?= htmlspecialchars(t('recommend_text')) ?></p>
+        <a href="https://helpbyplay.com" target="_blank" rel="noopener noreferrer"><?= htmlspecialchars(t('recommend_link')) ?></a>
+    </section>
+
+    <section class="game-info-card game-info-card--note">
+        <p><?= htmlspecialchars(t('ad_value_note')) ?></p>
+    </section>
+<?php
+}
+
 function render_footer(string $lang): void {
 ?>
     </main>
