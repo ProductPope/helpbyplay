@@ -572,6 +572,71 @@ main.container {
     animation: new-record 2s ease forwards;
 }
 
+/* ===== Foundation banner (index page — sticky under header) ===== */
+.foundation-banner {
+    position:     sticky;
+    top:          0;
+    z-index:      50;
+    background:   var(--color-primary);
+    color:        #fff;
+    padding:      10px var(--space-md);
+    text-align:   center;
+    font-weight:  600;
+    font-size:    14px;
+    /* Break out of container horizontal padding */
+    margin-left:  calc(-1 * var(--space-md));
+    margin-right: calc(-1 * var(--space-md));
+}
+
+/* ===== Foundation section (game pages — under board) ===== */
+.foundation-section {
+    text-align: center;
+    padding-top: var(--space-sm);
+}
+
+.foundation-section h2 {
+    font-size:     15px;
+    font-weight:   700;
+    color:         var(--color-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.foundation-section p {
+    font-size:   14px;
+    color:       var(--color-text-muted);
+    line-height: 1.5;
+}
+
+/* ===== NGO recommendation section (game pages) ===== */
+.recommend-section {
+    background:    var(--color-surface);
+    padding:       24px;
+    border-radius: var(--radius-lg);
+    box-shadow:    var(--shadow-sm);
+    margin-top:    24px;
+    text-align:    center;
+}
+
+.recommend-section h2 {
+    font-size:     16px;
+    font-weight:   700;
+    color:         var(--color-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.recommend-section p {
+    font-size:     14px;
+    color:         var(--color-text-muted);
+    line-height:   1.6;
+    margin-bottom: var(--space-sm);
+}
+
+.recommend-section a {
+    color:           var(--color-primary);
+    font-weight:     600;
+    text-decoration: underline;
+}
+
 /* ===== Animations — respect prefers-reduced-motion ===== */
 @media (prefers-reduced-motion: reduce) {
     .candy,

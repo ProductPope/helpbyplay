@@ -90,6 +90,14 @@ $TRANSLATIONS = [
 
         // Ad wait message
         'ad_wait_msg'          => 'Oczekiwanie na reklamę',
+
+        // Foundation banner & game page section
+        'playing_for'          => 'Grasz dla:',
+
+        // NGO recommendation section
+        'recommend_title'      => 'Poleć projekt swojej fundacji',
+        'recommend_text'       => 'Każda organizacja pozarządowa może dołączyć do Help By Play i otrzymać własną stronę z grami. Przychody z reklam Google AdSense trafiają bezpośrednio na konto fundacji. Zero prowizji, zero kosztów.',
+        'recommend_link'       => 'Dowiedz się więcej na helpbyplay.com',
     ],
 
     'en' => [
@@ -179,6 +187,14 @@ $TRANSLATIONS = [
 
         // Ad wait message
         'ad_wait_msg'          => 'Waiting for ad',
+
+        // Foundation banner & game page section
+        'playing_for'          => 'Playing for:',
+
+        // NGO recommendation section
+        'recommend_title'      => 'Recommend this project to your NGO',
+        'recommend_text'       => 'Any non-profit organisation can join Help By Play and get their own gaming page. Google AdSense revenue goes directly to the foundation\'s account. Zero commission, zero costs.',
+        'recommend_link'       => 'Learn more at helpbyplay.com',
     ],
 ];
 

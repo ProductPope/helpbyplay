@@ -26,6 +26,10 @@ render_header(
 );
 ?>
 
+        <div class="foundation-banner">
+            <?= htmlspecialchars(t('playing_for')) ?> <strong><?= htmlspecialchars(FOUNDATION_NAME) ?></strong>
+        </div>
+
         <div class="stats-bar">
             <span class="stats-item">👥 <strong class="stats-number"><?= number_format($totalSessions, 0, ',', ' ') ?></strong> <?= t('stat_players') ?></span>
             <span class="stats-dot" aria-hidden="true">·</span>
