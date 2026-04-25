@@ -8,8 +8,8 @@ $LANG = get_lang();
 
 $games = [
     ['key' => 'cards',       'url' => '/games/cards/', 'active' => true],
-    ['key' => '2048',        'active' => false],
-    ['key' => 'snake',       'active' => false],
+    ['key' => '2048',        'url' => '/games/2048/', 'active' => true],
+    ['key' => 'snake',       'url' => '/games/snake/', 'active' => true],
     ['key' => 'memory',      'active' => false],
     ['key' => 'minesweeper', 'active' => false],
     ['key' => 'flappy',      'active' => false],
@@ -50,6 +50,47 @@ render_header(
                             <text class="tile-suit" x="31" y="27" font-size="22" fill="#1565C0">♦</text>
                             <text class="tile-suit" x="7"  y="54" font-size="22" fill="#0D1117">♣</text>
                             <text class="tile-suit" x="31" y="54" font-size="22" fill="#0D1117">♠</text>
+                        </svg>
+<?php elseif ($g['key'] === '2048'): ?>
+                        <svg viewBox="0 0 56 56" width="52" height="52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <rect width="56" height="56" rx="4" fill="#BBADA0"/>
+                            <!-- row 1: empty cells -->
+                            <rect x="3"  y="3"  width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="17" y="3"  width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="31" y="3"  width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="45" y="3"  width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <!-- row 2: empty cells -->
+                            <rect x="3"  y="17" width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="17" y="17" width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="31" y="17" width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="45" y="17" width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <!-- row 3: empty cells -->
+                            <rect x="3"  y="31" width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="17" y="31" width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="31" y="31" width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <rect x="45" y="31" width="11" height="11" rx="2" fill="rgba(238,228,218,0.35)"/>
+                            <!-- row 4: 2, 4, 8, 16 -->
+                            <rect x="3"  y="45" width="11" height="11" rx="2" fill="#FFF9F0"/>
+                            <text x="8"  y="53.5" text-anchor="middle" font-size="6" font-weight="700" fill="#776E65">2</text>
+                            <rect x="17" y="45" width="11" height="11" rx="2" fill="#FFF3DC"/>
+                            <text x="22" y="53.5" text-anchor="middle" font-size="6" font-weight="700" fill="#776E65">4</text>
+                            <rect x="31" y="45" width="11" height="11" rx="2" fill="#FFBA73"/>
+                            <text x="36" y="53.5" text-anchor="middle" font-size="6" font-weight="700" fill="#F9F6F2">8</text>
+                            <rect x="45" y="45" width="11" height="11" rx="2" fill="#F9A04E"/>
+                            <text x="50" y="53.5" text-anchor="middle" font-size="5" font-weight="700" fill="#F9F6F2">16</text>
+                        </svg>
+<?php elseif ($g['key'] === 'snake'): ?>
+                        <svg viewBox="0 0 56 56" width="52" height="52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <rect width="56" height="56" rx="4" fill="#0a0a0a"/>
+                            <!-- Snake body (L-shape): tail top-left, head bottom-right -->
+                            <rect x="5"  y="16" width="9" height="9" rx="2" fill="#00ff41"/>
+                            <rect x="16" y="16" width="9" height="9" rx="2" fill="#00ff41"/>
+                            <rect x="27" y="16" width="9" height="9" rx="2" fill="#00ff41"/>
+                            <rect x="27" y="27" width="9" height="9" rx="2" fill="#00ff41"/>
+                            <!-- Head (lighter) -->
+                            <rect x="27" y="38" width="9" height="9" rx="2" fill="#80ff80"/>
+                            <!-- Apple -->
+                            <circle cx="44" cy="27" r="5" fill="#ff3333"/>
                         </svg>
 <?php else: ?>
                         <svg viewBox="0 0 60 60" width="48" height="48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

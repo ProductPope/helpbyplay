@@ -1,0 +1,63 @@
+/* Snake game — canvas wrapper and tutorial overlay */
+
+.snake-wrapper {
+    position: relative;
+    width:    min(calc(100vw - 32px), 400px);
+    height:   min(calc(100vw - 32px), 400px);
+    margin:   0 auto;
+}
+
+#snake-canvas {
+    display:       block;
+    width:         100%;
+    height:        100%;
+    border-radius: var(--radius-md);
+    cursor:        default;
+}
+
+/* Tutorial overlay */
+.snake-tutorial {
+    position:        absolute;
+    inset:           0;
+    background:      rgba(0, 0, 0, 0.90);
+    display:         none;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;
+    border-radius:   var(--radius-md);
+    z-index:         10;
+    padding:         24px;
+    gap:             20px;
+    text-align:      center;
+    color:           #00ff41;
+    font-family:     monospace;
+}
+
+.snake-tutorial .tutorial-text {
+    font-size:   15px;
+    line-height: 1.6;
+    max-width:   260px;
+}
+
+.snake-tutorial .tutorial-btn {
+    background:     transparent;
+    color:          #00ff41;
+    border:         2px solid #00ff41;
+    border-radius:  3px;
+    padding:        10px 32px;
+    font-size:      16px;
+    font-family:    monospace;
+    font-weight:    700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor:         pointer;
+    touch-action:   manipulation;
+}
+
+.snake-tutorial .tutorial-btn:active {
+    background: rgba(0, 255, 65, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Canvas animation controlled in JS — nothing to override here */
+}
