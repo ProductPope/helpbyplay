@@ -23,7 +23,7 @@ const BRICK_GAP_X   = 5;
 const BRICK_GAP_Y   = 6;
 const BRICK_H       = 16;
 const PAD_H         = 12;
-const PAD_Y         = CH - 45;
+const PAD_Y         = CH - 72;
 const PAD_W_BASE    = 80;
 const PAD_W_WIDE    = 120;
 const PAD_SPEED     = 7;
@@ -89,6 +89,9 @@ function initGame() {
     brickW        = (CW - 2 * BRICK_PAD_X - (BRICK_COLS - 1) * BRICK_GAP_X) / BRICK_COLS;
     highScore     = parseInt(localStorage.getItem(HS_KEY) || '0', 10);
     particles     = [];
+    score         = 0;
+    lives         = 3;
+    level         = 1;
 
     setupInputHandlers();
     updateHUDDisplay();
@@ -108,6 +111,15 @@ function showTutorial() {
     drawFrame();
     const tut = document.getElementById('bricks-tutorial');
     if (tut) tut.classList.add('active');
+
+    const btnStart = document.getElementById('btn-bricks-start');
+    if (btnStart) {
+        btnStart.onclick = function() {
+            console.log('[Bricks] START clicked');
+            localStorage.setItem(TUT_KEY, '1');
+            startNewGame();
+        };
+    }
 }
 
 function startNewGame() {
@@ -700,10 +712,6 @@ function setupInputHandlers() {
         touchX = (e.touches[0].clientX - rect.left) * (CW / rect.width);
     }, { passive: false });
 
-    canvas.addEventListener('touchend', function() {
-        touchX = null;
-    }, { passive: true });
-
     // Keyboard
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowLeft')  { keysLeft  = true;  keysRight = false; }
@@ -718,14 +726,6 @@ function setupInputHandlers() {
 
 // ── DOM events ────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-    const btnStart = document.getElementById('btn-bricks-start');
-    if (btnStart) {
-        btnStart.addEventListener('click', function() {
-            localStorage.setItem(TUT_KEY, '1');
-            startNewGame();
-        });
-    }
-
     const btnRestart = document.getElementById('btn-bricks-restart');
     if (btnRestart) btnRestart.addEventListener('click', startNewGame);
 
