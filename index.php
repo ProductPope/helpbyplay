@@ -15,7 +15,7 @@ $games = [
     ['key' => 'platformer',  'url' => '/games/platformer/', 'active' => true],
     ['key' => 'jumper',      'url' => '/games/jumper/', 'active' => true],
     ['key' => 'invaders',    'url' => '/games/invaders/', 'active' => true],
-    ['key' => 'arkanoid',    'active' => false],
+    ['key' => 'bricks',      'url' => '/games/bricks/', 'active' => true],
     ['key' => 'flappy',      'active' => false],
 ];
 
@@ -264,7 +264,7 @@ render_header(
                             <text x="34.5" y="38" text-anchor="middle" font-size="6" fill="rgba(255,255,255,0.35)" font-weight="700">?</text>
                             <text x="47.5" y="38" text-anchor="middle" font-size="6" fill="rgba(255,255,255,0.35)" font-weight="700">?</text>
                         </svg>
-<?php elseif ($g['key'] === 'arkanoid'): ?>
+<?php elseif ($g['key'] === 'bricks'): ?>
                         <svg viewBox="0 0 56 56" width="52" height="52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <!-- Background -->
                             <rect width="56" height="56" rx="4" fill="#000"/>

@@ -70,6 +70,11 @@ $TRANSLATIONS = [
         'game_invaders_desc'   => 'Klasyczna strzelanka kosmiczna. Zniszcz wszystkich najeźdźców!',
         'tutorial_invaders'    => 'Zniszcz wszystkich kosmitów! Unikaj ich pocisków i chroń się za schronami.',
         'tutorial_invaders_btn'=> 'START',
+        'game_bricks_name'         => 'Bricks',
+        'game_bricks_desc'         => 'Klasyczna gra w rozbijanie cegieł. Odbijaj piłkę i zniszcz wszystko!',
+        'tutorial_bricks'          => 'Poruszaj paletką aby odbijać piłkę. Zniszcz wszystkie cegły. Łap power-upy dla bonusów!',
+        'tutorial_bricks_btn'      => 'START',
+        'bricks_game_over_title'   => 'Koniec gry',
 
         // Game screen
         'game_title'           => 'Graj i pomagaj!',
@@ -152,6 +157,8 @@ $TRANSLATIONS = [
         'game_jumper_tutorial'     => 'Używaj przycisków lewo i prawo aby kierować skoczkiem. Ląduj na platformach i skacz wyżej. Upadek na dół kończy grę.',
         'game_invaders_about'      => 'Klasyczna strzelanka kosmiczna. Zniszcz wszystkich najeźdźców zanim Cię zestrzelą.',
         'game_invaders_tutorial'   => 'Poruszaj statkiem przyciskami lewo prawo. Przycisk strzału niszczy kosmitów. Unikaj ich pocisków. Zestrzelenie całego rzędu dodaje nowy.',
+        'game_bricks_about'        => 'Klasyczna gra w rozbijanie cegieł z power-upami i wieloma poziomami. Odbijaj piłkę paletką i niszcz kolorowe cegły. Każdy poziom jest trudniejszy od poprzedniego.',
+        'game_bricks_tutorial'     => 'Przesuń palcem po ekranie aby poruszać paletką. Odbij piłkę i zniszcz wszystkie cegły. Łap spadające power-upy. Nie pozwól piłce spaść!',
     ],
 
     'en' => [
@@ -221,6 +228,11 @@ $TRANSLATIONS = [
         'game_invaders_desc'   => 'Classic space shooter. Destroy all invaders!',
         'tutorial_invaders'    => 'Destroy all invaders! Dodge their shots and hide behind shields.',
         'tutorial_invaders_btn'=> 'START',
+        'game_bricks_name'         => 'Bricks',
+        'game_bricks_desc'         => 'Classic brick breaker. Bounce the ball and destroy everything!',
+        'tutorial_bricks'          => 'Move the paddle to bounce the ball. Destroy all bricks. Catch power-ups for bonuses!',
+        'tutorial_bricks_btn'      => 'START',
+        'bricks_game_over_title'   => 'Game Over',
 
         // Game screen
         'game_title'           => 'Play and help!',
@@ -303,6 +315,8 @@ $TRANSLATIONS = [
         'game_jumper_tutorial'     => 'Use left and right buttons to steer the jumper. Land on platforms and jump higher. Falling to the bottom ends the game.',
         'game_invaders_about'      => 'Classic space shooter. Destroy all invaders before they shoot you down.',
         'game_invaders_tutorial'   => 'Move your ship with left right buttons. Fire button destroys invaders. Dodge their shots. Destroying a full row adds a new one.',
+        'game_bricks_about'        => 'Classic brick breaker with power-ups and multiple levels. Bounce the ball with the paddle and destroy colored bricks. Each level is harder than the last.',
+        'game_bricks_tutorial'     => 'Slide your finger to move the paddle. Bounce the ball and destroy all bricks. Catch falling power-ups. Don\'t let the ball fall!',
     ],
 ];
 

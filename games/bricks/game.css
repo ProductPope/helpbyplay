@@ -1,0 +1,95 @@
+/* Bricks game */
+
+.bricks-wrapper {
+    width:     100%;
+    max-width: 480px;
+    margin:    12px auto 0;
+    position:  relative;
+}
+
+#bricks-canvas {
+    display:       block;
+    width:         100%;
+    height:        auto;
+    background:    #000;
+    border-radius: var(--radius-md);
+    touch-action:  none;
+    cursor:        none;
+}
+
+/* ── Overlays ────────────────────────────────────────────────────────────────── */
+.bricks-overlay {
+    position:        absolute;
+    inset:           0;
+    background:      rgba(0, 0, 0, 0.88);
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;
+    gap:             16px;
+    padding:         24px;
+    text-align:      center;
+    z-index:         20;
+    border-radius:   var(--radius-md);
+    color:           #fff;
+}
+
+.bricks-overlay.hidden  { display: none; }
+.bricks-overlay.active  { display: flex; }
+
+.bricks-overlay-title {
+    font-size:   24px;
+    font-weight: 700;
+    margin:      0;
+    line-height: 1.2;
+}
+
+.bricks-overlay-text {
+    font-size:   15px;
+    line-height: 1.55;
+    max-width:   280px;
+    margin:      0;
+    color:       rgba(255, 255, 255, 0.85);
+}
+
+.bricks-overlay-score {
+    font-size:   44px;
+    font-weight: 700;
+    font-family: monospace;
+    line-height: 1;
+}
+
+.bricks-overlay-hs {
+    font-size: 14px;
+    color:     rgba(255, 180, 0, 0.9);
+}
+
+.bricks-new-record {
+    color:       #4CAF50;
+    font-weight: 700;
+    font-size:   16px;
+}
+
+.bricks-countdown {
+    font-size:   72px;
+    font-weight: 700;
+    font-family: monospace;
+    color:       #fff;
+    line-height: 1;
+}
+
+.bricks-btn {
+    background:     var(--color-primary);
+    color:          #fff;
+    border:         none;
+    border-radius:  var(--radius-md);
+    padding:        12px 44px;
+    font-size:      16px;
+    font-weight:    700;
+    cursor:         pointer;
+    min-height:     48px;
+    touch-action:   manipulation;
+    letter-spacing: 1px;
+}
+
+.bricks-btn:active { background: var(--color-primary-light); }
