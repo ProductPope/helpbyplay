@@ -1,0 +1,250 @@
+/* Memory game styles */
+
+.memory-wrapper {
+    width:     100%;
+    max-width: 600px;
+    margin:    12px auto 0;
+}
+
+/* ── Stats bar ─────────────────────────────────────────────────────────────── */
+.memory-stats {
+    display:         flex;
+    justify-content: space-around;
+    align-items:     center;
+    background:      rgba(0, 0, 0, 0.55);
+    border-radius:   var(--radius-md);
+    padding:         8px 12px;
+    margin-bottom:   10px;
+    color:           #fff;
+}
+
+.memory-stat { text-align: center; }
+
+.memory-stat-label {
+    display:        block;
+    font-size:      11px;
+    color:          rgba(255, 255, 255, 0.65);
+    font-weight:    600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.memory-stat-value {
+    display:     block;
+    font-size:   18px;
+    font-weight: 700;
+    font-family: monospace;
+    line-height: 1.2;
+}
+
+/* ── Grid wrapper (overlay context) ────────────────────────────────────────── */
+.memory-grid-wrapper {
+    position:      relative;
+    border-radius: var(--radius-md);
+    overflow:      hidden;
+}
+
+/* ── Grid ────────────────────────────────────────────────────────────────────── */
+.memory-grid {
+    display:       grid;
+    gap:           6px;
+    padding:       6px;
+    background:    var(--color-background);
+    border-radius: var(--radius-md);
+}
+
+.memory-grid--4 { grid-template-columns: repeat(4, 1fr); }
+.memory-grid--6 { grid-template-columns: repeat(6, 1fr); }
+
+/* ── Cards ────────────────────────────────────────────────────────────────────── */
+.memory-card {
+    aspect-ratio:  1;
+    cursor:        pointer;
+    perspective:   500px;
+    border-radius: var(--radius-md);
+    position:      relative;
+    -webkit-tap-highlight-color: transparent;
+    touch-action:  manipulation;
+}
+
+.memory-card:focus-visible {
+    outline:        2px solid var(--color-primary-light);
+    outline-offset: 2px;
+}
+
+.memory-card-inner {
+    position:        absolute;
+    inset:           0;
+    transform-style: preserve-3d;
+    transition:      transform 300ms ease;
+    border-radius:   var(--radius-md);
+}
+
+.memory-card.is-flipped .memory-card-inner,
+.memory-card.is-matched .memory-card-inner {
+    transform: rotateY(180deg);
+}
+
+.memory-card-back,
+.memory-card-front {
+    position:                    absolute;
+    inset:                       0;
+    backface-visibility:         hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius:               var(--radius-md);
+    display:                     flex;
+    align-items:                 center;
+    justify-content:             center;
+    user-select:                 none;
+    -webkit-user-select:         none;
+}
+
+.memory-card-back {
+    background:  #1565C0;
+    color:       rgba(255, 255, 255, 0.8);
+    font-size:   clamp(14px, 4.5vw, 24px);
+    font-weight: 700;
+    border:      2px solid rgba(255, 255, 255, 0.12);
+}
+
+.memory-card-front {
+    background: #fff;
+    transform:  rotateY(180deg);
+    font-size:  clamp(18px, 5.5vw, 34px);
+    border:     2px solid var(--color-border);
+}
+
+.memory-card.is-matched-flash .memory-card-inner { transform: rotateY(180deg); }
+
+.memory-card.is-matched-flash .memory-card-front {
+    border-color: #4CAF50;
+    box-shadow:   0 0 0 3px rgba(76, 175, 80, 0.35);
+}
+
+.memory-card.is-matched { cursor: default; }
+
+/* ── Tutorial overlay ─────────────────────────────────────────────────────── */
+.memory-tutorial {
+    position:        absolute;
+    inset:           0;
+    background:      rgba(0, 0, 0, 0.90);
+    display:         none;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;
+    gap:             20px;
+    padding:         24px;
+    text-align:      center;
+    z-index:         20;
+    border-radius:   var(--radius-md);
+}
+
+.memory-tutorial.active { display: flex; }
+
+.memory-tutorial .tutorial-text {
+    font-size:   15px;
+    line-height: 1.65;
+    max-width:   280px;
+    margin:      0;
+    color:       rgba(255, 255, 255, 0.88);
+}
+
+.memory-tutorial .tutorial-btn {
+    background:     var(--color-primary);
+    color:          #fff;
+    border:         none;
+    border-radius:  var(--radius-md);
+    padding:        12px 44px;
+    font-size:      16px;
+    font-weight:    700;
+    cursor:         pointer;
+    min-height:     48px;
+    touch-action:   manipulation;
+    letter-spacing: 1px;
+}
+
+.memory-tutorial .tutorial-btn:active { background: var(--color-primary-light); }
+
+/* ── Win overlay ─────────────────────────────────────────────────────────── */
+.memory-win {
+    position:        absolute;
+    inset:           0;
+    background:      rgba(0, 0, 0, 0.88);
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;
+    z-index:         20;
+    border-radius:   var(--radius-md);
+    padding:         16px;
+}
+
+.memory-win.hidden { display: none; }
+
+.memory-win-card {
+    background:    var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding:       20px 24px;
+    text-align:    center;
+    width:         100%;
+    max-width:     280px;
+    box-shadow:    var(--shadow-sm);
+}
+
+.memory-win-emoji {
+    font-size:     32px;
+    margin:        0 0 12px;
+    line-height:   1;
+}
+
+.memory-win-stats {
+    display:               grid;
+    grid-template-columns: 1fr 1fr;
+    gap:                   8px 12px;
+    text-align:            left;
+    margin-bottom:         14px;
+}
+
+.memory-win-stats dt {
+    font-size:      11px;
+    color:          var(--color-text-muted);
+    font-weight:    600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.memory-win-stats dd {
+    font-size:   16px;
+    font-weight: 700;
+    color:       var(--color-text);
+    margin:      0;
+    font-family: monospace;
+}
+
+.memory-win-bonus {
+    background:    rgba(76, 175, 80, 0.12);
+    color:         var(--color-primary);
+    border:        1px solid rgba(76, 175, 80, 0.35);
+    border-radius: var(--radius-sm);
+    padding:       6px 12px;
+    font-size:     13px;
+    font-weight:   700;
+    margin-bottom: 14px;
+}
+
+.memory-win-btn {
+    display:       block;
+    width:         100%;
+    background:    var(--color-primary);
+    color:         #fff;
+    border:        none;
+    border-radius: var(--radius-md);
+    padding:       12px 0;
+    font-size:     15px;
+    font-weight:   700;
+    cursor:        pointer;
+    min-height:    48px;
+    touch-action:  manipulation;
+}
+
+.memory-win-btn:active { background: var(--color-primary-light); }

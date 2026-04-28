@@ -1,0 +1,113 @@
+/* Space Invaders game styles */
+
+.invaders-wrapper {
+    position:      relative;
+    width:         min(calc(100vw - 32px), 480px);
+    margin:        12px auto 0;
+    border-radius: var(--radius-md);
+    overflow:      hidden;
+    touch-action:  none;
+    background:    #000;
+}
+
+#invaders-canvas {
+    display:      block;
+    width:        100%;
+    touch-action: none;
+}
+
+/* Tutorial overlay */
+.invaders-tutorial {
+    position:        absolute;
+    inset:           0;
+    background:      rgba(0, 0, 0, 0.92);
+    display:         none;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;
+    gap:             20px;
+    padding:         24px;
+    color:           #33ff33;
+    text-align:      center;
+    z-index:         20;
+    border-radius:   var(--radius-md);
+    font-family:     monospace;
+}
+
+.invaders-tutorial.active { display: flex; }
+
+.invaders-tutorial .tutorial-text {
+    font-size:   15px;
+    line-height: 1.65;
+    max-width:   280px;
+    margin:      0;
+    color:       #aaffaa;
+}
+
+.invaders-tutorial .tutorial-btn {
+    background:     transparent;
+    color:          #33ff33;
+    border:         2px solid #33ff33;
+    border-radius:  var(--radius-md);
+    padding:        12px 44px;
+    font-size:      16px;
+    font-weight:    700;
+    font-family:    monospace;
+    cursor:         pointer;
+    min-height:     48px;
+    touch-action:   manipulation;
+    letter-spacing: 2px;
+}
+
+.invaders-tutorial .tutorial-btn:active {
+    background: rgba(51, 255, 51, 0.15);
+}
+
+/* Mobile controls */
+.invaders-mobile-controls {
+    display:          flex;
+    justify-content:  space-between;
+    align-items:      center;
+    padding:          8px 4px 4px;
+    background:       #000;
+}
+
+@media (min-width: 768px) {
+    .invaders-mobile-controls { display: none; }
+}
+
+.inv-ctrl-btn {
+    width:          80px;
+    height:         64px;
+    font-size:      24px;
+    background:     rgba(51, 255, 51, 0.08);
+    color:          #33ff33;
+    border:         2px solid rgba(51, 255, 51, 0.4);
+    border-radius:  var(--radius-md);
+    cursor:         pointer;
+    touch-action:   none;
+    user-select:    none;
+    -webkit-user-select: none;
+    font-family:    monospace;
+    display:        flex;
+    align-items:    center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.inv-ctrl-btn:active {
+    background:   rgba(51, 255, 51, 0.22);
+    border-color: rgba(51, 255, 51, 0.9);
+}
+
+.inv-ctrl-fire {
+    width:       96px;
+    height:      72px;
+    font-size:   26px;
+    background:  rgba(51, 255, 51, 0.12);
+    border-color: rgba(51, 255, 51, 0.6);
+}
+
+.inv-ctrl-fire:active {
+    background: rgba(51, 255, 51, 0.30);
+}

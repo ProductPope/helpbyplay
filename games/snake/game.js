@@ -69,6 +69,7 @@ function step() {
     if (snake.slice(0, -1).some(s => s.x === nx && s.y === ny)) {
         gameOver     = true;
         gameOverTime = performance.now();
+        unlockScroll();
         if (score > highScore) {
             highScore = score;
             localStorage.setItem(HS_KEY, highScore);
@@ -237,9 +238,13 @@ function initGame() {
     }
 }
 
+function lockScroll()   { document.body.style.overflow = 'hidden'; }
+function unlockScroll() { document.body.style.overflow = ''; }
+
 function startSnake() {
     resetState();
     updateHUD();
+    lockScroll();
     startLoop();
 }
 
@@ -295,11 +300,17 @@ document.addEventListener('keydown', e => {
     const cvs = document.getElementById('snake-canvas');
 
     cvs?.addEventListener('touchstart', e => {
+        e.preventDefault();
         touchSX = e.touches[0].clientX;
         touchSY = e.touches[0].clientY;
-    }, { passive: true });
+    }, { passive: false });
+
+    cvs?.addEventListener('touchmove', e => {
+        e.preventDefault();
+    }, { passive: false });
 
     cvs?.addEventListener('touchend', e => {
+        e.preventDefault();
         if (gameOver) { restartGame(); return; }
         const dx = e.changedTouches[0].clientX - touchSX;
         const dy = e.changedTouches[0].clientY - touchSY;
@@ -308,7 +319,7 @@ document.addEventListener('keydown', e => {
             ? (dx > 0 ? {x:1,y:0} : {x:-1,y:0})
             : (dy > 0 ? {x:0,y:1} : {x:0,y:-1});
         if (d.x !== -dir.x || d.y !== -dir.y) nextDir = d;
-    }, { passive: true });
+    }, { passive: false });
 
     cvs?.addEventListener('click', e => {
         if (!gameOver || !restartBtnRect || !canvas) return;
@@ -334,6 +345,11 @@ document.getElementById('btn-snake-start')?.addEventListener('click', () => {
 // ── Restart button (HTML, not canvas) ────────────────────────────────────────
 
 document.getElementById('btn-restart')?.addEventListener('click', restartGame);
+
+// ── Scroll lock cleanup ───────────────────────────────────────────────────────
+
+window.addEventListener('pagehide',    unlockScroll);
+window.addEventListener('beforeunload', unlockScroll);
 
 // ── Resize ────────────────────────────────────────────────────────────────────
 

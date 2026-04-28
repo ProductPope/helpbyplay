@@ -1,0 +1,184 @@
+/* Minesweeper (Saper) game styles */
+
+.saper-wrapper {
+    position: relative;
+    width: min(calc(100vw - 32px), 520px);
+    margin: 16px auto 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+}
+
+#saper-board {
+    display: grid;
+    gap: 2px;
+    padding: 8px;
+    background: #bdbdbd;
+    border-radius: var(--radius-md);
+    border: 4px solid;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.saper-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: clamp(9px, 3vw, 16px);
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    border: 2px solid;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    background: #bdbdbd;
+    line-height: 1;
+}
+
+.saper-cell.revealed {
+    border-top-color: #808080;
+    border-left-color: #808080;
+    border-right-color: #dfdfdf;
+    border-bottom-color: #dfdfdf;
+    background: #c0c0c0;
+    cursor: default;
+}
+
+.saper-cell.just-revealed {
+    animation: cell-reveal 0.08s ease-out;
+}
+
+.saper-cell.mine-hit {
+    background: #ff4444;
+}
+
+@keyframes cell-reveal {
+    from { opacity: 0.5; transform: scale(0.9); }
+    to   { opacity: 1;   transform: scale(1); }
+}
+
+/* Number colors */
+.num-1 { color: #1565C0; }
+.num-2 { color: #388E3C; }
+.num-3 { color: #C62828; }
+.num-4 { color: #1A237E; }
+.num-5 { color: #880E4F; }
+.num-6 { color: #00838F; }
+.num-7 { color: #212121; }
+.num-8 { color: #757575; }
+
+/* Tutorial overlay */
+.saper-tutorial {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    border-radius: var(--radius-md);
+    color: #fff;
+    text-align: center;
+    z-index: 10;
+}
+
+.saper-tutorial.active {
+    display: flex;
+}
+
+.saper-tutorial .tutorial-text {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.saper-tutorial .tutorial-btn {
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 12px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 48px;
+    touch-action: manipulation;
+}
+
+/* Win/lose result overlay */
+.saper-result-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 16px;
+}
+
+.saper-result-overlay.hidden {
+    display: none;
+}
+
+.saper-result-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    text-align: center;
+    max-width: 320px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+}
+
+.saper-result-card h2 {
+    font-size: 22px;
+    color: var(--color-text);
+    margin: 0 0 16px;
+}
+
+.saper-result-card .result-stats {
+    margin: 0 0 24px;
+    color: var(--color-text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.saper-result-card .result-stats strong {
+    color: var(--color-text);
+    font-weight: 700;
+}
+
+.saper-result-card .overlay-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.saper-result-card .overlay-actions .btn-play,
+.saper-result-card .overlay-actions .btn-secondary {
+    flex: 1 1 auto;
+}
+
+/* Dual HUD center (mine count + timer) */
+.saper-hud-center {
+    flex-direction: row !important;
+    gap: 14px;
+}
+
+.saper-hud-pair {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}

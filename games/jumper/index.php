@@ -7,12 +7,12 @@ require_once __DIR__ . '/../../shared/layout.php';
 $LANG = get_lang();
 
 render_header(
-    t('game_snake_name') . ' — ' . t('site_title'),
+    t('game_jumper_name') . ' — ' . t('site_title'),
     'page-game',
     $totalSessions,
     $totalPln,
     $LANG,
-    '/games/snake/game.css',
+    '/games/jumper/game.css',
     filemtime(__DIR__ . '/game.css')
 );
 ?>
@@ -72,15 +72,21 @@ render_header(
                 <?php endif; ?>
             </div>
 
-            <div class="snake-wrapper">
-                <canvas id="snake-canvas" role="img" aria-label="<?= t('game_snake_name') ?>"></canvas>
-                <div id="snake-tutorial" class="snake-tutorial">
-                    <p class="tutorial-text"><?= htmlspecialchars(t('tutorial_snake')) ?></p>
-                    <button id="btn-snake-start" class="tutorial-btn"><?= htmlspecialchars(t('tutorial_snake_btn')) ?></button>
+            <div class="jumper-wrapper">
+                <canvas id="jumper-canvas" role="img" aria-label="<?= t('game_jumper_name') ?>"></canvas>
+                <div id="jumper-tutorial" class="jumper-tutorial">
+                    <p class="tutorial-text"><?= htmlspecialchars(t('tutorial_jumper')) ?></p>
+                    <button id="btn-jumper-start" class="tutorial-btn"><?= htmlspecialchars(t('tutorial_jumper_btn')) ?></button>
                 </div>
             </div>
 
-            <?php render_below_game('snake'); ?>
+            <!-- Mobile controls (hidden on desktop via CSS) -->
+            <div class="jumper-mobile-controls" id="jumper-mobile-controls">
+                <button id="btn-jumper-left"  class="jumper-ctrl-btn" aria-label="Left">◀</button>
+                <button id="btn-jumper-right" class="jumper-ctrl-btn" aria-label="Right">▶</button>
+            </div>
+
+            <?php render_below_game('jumper'); ?>
 
         </section>
 
@@ -104,7 +110,7 @@ render_header(
                 <p class="summary-thanks"><?= t('summary_thanks_msg') ?></p>
 
                 <div class="summary-actions">
-                    <a href="/games/snake/" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/games/jumper/" class="btn-play"><?= t('btn_play_again') ?></a>
                     <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
                 </div>
             </div>
@@ -121,7 +127,7 @@ render_header(
                 <h1 class="summary-title"><?= t('inactivity_title') ?></h1>
                 <p class="summary-thanks"><?= t('inactivity_msg') ?></p>
                 <div class="summary-actions">
-                    <a href="/games/snake/" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/games/jumper/" class="btn-play"><?= t('btn_play_again') ?></a>
                     <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
                 </div>
             </div>
@@ -133,7 +139,7 @@ render_header(
 
 <script src="/shared/assets/lang.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/lang.js') ?>"></script>
 <script src="/shared/assets/counter.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/counter.js') ?>"></script>
-<script src="/games/snake/game.js?v=<?= filemtime(__DIR__ . '/game.js') ?>"></script>
+<script src="/games/jumper/game.js?v=<?= filemtime(__DIR__ . '/game.js') ?>"></script>
 <script src="/shared/assets/session.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/session.js') ?>"></script>
 </body>
 </html>

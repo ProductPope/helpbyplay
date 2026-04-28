@@ -72,7 +72,7 @@ render_header(
 
             <div id="game-grid" class="game-grid" role="grid" aria-label="<?= t('game_cards_name') ?>"></div>
 
-            <?php render_below_game(); ?>
+            <?php render_below_game('cards'); ?>
 
         </section>
 

@@ -79,7 +79,7 @@ render_header(
                 </div>
             </div>
 
-            <?php render_below_game(); ?>
+            <?php render_below_game('2048'); ?>
 
         </section>
 

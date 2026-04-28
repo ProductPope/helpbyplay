@@ -7,12 +7,12 @@ require_once __DIR__ . '/../../shared/layout.php';
 $LANG = get_lang();
 
 render_header(
-    t('game_snake_name') . ' — ' . t('site_title'),
+    t('game_memory_name') . ' — ' . t('site_title'),
     'page-game',
     $totalSessions,
     $totalPln,
     $LANG,
-    '/games/snake/game.css',
+    '/games/memory/game.css',
     filemtime(__DIR__ . '/game.css')
 );
 ?>
@@ -32,7 +32,7 @@ render_header(
                 <div class="status-right">
                     <div class="status-item status-item--right">
                         <span class="status-label"><?= t('highscore_label') ?></span>
-                        <span id="high-score" class="status-value status-value--hs">0</span>
+                        <span id="high-score" class="status-value status-value--hs">—</span>
                     </div>
                     <button id="btn-restart" class="btn-restart" aria-label="<?= t('btn_restart') ?>">↺</button>
                 </div>
@@ -72,15 +72,54 @@ render_header(
                 <?php endif; ?>
             </div>
 
-            <div class="snake-wrapper">
-                <canvas id="snake-canvas" role="img" aria-label="<?= t('game_snake_name') ?>"></canvas>
-                <div id="snake-tutorial" class="snake-tutorial">
-                    <p class="tutorial-text"><?= htmlspecialchars(t('tutorial_snake')) ?></p>
-                    <button id="btn-snake-start" class="tutorial-btn"><?= htmlspecialchars(t('tutorial_snake_btn')) ?></button>
+            <div class="memory-wrapper">
+
+                <div class="memory-stats">
+                    <div class="memory-stat">
+                        <span class="memory-stat-label"><?= htmlspecialchars(t('saper_time')) ?></span>
+                        <span id="mem-timer" class="memory-stat-value">0:00</span>
+                    </div>
+                    <div class="memory-stat">
+                        <span class="memory-stat-label"><?= htmlspecialchars(t('memory_moves')) ?></span>
+                        <span id="mem-moves" class="memory-stat-value">0</span>
+                    </div>
+                    <div class="memory-stat">
+                        <span class="memory-stat-label"><?= htmlspecialchars(t('memory_pairs')) ?></span>
+                        <span id="mem-pairs" class="memory-stat-value">—</span>
+                    </div>
                 </div>
+
+                <div class="memory-grid-wrapper">
+                    <div id="memory-grid" class="memory-grid memory-grid--4"
+                         role="grid" aria-label="<?= htmlspecialchars(t('game_memory_name')) ?>"></div>
+
+                    <div id="memory-tutorial" class="memory-tutorial" role="dialog" aria-modal="true">
+                        <p class="tutorial-text"><?= htmlspecialchars(t('tutorial_memory')) ?></p>
+                        <button id="btn-memory-start" class="tutorial-btn"><?= htmlspecialchars(t('tutorial_memory_btn')) ?></button>
+                    </div>
+
+                    <div id="memory-win" class="memory-win hidden" role="dialog" aria-modal="true">
+                        <div class="memory-win-card">
+                            <p class="memory-win-emoji">🎉</p>
+                            <dl class="memory-win-stats">
+                                <dt><?= htmlspecialchars(t('saper_time')) ?></dt>
+                                <dd id="mem-win-time">—</dd>
+                                <dt><?= htmlspecialchars(t('memory_moves')) ?></dt>
+                                <dd id="mem-win-moves">—</dd>
+                                <dt><?= htmlspecialchars(t('score_label')) ?></dt>
+                                <dd id="mem-win-score">—</dd>
+                                <dt><?= htmlspecialchars(t('saper_best')) ?></dt>
+                                <dd id="mem-win-best">—</dd>
+                            </dl>
+                            <p id="mem-win-bonus" class="memory-win-bonus" style="display:none"><?= htmlspecialchars(t('memory_bonus')) ?></p>
+                            <button id="btn-memory-restart" class="memory-win-btn"><?= htmlspecialchars(t('btn_restart')) ?></button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <?php render_below_game('snake'); ?>
+            <?php render_below_game('memory'); ?>
 
         </section>
 
@@ -104,7 +143,7 @@ render_header(
                 <p class="summary-thanks"><?= t('summary_thanks_msg') ?></p>
 
                 <div class="summary-actions">
-                    <a href="/games/snake/" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/games/memory/" class="btn-play"><?= t('btn_play_again') ?></a>
                     <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
                 </div>
             </div>
@@ -121,7 +160,7 @@ render_header(
                 <h1 class="summary-title"><?= t('inactivity_title') ?></h1>
                 <p class="summary-thanks"><?= t('inactivity_msg') ?></p>
                 <div class="summary-actions">
-                    <a href="/games/snake/" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/games/memory/" class="btn-play"><?= t('btn_play_again') ?></a>
                     <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
                 </div>
             </div>
@@ -133,7 +172,7 @@ render_header(
 
 <script src="/shared/assets/lang.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/lang.js') ?>"></script>
 <script src="/shared/assets/counter.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/counter.js') ?>"></script>
-<script src="/games/snake/game.js?v=<?= filemtime(__DIR__ . '/game.js') ?>"></script>
+<script src="/games/memory/game.js?v=<?= filemtime(__DIR__ . '/game.js') ?>"></script>
 <script src="/shared/assets/session.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/session.js') ?>"></script>
 </body>
 </html>

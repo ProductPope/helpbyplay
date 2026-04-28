@@ -7,12 +7,12 @@ require_once __DIR__ . '/../../shared/layout.php';
 $LANG = get_lang();
 
 render_header(
-    t('game_snake_name') . ' — ' . t('site_title'),
+    t('game_platformer_name') . ' — ' . t('site_title'),
     'page-game',
     $totalSessions,
     $totalPln,
     $LANG,
-    '/games/snake/game.css',
+    '/games/platformer/game.css',
     filemtime(__DIR__ . '/game.css')
 );
 ?>
@@ -72,15 +72,25 @@ render_header(
                 <?php endif; ?>
             </div>
 
-            <div class="snake-wrapper">
-                <canvas id="snake-canvas" role="img" aria-label="<?= t('game_snake_name') ?>"></canvas>
-                <div id="snake-tutorial" class="snake-tutorial">
-                    <p class="tutorial-text"><?= htmlspecialchars(t('tutorial_snake')) ?></p>
-                    <button id="btn-snake-start" class="tutorial-btn"><?= htmlspecialchars(t('tutorial_snake_btn')) ?></button>
+            <div class="platformer-wrapper">
+                <canvas id="plat-canvas" role="img" aria-label="<?= t('game_platformer_name') ?>"></canvas>
+                <div id="plat-tutorial" class="plat-tutorial">
+                    <p class="tutorial-text"><?= htmlspecialchars(t('tutorial_platformer')) ?></p>
+                    <p class="tutorial-hint"><?= htmlspecialchars(t('tutorial_platformer_hint')) ?></p>
+                    <button id="btn-plat-start" class="tutorial-btn"><?= htmlspecialchars(t('tutorial_platformer_btn')) ?></button>
                 </div>
             </div>
 
-            <?php render_below_game('snake'); ?>
+            <!-- Mobile controls (hidden on desktop via CSS) -->
+            <div class="plat-mobile-controls" id="plat-mobile-controls">
+                <div class="plat-ctrl-left">
+                    <button id="btn-plat-left"  class="plat-ctrl-btn" aria-label="Left">◀</button>
+                    <button id="btn-plat-right" class="plat-ctrl-btn" aria-label="Right">▶</button>
+                </div>
+                <button id="btn-plat-jump" class="plat-ctrl-btn plat-ctrl-jump" aria-label="Jump">▲</button>
+            </div>
+
+            <?php render_below_game('platformer'); ?>
 
         </section>
 
@@ -104,7 +114,7 @@ render_header(
                 <p class="summary-thanks"><?= t('summary_thanks_msg') ?></p>
 
                 <div class="summary-actions">
-                    <a href="/games/snake/" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/games/platformer/" class="btn-play"><?= t('btn_play_again') ?></a>
                     <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
                 </div>
             </div>
@@ -121,7 +131,7 @@ render_header(
                 <h1 class="summary-title"><?= t('inactivity_title') ?></h1>
                 <p class="summary-thanks"><?= t('inactivity_msg') ?></p>
                 <div class="summary-actions">
-                    <a href="/games/snake/" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/games/platformer/" class="btn-play"><?= t('btn_play_again') ?></a>
                     <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
                 </div>
             </div>
@@ -133,7 +143,7 @@ render_header(
 
 <script src="/shared/assets/lang.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/lang.js') ?>"></script>
 <script src="/shared/assets/counter.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/counter.js') ?>"></script>
-<script src="/games/snake/game.js?v=<?= filemtime(__DIR__ . '/game.js') ?>"></script>
+<script src="/games/platformer/game.js?v=<?= filemtime(__DIR__ . '/game.js') ?>"></script>
 <script src="/shared/assets/session.js?v=<?= filemtime(__DIR__ . '/../../shared/assets/session.js') ?>"></script>
 </body>
 </html>

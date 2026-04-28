@@ -43,8 +43,17 @@ function render_header(
 <?php
 }
 
-function render_below_game(): void {
+function render_below_game(string $game_id = ''): void {
 ?>
+<?php if ($game_id !== ''): ?>
+    <section class="game-info">
+        <h2><?= htmlspecialchars(t('game_' . $game_id . '_name')) ?></h2>
+        <p><?= htmlspecialchars(t('game_' . $game_id . '_about')) ?></p>
+        <h3><?= htmlspecialchars(t('how_to_play')) ?></h3>
+        <p><?= htmlspecialchars(t('game_' . $game_id . '_tutorial')) ?></p>
+    </section>
+<?php endif; ?>
+
     <section class="game-info-card">
         <h2><?= htmlspecialchars(t('playing_for')) ?> <?= htmlspecialchars(FOUNDATION_NAME) ?></h2>
         <p><?= htmlspecialchars(FOUNDATION_DESC) ?></p>
@@ -54,10 +63,6 @@ function render_below_game(): void {
         <h2><?= htmlspecialchars(t('recommend_title')) ?></h2>
         <p><?= htmlspecialchars(t('recommend_text')) ?></p>
         <a href="https://helpbyplay.com" target="_blank" rel="noopener noreferrer"><?= htmlspecialchars(t('recommend_link')) ?></a>
-    </section>
-
-    <section class="game-info-card game-info-card--note">
-        <p><?= htmlspecialchars(t('ad_value_note')) ?></p>
     </section>
 <?php
 }
@@ -78,6 +83,7 @@ function render_footer(string $lang): void {
                 <button onclick="switchLang('pl')" class="<?= $lang === 'pl' ? 'active' : '' ?>"><?= t('lang_pl') ?></button>
                 <button onclick="switchLang('en')" class="<?= $lang === 'en' ? 'active' : '' ?>"><?= t('lang_en') ?></button>
             </div>
+            <p class="footer-ad-note"><?= htmlspecialchars(t('footer_ad_note')) ?></p>
         </div>
     </footer>
 <?php
