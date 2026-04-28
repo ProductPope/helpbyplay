@@ -44,6 +44,8 @@ function render_header(
 }
 
 function render_below_game(string $game_id = ''): void {
+    $all_games = ['cards', '2048', 'snake', 'saper', 'platformer', 'jumper', 'invaders', 'memory', 'bricks'];
+    $other_games = array_filter($all_games, fn($key) => $key !== $game_id);
 ?>
 <?php if ($game_id !== ''): ?>
     <section class="game-info">
@@ -51,6 +53,16 @@ function render_below_game(string $game_id = ''): void {
         <p><?= htmlspecialchars(t('game_' . $game_id . '_about')) ?></p>
         <h3><?= htmlspecialchars(t('how_to_play')) ?></h3>
         <p><?= htmlspecialchars(t('game_' . $game_id . '_tutorial')) ?></p>
+
+        <h3 class="other-games-heading"><?= htmlspecialchars(t('other_games')) ?></h3>
+        <div class="other-games-scroll">
+<?php foreach ($other_games as $key): ?>
+            <a href="/games/<?= htmlspecialchars($key) ?>/" class="other-games-tile">
+                <span class="other-games-tile-letter"><?= htmlspecialchars(mb_substr(t('game_' . $key . '_name'), 0, 1)) ?></span>
+                <span class="other-games-tile-name"><?= htmlspecialchars(t('game_' . $key . '_name')) ?></span>
+            </a>
+<?php endforeach; ?>
+        </div>
     </section>
 <?php endif; ?>
 
