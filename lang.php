@@ -72,7 +72,7 @@ $TRANSLATIONS = [
         'tutorial_invaders_btn'=> 'START',
         'game_bricks_name'         => 'Bricks',
         'game_bricks_desc'         => 'Klasyczna gra w rozbijanie cegieł. Odbijaj piłkę i zniszcz wszystko!',
-        'tutorial_bricks'          => 'Poruszaj paletką aby odbijać piłkę. Zniszcz wszystkie cegły. Łap power-upy dla bonusów!',
+        'tutorial_bricks'          => 'Mysz lub strzałki – paletka. Klik lub Spacja – startuj piłkę. Na telefonie: dotyk. Zniszcz wszystkie cegły i łap power-upy!',
         'tutorial_bricks_btn'      => 'START',
         'bricks_game_over_title'   => 'Koniec gry',
 
@@ -230,7 +230,7 @@ $TRANSLATIONS = [
         'tutorial_invaders_btn'=> 'START',
         'game_bricks_name'         => 'Bricks',
         'game_bricks_desc'         => 'Classic brick breaker. Bounce the ball and destroy everything!',
-        'tutorial_bricks'          => 'Move the paddle to bounce the ball. Destroy all bricks. Catch power-ups for bonuses!',
+        'tutorial_bricks'          => 'Mouse or arrow keys – paddle. Click or Space – launch ball. On mobile: touch. Destroy all bricks and catch power-ups!',
         'tutorial_bricks_btn'      => 'START',
         'bricks_game_over_title'   => 'Game Over',
 

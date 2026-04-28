@@ -371,7 +371,7 @@ function triggerLevelClear(now) {
     stopLoop();
 
     const el = document.getElementById('bricks-levelclear');
-    if (el) el.classList.remove('hidden');
+    if (el) el.classList.add('active');
 
     const titleEl = document.getElementById('bricks-level-text');
     if (titleEl) {
@@ -398,7 +398,7 @@ function triggerGameOver() {
     updateHUDDisplay();
 
     const el = document.getElementById('bricks-gameover');
-    if (el) el.classList.remove('hidden');
+    if (el) el.classList.add('active');
     const scoreEl = document.getElementById('bricks-final-score');
     if (scoreEl) scoreEl.textContent = score;
     const hsEl = document.getElementById('bricks-highscore');
@@ -628,13 +628,15 @@ function drawParticles() {
 
 function drawPrompt() {
     const lang = getLang();
-    const msg  = lang === 'pl' ? 'Dotknij / Spacja aby wypuścić piłkę' : 'Tap / Space to launch ball';
+    const line1 = lang === 'pl' ? 'Kliknij / Dotknij / Spacja' : 'Click / Tap / Space';
+    const line2 = lang === 'pl' ? 'aby wypuścić piłkę' : 'to launch the ball';
     ctx.save();
     ctx.font         = '13px system-ui,sans-serif';
     ctx.fillStyle    = 'rgba(255,255,255,0.65)';
     ctx.textAlign    = 'center';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(msg, CW / 2, PAD_Y - 18);
+    ctx.fillText(line1, CW / 2, PAD_Y - 30);
+    ctx.fillText(line2, CW / 2, PAD_Y - 14);
     ctx.restore();
 }
 
@@ -671,9 +673,7 @@ function lighten(hex, amt) {
 function hideAllOverlays() {
     ['bricks-tutorial', 'bricks-levelclear', 'bricks-gameover'].forEach(function(id) {
         const el = document.getElementById(id);
-        if (!el) return;
-        el.classList.remove('active');
-        el.classList.add('hidden');
+        if (el) el.classList.remove('active');
     });
 }
 

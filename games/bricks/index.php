@@ -76,20 +76,20 @@ render_header(
                 <canvas id="bricks-canvas" role="img" aria-label="<?= t('game_bricks_name') ?>"></canvas>
 
                 <!-- Tutorial overlay -->
-                <div id="bricks-tutorial" class="bricks-overlay hidden">
+                <div id="bricks-tutorial" class="bricks-overlay">
                     <p class="bricks-overlay-title"><?= htmlspecialchars(t('game_bricks_name')) ?></p>
                     <p class="bricks-overlay-text"><?= htmlspecialchars(t('tutorial_bricks')) ?></p>
                     <button id="btn-bricks-start" class="bricks-btn"><?= htmlspecialchars(t('tutorial_bricks_btn')) ?></button>
                 </div>
 
                 <!-- Level clear overlay -->
-                <div id="bricks-levelclear" class="bricks-overlay hidden">
+                <div id="bricks-levelclear" class="bricks-overlay">
                     <p id="bricks-level-text" class="bricks-overlay-title"></p>
                     <div id="bricks-countdown" class="bricks-countdown">3</div>
                 </div>
 
                 <!-- Game over overlay -->
-                <div id="bricks-gameover" class="bricks-overlay hidden">
+                <div id="bricks-gameover" class="bricks-overlay">
                     <p class="bricks-overlay-title"><?= htmlspecialchars(t('bricks_game_over_title')) ?></p>
                     <div id="bricks-final-score" class="bricks-overlay-score">0</div>
                     <p id="bricks-highscore" class="bricks-overlay-hs">0</p>
