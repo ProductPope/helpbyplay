@@ -62,6 +62,28 @@ April 2026: AI tools changed what one person can build. And one more thing chang
 
 ---
 
+## Contributing
+
+The platform is open for contributions in four areas:
+
+**New games** — Each game lives in `games/<name>/` with `game.js`, `game.css`, and `index.php`. A new game must define `GAME_CONFIG` and `initGame()` — the shared `session.js` handles the session lifecycle. See any existing game for the pattern. Mobile-first (360px base) is a hard requirement.
+
+**Translation review (PL/EN)** — All UI strings are in `lang.php`. Both languages need a native-eye pass for tone, consistency, and anything that reads like machine translation.
+
+**Bounty hunting** — Edge cases, device-specific bugs, broken flows. Mobile Safari and older Android WebView are the priority targets.
+
+**QA testing** — Full session flow on real devices: load → play → session end → summary. Verify earnings counter, inactivity timeout, and ad placeholder layout across browsers.
+
+### Ground rules
+
+- **Small, focused PRs.** One concern per PR. Don't bundle a new game with a shared layout change.
+- **Architecture changes require an issue first.** If you're touching `shared/`, `session.js`, `counter.js`, or `layout.php`, open an issue and describe the why before writing code. These files affect every game on every instance.
+- **No external libraries.** No build tools. Vanilla JS + plain CSS only — the platform runs on shared hosting.
+
+Stack: PHP 8.1 · Vanilla JS · Plain CSS · MariaDB 10.4. No frameworks, intentionally.
+
+---
+
 ## Contact
 
 Want to join the platform or self-host an instance? [Open an issue](https://github.com/ProductPope/helpbyplay/issues) or visit [helpbyplay.com](https://helpbyplay.com).
