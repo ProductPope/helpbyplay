@@ -88,6 +88,7 @@ function initGame() {
     canvas.height = CH;
     brickW        = (CW - 2 * BRICK_PAD_X - (BRICK_COLS - 1) * BRICK_GAP_X) / BRICK_COLS;
     highScore     = parseInt(localStorage.getItem(HS_KEY) || '0', 10);
+    particles     = [];
 
     setupInputHandlers();
     updateHUDDisplay();
