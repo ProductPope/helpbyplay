@@ -42,6 +42,9 @@
     /* Touch targets — WCAG 2.5.5 minimum 48px */
     --touch-min: 48px;
 
+    /* Status bar height — used for sticky ad-wrapper offset */
+    --status-bar-h: 48px;
+
     /* Game grid — fills 360px container minus 2×16px padding = 328px */
     --grid-gap:  3px;
     --grid-cols: 7;
@@ -62,7 +65,7 @@ body {
     min-height:       100vh;
     display:          flex;
     flex-direction:   column;
-    overflow-x:       hidden;
+    overflow-x:       clip; /* clip, not hidden — hidden creates scroll container and breaks position:sticky */
 }
 
 /* ===== Container ===== */
@@ -722,6 +725,23 @@ main.container {
     .btn-play,
     .btn-secondary,
     .btn-end-session   { transition: none; }
+}
+
+/* ===== Sticky status bar + ad on mobile ===== */
+@media (max-width: 767px) {
+    .status-bar {
+        position: sticky;
+        top:      0;
+        z-index:  100;
+        /* background-color and box-shadow already defined in base rule */
+    }
+
+    .ad-wrapper {
+        position:         sticky;
+        top:              calc(var(--status-bar-h) + var(--space-sm));
+        z-index:          99;
+        background-color: var(--color-background);
+    }
 }
 
 /* ===== min-width: 480px ===== */
