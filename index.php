@@ -332,7 +332,7 @@ render_header(
                  data-ad-slot="<?php echo htmlspecialchars(ADSENSE_SLOT); ?>"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <script>if(localStorage.getItem('hbp_cookie_consent')==='accepted'){(adsbygoogle=window.adsbygoogle||[]).push({});}</script>
             <?php else: ?>
             <div class="ad-placeholder">
                 <span class="ad-placeholder-icon">📢</span>

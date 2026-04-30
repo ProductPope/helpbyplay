@@ -90,6 +90,8 @@ function render_footer(string $lang): void {
                 <a href="https://helpbyplay.com" target="_blank" rel="noopener"><?= t('footer_about_link') ?></a>
                 &middot;
                 <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener">GitHub</a>
+                &middot;
+                <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener"><?= t('privacy_policy') ?></a>
             </p>
             <div class="lang-switcher">
                 <button onclick="switchLang('pl')" class="<?= $lang === 'pl' ? 'active' : '' ?>"><?= t('lang_pl') ?></button>
@@ -98,5 +100,7 @@ function render_footer(string $lang): void {
             <p class="footer-ad-note"><?= htmlspecialchars(t('footer_ad_note')) ?></p>
         </div>
     </footer>
+    <script>window.HBP_CONSENT_STRINGS={text:<?= json_encode(t('cookie_consent_text')) ?>,accept:<?= json_encode(t('cookie_accept')) ?>,decline:<?= json_encode(t('cookie_decline')) ?>};</script>
+    <script src="/shared/assets/cookie-consent.js?v=<?= @filemtime(__DIR__ . '/assets/cookie-consent.js') ?>"></script>
 <?php
 }

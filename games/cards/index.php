@@ -54,13 +54,15 @@ render_header(
                 <script>(function() {
                     var ins = document.getElementById('hbp-ad-ins');
                     var fallback = document.getElementById('hbp-ad-fallback');
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                    setTimeout(function() {
-                        if (ins.children.length === 0) {
-                            ins.style.display = 'none';
-                            fallback.style.display = '';
-                        }
-                    }, 2000);
+                    if (localStorage.getItem('hbp_cookie_consent') === 'accepted') {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                        setTimeout(function() {
+                            if (ins.children.length === 0) {
+                                ins.style.display = 'none';
+                                fallback.style.display = '';
+                            }
+                        }, 2000);
+                    }
                 })();</script>
                 <?php else: ?>
                 <div class="ad-placeholder">

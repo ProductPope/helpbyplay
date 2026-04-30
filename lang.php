@@ -160,6 +160,12 @@ $TRANSLATIONS = [
         'game_invaders_tutorial'   => 'Poruszaj statkiem przyciskami lewo prawo. Przycisk strzału niszczy kosmitów. Unikaj ich pocisków. Zestrzelenie całego rzędu dodaje nowy.',
         'game_bricks_about'        => 'Klasyczna gra w rozbijanie cegieł z power-upami i wieloma poziomami. Odbijaj piłkę paletką i niszcz kolorowe cegły. Każdy poziom jest trudniejszy od poprzedniego.',
         'game_bricks_tutorial'     => 'Przesuń palcem po ekranie aby poruszać paletką. Odbij piłkę i zniszcz wszystkie cegły. Łap spadające power-upy. Nie pozwól piłce spaść!',
+
+        // Cookie consent
+        'cookie_consent_text'  => 'Ta strona używa plików cookie do wyświetlania reklam Google AdSense. Więcej informacji w <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce Prywatności Help By Play</a>.',
+        'cookie_accept'        => 'Akceptuję',
+        'cookie_decline'       => 'Odrzucam',
+        'privacy_policy'       => 'Polityka Prywatności',
     ],
 
     'en' => [
@@ -319,6 +325,12 @@ $TRANSLATIONS = [
         'game_invaders_tutorial'   => 'Move your ship with left right buttons. Fire button destroys invaders. Dodge their shots. Destroying a full row adds a new one.',
         'game_bricks_about'        => 'Classic brick breaker with power-ups and multiple levels. Bounce the ball with the paddle and destroy colored bricks. Each level is harder than the last.',
         'game_bricks_tutorial'     => 'Slide your finger to move the paddle. Bounce the ball and destroy all bricks. Catch falling power-ups. Don\'t let the ball fall!',
+
+        // Cookie consent
+        'cookie_consent_text'  => 'This site uses cookies for Google AdSense advertising. Learn more in the <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Help By Play Privacy Policy</a>.',
+        'cookie_accept'        => 'Accept',
+        'cookie_decline'       => 'Decline',
+        'privacy_policy'       => 'Privacy Policy',
     ],
 ];
 
