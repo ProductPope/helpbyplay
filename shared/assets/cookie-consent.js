@@ -17,7 +17,10 @@
 
     function pushAds() {
         document.querySelectorAll('ins.adsbygoogle').forEach(function (ins) {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
+            if (ins.getAttribute('data-ad-status')) return;
+            try {
+                (window.adsbygoogle = window.adsbygoogle || []).push({});
+            } catch (e) {}
         });
     }
 
@@ -69,10 +72,12 @@
 
         var btnAccept = document.createElement('button');
         btnAccept.id = 'hbp-cookie-accept';
+        btnAccept.setAttribute('type', 'button');
         btnAccept.textContent = strings.accept || 'Accept';
 
         var btnDecline = document.createElement('button');
         btnDecline.id = 'hbp-cookie-decline';
+        btnDecline.setAttribute('type', 'button');
         btnDecline.textContent = strings.decline || 'Decline';
 
         btnAccept.addEventListener('click', function () {
