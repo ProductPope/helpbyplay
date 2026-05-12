@@ -76,6 +76,17 @@ $TRANSLATIONS = [
         'tutorial_bricks_btn'      => 'START',
         'bricks_game_over_title'   => 'Koniec gry',
 
+        // Stats page
+        'nav_stats'            => 'Statystyki',
+        'stats_page_title'     => 'Statystyki platformy',
+        'stats_today'          => 'Dzisiaj',
+        'stats_week'           => 'Ten tydzień',
+        'stats_alltime'        => 'Od początku projektu',
+        'stats_sessions_label' => 'sesji',
+        'stats_players_label'  => 'unikalnych graczy',
+        'stats_avg_label'      => 'Śr. czas sesji',
+        'stats_link_text'      => 'Statystyki platformy →',
+
         // Game screen
         'game_title'           => 'Graj i pomagaj!',
         'game_story'           => 'Pomysł ma ponad 11 lat. Gry online, reklamy, fundacje — byliśmy blisko. Zabrakło reklamodawcy, projekt upadł. Kwiecień 2026: AI zmienił zasady. AdSense płaci bezpośrednio fundacji — bez pośrednika. Help By Play wraca, tym razem inaczej.',
@@ -160,6 +171,10 @@ $TRANSLATIONS = [
         'game_invaders_tutorial'   => 'Poruszaj statkiem przyciskami lewo prawo. Przycisk strzału niszczy kosmitów. Unikaj ich pocisków. Zestrzelenie całego rzędu dodaje nowy.',
         'game_bricks_about'        => 'Klasyczna gra w rozbijanie cegieł z power-upami i wieloma poziomami. Odbijaj piłkę paletką i niszcz kolorowe cegły. Każdy poziom jest trudniejszy od poprzedniego.',
         'game_bricks_tutorial'     => 'Przesuń palcem po ekranie aby poruszać paletką. Odbij piłkę i zniszcz wszystkie cegły. Łap spadające power-upy. Nie pozwól piłce spaść!',
+        'game_runner_name'         => 'Flappy Runner',
+        'game_runner_desc'         => 'Endless runner. Skacz przez przeszkody i przeżyj jak najdłużej!',
+        'game_runner_about'        => 'Side-scrollingowy endless runner. Postać biegnie automatycznie — Ty tylko skaczesz przez przeszkody. Podwójny skok pozwala ratować się w ostatniej chwili. Im dłużej przeżyjesz, tym szybciej idzie!',
+        'game_runner_tutorial'     => 'Dotknij ekran lub naciśnij Spację aby skoczyć. Możesz skoczyć dwa razy z rzędu. Unikaj czerwonych bloków. Im dłużej grasz tym szybciej się poruszasz!',
 
         // Cookie consent
         'cookie_consent_text'  => 'Ta strona używa plików cookie do wyświetlania reklam Google AdSense. Więcej informacji w <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce Prywatności Help By Play</a>.',
@@ -240,6 +255,17 @@ $TRANSLATIONS = [
         'tutorial_bricks'          => 'Mouse or arrow keys – paddle. Click or Space – launch ball. On mobile: touch. Destroy all bricks and catch power-ups!',
         'tutorial_bricks_btn'      => 'START',
         'bricks_game_over_title'   => 'Game Over',
+
+        // Stats page
+        'nav_stats'            => 'Statistics',
+        'stats_page_title'     => 'Platform Statistics',
+        'stats_today'          => 'Today',
+        'stats_week'           => 'This week',
+        'stats_alltime'        => 'Since the beginning',
+        'stats_sessions_label' => 'sessions',
+        'stats_players_label'  => 'unique players',
+        'stats_avg_label'      => 'Avg. session length',
+        'stats_link_text'      => 'Platform statistics →',
 
         // Game screen
         'game_title'           => 'Play and help!',
@@ -325,6 +351,10 @@ $TRANSLATIONS = [
         'game_invaders_tutorial'   => 'Move your ship with left right buttons. Fire button destroys invaders. Dodge their shots. Destroying a full row adds a new one.',
         'game_bricks_about'        => 'Classic brick breaker with power-ups and multiple levels. Bounce the ball with the paddle and destroy colored bricks. Each level is harder than the last.',
         'game_bricks_tutorial'     => 'Slide your finger to move the paddle. Bounce the ball and destroy all bricks. Catch falling power-ups. Don\'t let the ball fall!',
+        'game_runner_name'         => 'Flappy Runner',
+        'game_runner_desc'         => 'Endless runner. Jump over obstacles and survive as long as you can!',
+        'game_runner_about'        => 'Side-scrolling endless runner. Your character runs automatically — you just jump over obstacles. Double jump can save you at the last moment. The longer you survive, the faster it gets!',
+        'game_runner_tutorial'     => 'Tap the screen or press Space to jump. You can jump twice in a row. Avoid red blocks. The longer you play, the faster it gets!',
 
         // Cookie consent
         'cookie_consent_text'  => 'This site uses cookies for Google AdSense advertising. Learn more in the <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Help By Play Privacy Policy</a>.',

@@ -10,13 +10,13 @@ const HS_KEY  = 'hbp_highscore_invaders';
 
 // ── Formation constants ───────────────────────────────────────────────────────
 const COLS     = 10;
-const ROWS     = 3;
+const ROWS     = 5;
 const INV_SIZE = 18;
 const INV_GAP  = 10;
 const INV_STEP = INV_SIZE + INV_GAP;   // 28 px per cell
 const FORM_W   = COLS * INV_STEP - INV_GAP; // 270 px
 
-const ROW_COLORS = ['#9c27b0', '#ff9800', '#4caf50']; // top→purple, mid→orange, bot→green
+const ROW_COLORS = ['#9c27b0', '#ff9800', '#4caf50']; // cycles: purple→orange→green
 
 // ── Bullet / UFO constants ────────────────────────────────────────────────────
 const PB_W = 3, PB_H = 10, PB_SPD = 8;
@@ -35,7 +35,7 @@ let FORM_TOP, FLOOR_Y;
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let gameState;
-let score, lives, rowsAdded;
+let score, lives, rowsAdded, gameStartTs;
 let player, playerBullet, enemyBullets;
 let invaders, currentBottomRowGroup;
 let ufo, ufoTimeout;
@@ -62,7 +62,8 @@ function initGame() {
 
     const wrap = canvas.parentElement;
     CW = Math.max(280, Math.min(wrap.clientWidth || (window.innerWidth - 32), 480));
-    CH = Math.min(Math.round(CW * 1.45), 600);
+    const maxH = Math.max(320, window.innerHeight - 260); // 260 = header+statusbar+ad+controls
+    CH = Math.min(Math.round(CW * 1.45), 600, maxH);
     canvas.width  = CW;
     canvas.height = CH;
 
@@ -86,7 +87,7 @@ function startGame() {
     clearTimeout(ufoTimeout);
     clearTimeout(fireTimeout);
 
-    score = 0; lives = 3; rowsAdded = 0;
+    score = 0; lives = 3; rowsAdded = 0; gameStartTs = performance.now();
     restartBtn  = null;
     newRowMsgTs = 0;
     gameState   = 'playing';
@@ -207,8 +208,11 @@ function finishEntry() {
 // ── Timers ─────────────────────────────────────────────────────────────────────
 function scheduleEnemyFire() {
     clearTimeout(fireTimeout);
-    const delay = Math.max(150,
-        Math.round(FIRE_BASE_MS * Math.pow(0.8, rowsAdded)) + Math.random() * 400
+    const elapsed  = (performance.now() - gameStartTs) / 1000; // seconds
+    const timeMult = Math.max(0.2, 1 - elapsed / 80);          // 0→1.0, 80s→0.2
+    const rowMult  = Math.pow(0.82, rowsAdded);
+    const delay    = Math.max(120,
+        Math.round(FIRE_BASE_MS * timeMult * rowMult) + Math.random() * 300
     );
     fireTimeout = setTimeout(function() {
         if (gameState === 'playing') { enemyShoot(); scheduleEnemyFire(); }
@@ -228,7 +232,9 @@ function scheduleUfo() {
 }
 
 function enemyShoot() {
-    if (enemyBullets.length >= 3 + Math.min(rowsAdded, 3)) return;
+    const elapsed  = (performance.now() - gameStartTs) / 1000;
+    const maxBulls = 3 + Math.min(rowsAdded, 3) + Math.floor(elapsed / 20);
+    if (enemyBullets.length >= Math.min(maxBulls, 8)) return;
     const alive = invaders.filter(i => i.alive);
     if (!alive.length) return;
 
