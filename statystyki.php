@@ -93,12 +93,12 @@ $v09_hours   = 5050;
             <div class="stat-card stat-card--alltime">
                 <h2 class="stat-card-period"><?= htmlspecialchars(t('stats_alltime')) ?></h2>
                 <div class="stat-row">
-                    <span class="stat-value stat-value--pln"><?= number_format($totalPln, 4, ',', ' ') ?></span>
-                    <span class="stat-label"><?= htmlspecialchars(t('currency')) ?></span>
+                    <span class="stat-value"><?= number_format($players, 0, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('stats_sessions_label')) ?></span>
                 </div>
                 <div class="stat-row">
-                    <span class="stat-value"><?= number_format($players, 0, ',', ' ') ?></span>
-                    <span class="stat-label"><?= htmlspecialchars(t('stats_players_label')) ?></span>
+                    <span class="stat-value stat-value--pln"><?= number_format($totalPln, 4, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('currency')) ?></span>
                 </div>
             </div>
 
