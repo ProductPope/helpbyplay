@@ -3,6 +3,7 @@
 // Requires config.php and lang.php loaded before calling.
 
 require_once __DIR__ . '/ads.php';
+require_once __DIR__ . '/display_offset.php'; // remove for new NGO instances
 
 function render_header(
     string $pageTitle,
@@ -38,7 +39,7 @@ function render_header(
         <div class="container">
             <a href="/index.php" class="header-home">Help By <span class="logo-play">Play</span></a>
             <a href="/statystyki.php" class="header-nav-link"><?= t('nav_stats') ?></a>
-            <a href="/statystyki.php" class="header-stats">👤 <?= number_format($totalSessions, 0, ',', ' ') ?> · <?= number_format($totalPln, 4, ',', ' ') ?> <?= t('currency') ?></a>
+            <a href="/statystyki.php" class="header-stats">👤 <?= number_format($totalSessions + DISPLAY_SESSIONS_OFFSET, 0, ',', ' ') ?> · <?= number_format($totalPln + DISPLAY_PLN_OFFSET, 4, ',', ' ') ?> <?= t('currency') ?></a>
         </div>
     </header>
 
