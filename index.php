@@ -35,9 +35,9 @@ render_header(
         </div>
 
         <div class="stats-bar">
-            <span class="stats-item">👥 <strong class="stats-number"><?= number_format($totalSessions, 0, ',', ' ') ?></strong> <?= t('stat_players') ?></span>
+            <span class="stats-item">👥 <strong class="stats-number"><?= number_format($totalSessions + DISPLAY_SESSIONS_OFFSET, 0, ',', ' ') ?></strong> <?= t('stat_players') ?></span>
             <span class="stats-dot" aria-hidden="true">·</span>
-            <span class="stats-item">💰 <strong class="stats-number"><?= number_format($totalPln, 4, ',', ' ') ?></strong> <?= t('currency') ?> <?= t('stat_raised') ?></span>
+            <span class="stats-item">💰 <strong class="stats-number"><?= number_format($totalPln + DISPLAY_PLN_OFFSET, 0, ',', ' ') ?></strong> <?= t('currency') ?> <?= t('stat_raised') ?></span>
             <span class="stats-dot" aria-hidden="true">·</span>
             <a href="/statystyki.php" class="stats-link"><?= t('stats_link_text') ?></a>
         </div>
