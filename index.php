@@ -79,23 +79,7 @@ render_header(
             <a href="https://github.com/ProductPope/helpbyplay" target="_blank" rel="noopener"><?= t('about_link') ?></a>
         </p>
 
-        <!-- ADSENSE_PLACEHOLDER -->
-        <div class="ad-wrapper">
-            <?php if (defined('ADSENSE_CLIENT') && ADSENSE_CLIENT !== '' && defined('ADSENSE_SLOT') && ADSENSE_SLOT !== ''): ?>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="<?php echo htmlspecialchars(ADSENSE_CLIENT); ?>"
-                 data-ad-slot="<?php echo htmlspecialchars(ADSENSE_SLOT); ?>"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>if(localStorage.getItem('hbp_cookie_consent')==='accepted'){(adsbygoogle=window.adsbygoogle||[]).push({});}</script>
-            <?php else: ?>
-            <div class="ad-placeholder">
-                <span class="ad-placeholder-icon">📢</span>
-                <span class="ad-placeholder-text"><?= t('ad_placeholder') ?></span>
-            </div>
-            <?php endif; ?>
-        </div>
+        <?php render_ad_slot(); ?>
 
         <section class="how-it-works">
             <h2><?= t('how_it_works_title') ?></h2>

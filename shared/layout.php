@@ -2,6 +2,8 @@
 // Shared page layout — render_header() and render_footer().
 // Requires config.php and lang.php loaded before calling.
 
+require_once __DIR__ . '/ads.php';
+
 function render_header(
     string $pageTitle,
     string $bodyClass,
@@ -16,14 +18,9 @@ function render_header(
 <!DOCTYPE html>
 <html lang="<?= htmlspecialchars($lang) ?>">
 <head>
-    <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js"></script>
-    <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js"></script>
-    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-    <script>
-        window.ezstandalone = window.ezstandalone || {};
-        ezstandalone.cmd = ezstandalone.cmd || [];
-    </script>
-    <script src="//ezoicanalytics.com/analytics.js"></script>
+<?php if (defined('AD_PROVIDER') && AD_PROVIDER === 'adsense' && defined('ADSENSE_CLIENT') && ADSENSE_CLIENT !== ''): ?>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<?= htmlspecialchars(ADSENSE_CLIENT) ?>" crossorigin="anonymous"></script>
+<?php endif; ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>

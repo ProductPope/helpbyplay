@@ -40,39 +40,7 @@ render_header(
 
             <div id="ad-wait-msg"><?= t('ad_wait_msg') ?></div>
 
-            <!-- ADSENSE_PLACEHOLDER -->
-            <div class="ad-wrapper">
-                <?php if (defined('ADSENSE_CLIENT') && ADSENSE_CLIENT !== '' && defined('ADSENSE_SLOT') && ADSENSE_SLOT !== ''): ?>
-                <ins id="hbp-ad-ins" class="adsbygoogle"
-                     style="display:block;width:100%;height:80px"
-                     data-ad-client="<?php echo htmlspecialchars(ADSENSE_CLIENT); ?>"
-                     data-ad-slot="<?php echo htmlspecialchars(ADSENSE_SLOT); ?>"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <div id="hbp-ad-fallback" class="ad-placeholder" style="display:none">
-                    <span class="ad-placeholder-icon">📢</span>
-                    <span class="ad-placeholder-text"><?= t('ad_placeholder') ?></span>
-                </div>
-                <script>(function() {
-                    var ins = document.getElementById('hbp-ad-ins');
-                    var fallback = document.getElementById('hbp-ad-fallback');
-                    if (localStorage.getItem('hbp_cookie_consent') === 'accepted') {
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                        setTimeout(function() {
-                            if (ins.children.length === 0) {
-                                ins.style.display = 'none';
-                                fallback.style.display = '';
-                            }
-                        }, 2000);
-                    }
-                })();</script>
-                <?php else: ?>
-                <div class="ad-placeholder">
-                    <span class="ad-placeholder-icon">📢</span>
-                    <span class="ad-placeholder-text"><?= t('ad_placeholder') ?></span>
-                </div>
-                <?php endif; ?>
-            </div>
+            <?php render_ad_slot(); ?>
 
             <div class="memory-wrapper">
 

@@ -165,16 +165,18 @@ main.container {
 .page-index main.container { gap: var(--space-xl); }
 .page-game  main.container { gap: 0; padding-top: var(--space-md); }
 
-/* ===== AdSense wrapper ===== */
+/* ===== Ad wrapper ===== */
 .ad-wrapper {
-    width:    100%;
-    height:   80px;
-    overflow: hidden;
+    width:      100%;
+    min-height: 100px;
+    overflow:   hidden;
 }
+
+.ad-slot-desktop { display: none; }
 
 .ad-placeholder {
     width:           100%;
-    height:          80px;
+    min-height:      100px;
     margin:          0 auto;
     background:      var(--color-surface);
     border:          2px dashed var(--color-border);
@@ -679,6 +681,10 @@ main.container {
 
 @media (min-width: 768px) {
     .foundation-banner { font-size: 24px; }
+    .ad-wrapper    { max-width: 728px; min-height: 90px; margin: 0 auto; }
+    .ad-placeholder { min-height: 90px; }
+    .ad-slot-mobile  { display: none; }
+    .ad-slot-desktop { display: block; }
 }
 
 /* ===== Foundation section (game pages — under board) ===== */

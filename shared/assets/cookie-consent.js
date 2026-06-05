@@ -13,14 +13,21 @@
         document.querySelectorAll('ins.adsbygoogle').forEach(function (ins) {
             ins.style.display = 'none';
         });
+        document.querySelectorAll('.ad-custom-slot').forEach(function (el) {
+            el.style.display = 'none';
+        });
     }
 
     function pushAds() {
         document.querySelectorAll('ins.adsbygoogle').forEach(function (ins) {
+            ins.style.display = 'block';
             if (ins.getAttribute('data-ad-status')) return;
             try {
                 (window.adsbygoogle = window.adsbygoogle || []).push({});
             } catch (e) {}
+        });
+        document.querySelectorAll('.ad-custom-slot').forEach(function (el) {
+            el.style.display = '';
         });
     }
 
