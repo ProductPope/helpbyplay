@@ -14,6 +14,9 @@ CREATE TABLE IF NOT EXISTS sessions (
 
 CREATE TABLE IF NOT EXISTS stats (
     id             INT UNSIGNED  NOT NULL DEFAULT 1,
+    -- total_sessions counts unique device_ids with at least one completed session,
+    -- NOT total session count. Incremented once per device on first completion.
+    -- TODO: rename to total_players for clarity (requires ALTER TABLE migration).
     total_sessions INT UNSIGNED  NOT NULL DEFAULT 0,
     total_pln      DECIMAL(14,4) NOT NULL DEFAULT 0.0000,
     PRIMARY KEY (id)

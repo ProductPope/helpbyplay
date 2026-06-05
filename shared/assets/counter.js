@@ -2,7 +2,8 @@
 // Rate: 0.001 PLN per 10 seconds = 0.0001 PLN per second.
 // Pauses after 10s of inactivity. Dispatches auto-end after 600s inactivity.
 // Dispatches heartbeat every 30 active seconds.
-// Also pauses when no AdSense ad is detected (checked every 5s).
+// For AdSense provider: pauses until ad fills (checked every 5s).
+// For other providers (custom, placeholder): counter runs without ad gate.
 
 const PLN_PER_SECOND         = 0.0001;
 const INACTIVITY_PAUSE_MS    = 10000;   // 10s  → pause counter + grey display
@@ -21,12 +22,11 @@ let adWaitMsgTimer       = null;
 
 function isAdVisible() {
     const ins = document.querySelector('ins.adsbygoogle');
-    if (!ins) return false;
+    if (!ins) return true;  // non-AdSense provider — no ad gate
     const status = ins.getAttribute('data-ad-status');
     if (status === 'filled')   return true;
     if (status === 'unfilled') return false;
-    // AdSense still loading — treat as not ready
-    return false;
+    return false; // AdSense still loading
 }
 
 function setAdWaitMsg(visible) {
