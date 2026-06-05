@@ -924,6 +924,7 @@ main.container {
     .stats-grid { flex-direction: row; flex-wrap: wrap; }
     .stat-card  { flex: 1; min-width: 180px; }
     .stat-card--alltime { flex-basis: 100%; }
+    .page-stats .stat-card--alltime { flex-basis: auto; }
 }
 
 .stats-era-current-label {

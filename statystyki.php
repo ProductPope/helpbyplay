@@ -100,10 +100,6 @@ $v09_hours   = 5050;
                     <span class="stat-value"><?= number_format($players, 0, ',', ' ') ?></span>
                     <span class="stat-label"><?= htmlspecialchars(t('stats_players_label')) ?></span>
                 </div>
-                <div class="stat-row">
-                    <span class="stat-value"><?= htmlspecialchars($avg_formatted) ?></span>
-                    <span class="stat-label"><?= htmlspecialchars(t('stats_avg_label')) ?></span>
-                </div>
             </div>
 
         </div>
