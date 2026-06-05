@@ -1,6 +1,5 @@
 <?php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
 
 require_once __DIR__ . '/../config.php';
 
@@ -21,6 +20,8 @@ if (strpos($contentType, 'application/json') !== false) {
 $sessionId   = isset($body['session_id'])   ? (int)    $body['session_id']   : 0;
 $durationSec = isset($body['duration_sec']) ? (int)    $body['duration_sec'] : 0;
 $type        = isset($body['type'])         ? (string) $body['type']         : 'end';
+
+$durationSec = min($durationSec, 3600);
 
 if ($sessionId <= 0 || $durationSec < 0) {
     http_response_code(400);
