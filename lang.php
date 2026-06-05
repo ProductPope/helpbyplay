@@ -90,7 +90,7 @@ $TRANSLATIONS = [
 
         // Game screen
         'game_title'           => 'Graj i pomagaj!',
-        'game_story'           => 'Pomysł ma ponad 11 lat. Gry online, reklamy, fundacje — byliśmy blisko. Zabrakło reklamodawcy, projekt upadł. Kwiecień 2026: AI zmienił zasady. AdSense płaci bezpośrednio fundacji — bez pośrednika. Help By Play wraca, tym razem inaczej.',
+        'game_story'           => 'Pomysł ma ponad 11 lat. Gry online, reklamy, fundacje — byliśmy blisko. Zabrakło reklamodawcy, projekt upadł. Kwiecień 2026: AI zmienił zasady. Reklamy płacą bezpośrednio fundacji — bez pośrednika. Help By Play wraca, tym razem inaczej.',
         'session_earned_label' => 'Twoja sesja zebrała',
 
         // Summary screen
@@ -121,10 +121,10 @@ $TRANSLATIONS = [
         'btn_restart'          => 'Nowa plansza',
 
         // Ad placeholder
-        'ad_placeholder'       => 'Tu pojawi się reklama Google AdSense',
+        'ad_placeholder'       => 'Tu pojawi się reklama',
 
         // About blurb
-        'about_text'           => 'Help By Play to inicjatywa społecznościowa która łączy granie z pomaganiem. Grasz bezpłatnie, wyświetlają się reklamy, przychód trafia bezpośrednio na konto tej fundacji przez Google AdSense. Projekt jest open source — kod jest publiczny i każdy może sprawdzić jak działa.',
+        'about_text'           => 'Help By Play to inicjatywa społecznościowa która łączy granie z pomaganiem. Grasz bezpłatnie, wyświetlają się reklamy, przychód trafia bezpośrednio na konto tej fundacji. Projekt jest open source — kod jest publiczny i każdy może sprawdzić jak działa.',
         'about_link'           => 'Więcej o projekcie →',
 
         // Header stats
@@ -142,14 +142,14 @@ $TRANSLATIONS = [
 
         // NGO recommendation section
         'recommend_title'      => 'Poleć projekt swojej fundacji',
-        'recommend_text'       => 'Każda organizacja pozarządowa może dołączyć do Help By Play i otrzymać własną stronę z grami. Przychody z reklam Google AdSense trafiają bezpośrednio na konto fundacji. Zero prowizji, zero kosztów.',
+        'recommend_text'       => 'Każda organizacja pozarządowa może dołączyć do Help By Play i otrzymać własną stronę z grami. Przychody z reklam trafiają bezpośrednio na konto fundacji. Zero prowizji, zero kosztów.',
         'recommend_link'       => 'Dowiedz się więcej na helpbyplay.com',
 
         // Game page footer note
         'ad_value_note'        => 'Szacunkowa wartość wyświetleń reklamowych.',
 
         // Footer disclaimer
-        'footer_ad_note'       => 'Kwota zebranych środków jest szacunkowa i zależy od aktualnych stawek Google AdSense.',
+        'footer_ad_note'       => 'Kwota zebranych środków jest szacunkowa i zależy od aktualnych stawek reklamowych.',
 
         // SEO game info section
         'other_games'              => 'Inne gry',
@@ -178,7 +178,7 @@ $TRANSLATIONS = [
         'game_runner_tutorial'     => 'Dotknij ekran lub naciśnij Spację aby skoczyć. Możesz skoczyć dwa razy z rzędu. Unikaj czerwonych bloków. Im dłużej grasz tym szybciej się poruszasz!',
 
         // Cookie consent
-        'cookie_consent_text'  => 'Ta strona używa plików cookie do wyświetlania reklam Google AdSense. Więcej informacji w <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce Prywatności Help By Play</a>.',
+        'cookie_consent_text'  => 'Ta strona używa plików cookie do wyświetlania reklam. Więcej informacji w <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce Prywatności Help By Play</a>.',
         'cookie_accept'        => 'Akceptuję',
         'cookie_decline'       => 'Odrzucam',
         'privacy_policy'       => 'Polityka Prywatności',
@@ -271,7 +271,7 @@ $TRANSLATIONS = [
 
         // Game screen
         'game_title'           => 'Play and help!',
-        'game_story'           => 'The idea is over 11 years old. Online games, ads, charities — we were close. Advertisers never came. The project died. April 2026: AI changed the rules. AdSense pays the charity directly — no middleman. Help By Play is back, this time differently.',
+        'game_story'           => 'The idea is over 11 years old. Online games, ads, charities — we were close. Advertisers never came. The project died. April 2026: AI changed the rules. Ad revenue goes directly to the charity — no middleman. Help By Play is back, this time differently.',
         'session_earned_label' => 'Your session raised',
 
         // Summary screen
@@ -302,10 +302,10 @@ $TRANSLATIONS = [
         'btn_restart'          => 'New board',
 
         // Ad placeholder
-        'ad_placeholder'       => 'Google AdSense ad will appear here',
+        'ad_placeholder'       => 'Ad will appear here',
 
         // About blurb
-        'about_text'           => 'Help By Play is a community initiative that connects gaming with helping others. You play for free, ads are displayed, and the revenue goes directly to this charity\'s account via Google AdSense. The project is open source — the code is public and anyone can see how it works.',
+        'about_text'           => 'Help By Play is a community initiative that connects gaming with helping others. You play for free, ads are displayed, and the revenue goes directly to this charity\'s account. The project is open source — the code is public and anyone can see how it works.',
         'about_link'           => 'More about the project →',
 
         // Header stats
@@ -323,14 +323,14 @@ $TRANSLATIONS = [
 
         // NGO recommendation section
         'recommend_title'      => 'Recommend this project to your NGO',
-        'recommend_text'       => 'Any non-profit organisation can join Help By Play and get their own gaming page. Google AdSense revenue goes directly to the foundation\'s account. Zero commission, zero costs.',
+        'recommend_text'       => 'Any non-profit organisation can join Help By Play and get their own gaming page. Ad revenue goes directly to the foundation\'s account. Zero commission, zero costs.',
         'recommend_link'       => 'Learn more at helpbyplay.com',
 
         // Game page footer note
         'ad_value_note'        => 'Estimated ad impression value.',
 
         // Footer disclaimer
-        'footer_ad_note'       => 'The amount collected is an estimate based on current Google AdSense rates.',
+        'footer_ad_note'       => 'The amount collected is an estimate based on current advertising rates.',
 
         // SEO game info section
         'other_games'              => 'Other games',
@@ -359,7 +359,7 @@ $TRANSLATIONS = [
         'game_runner_tutorial'     => 'Tap the screen or press Space to jump. You can jump twice in a row. Avoid red blocks. The longer you play, the faster it gets!',
 
         // Cookie consent
-        'cookie_consent_text'  => 'This site uses cookies for Google AdSense advertising. Learn more in the <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Help By Play Privacy Policy</a>.',
+        'cookie_consent_text'  => 'This site uses cookies to display ads. Learn more in the <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Help By Play Privacy Policy</a>.',
         'cookie_accept'        => 'Accept',
         'cookie_decline'       => 'Decline',
         'privacy_policy'       => 'Privacy Policy',
