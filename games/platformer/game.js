@@ -91,9 +91,9 @@ function startGame() {
 
 function spawnPlayer() {
     player = {
-        x: 60, y: FLOOR_Y - 34,
+        x: 60, y: FLOOR_Y - 18,
         vx: 0, vy: 0,
-        w: 22, h: 34,
+        w: 12, h: 18,
         onGround: false,
         lives: 3,
         score: 0,
@@ -551,34 +551,34 @@ function drawPlayer(ts) {
 
     const legPhase = Math.floor(ts / 150) % 2;
     const moving   = Math.abs(p.vx) > 0.1;
-    const lyL = moving ? (legPhase === 0 ? 0 : 4) : 2;
-    const lyR = moving ? (legPhase === 0 ? 4 : 0) : 2;
+    const lyL = moving ? (legPhase === 0 ? 0 : 2) : 1;
+    const lyR = moving ? (legPhase === 0 ? 2 : 0) : 1;
     ctx.fillStyle = '#1a4ab0';
-    ctx.fillRect(px + 2,       py + p.h + lyL - 2, 7, 8);
-    ctx.fillRect(px + p.w - 9, py + p.h + lyR - 2, 7, 8);
+    ctx.fillRect(px + 1,       py + p.h + lyL - 1, 4, 4);
+    ctx.fillRect(px + p.w - 5, py + p.h + lyR - 1, 4, 4);
 
     ctx.fillStyle = '#f0f8ff';
-    ctx.fillRect(px, py + 12, p.w, p.h - 12);
+    ctx.fillRect(px, py + 6, p.w, p.h - 6);
 
     const bx = px + Math.round(p.w / 2);
-    const by = py + 22;
+    const by = py + 11;
     ctx.fillStyle = '#1155cc';
-    ctx.fillRect(bx - 5, by - 2, 10, 4);
-    ctx.fillRect(bx - 2, by - 5, 4, 10);
+    ctx.fillRect(bx - 3, by - 1, 6, 2);
+    ctx.fillRect(bx - 1, by - 3, 2, 6);
 
     ctx.fillStyle = '#ffcc88';
-    ctx.fillRect(px + 4, py + 5, p.w - 8, 12);
+    ctx.fillRect(px + 2, py + 3, p.w - 4, 6);
 
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(px - 1, py, p.w + 2, 8);
-    ctx.fillRect(px - 3, py + 5, p.w + 6, 4);
+    ctx.fillRect(px - 1, py, p.w + 2, 4);
+    ctx.fillRect(px - 2, py + 3, p.w + 4, 2);
     const capCX = px + Math.round(p.w / 2);
     ctx.fillStyle = '#dd2222';
-    ctx.fillRect(capCX - 4, py + 1, 8, 3);
-    ctx.fillRect(capCX - 1, py - 2, 3, 8);
+    ctx.fillRect(capCX - 2, py + 1, 5, 2);
+    ctx.fillRect(capCX - 1, py - 1, 2, 5);
 
     ctx.fillStyle = '#333';
-    ctx.fillRect(fr ? px + p.w - 7 : px + 3, py + 9, 3, 3);
+    ctx.fillRect(fr ? px + p.w - 4 : px + 1, py + 5, 2, 2);
 }
 
 function drawHUD() {

@@ -48,6 +48,8 @@ let rafId, lastTs;
 const keys = {};
 const mob  = { left: false, right: false, fire: false };
 let prevFire = false;
+let autofireTimer = 0;
+const AUTOFIRE_MS = 320;
 
 // ── Language helper ───────────────────────────────────────────────────────────
 function getFiringFasterMsg() {
@@ -301,12 +303,15 @@ function updatePlayer(dt) {
     player.x = Math.max(0, Math.min(CW - PLAYER_W, player.x));
 
     const wantFire = !!(keys[' '] || mob.fire);
-    if (wantFire && !prevFire && !playerBullet) {
+    const now = performance.now();
+    if (wantFire && !playerBullet && now - autofireTimer > AUTOFIRE_MS) {
         playerBullet = {
             x: Math.round(player.x + PLAYER_W / 2 - PB_W / 2),
             y: player.y - PB_H,
         };
+        autofireTimer = now;
     }
+    if (!wantFire) autofireTimer = 0;
     prevFire = wantFire;
 }
 
@@ -588,11 +593,21 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
     }
 
-    cvs.addEventListener('click', e => tapRestart(e.clientX, e.clientY));
-    cvs.addEventListener('touchend', function(e) {
+    cvs.addEventListener('click', function(e) {
+        if (gameState === 'over') { startGame(); return; }
+        tapRestart(e.clientX, e.clientY);
+    });
+
+    cvs.addEventListener('touchstart', function(e) {
+        if (gameState === 'over') { e.preventDefault(); startGame(); return; }
+    }, { passive: false });
+
+    cvs.addEventListener('touchmove', function(e) {
         e.preventDefault();
-        const t = e.changedTouches[0];
-        tapRestart(t.clientX, t.clientY);
+        if (gameState !== 'playing') return;
+        const rect = cvs.getBoundingClientRect();
+        const x = (e.touches[0].clientX - rect.left) * (CW / rect.width);
+        player.x = Math.max(0, Math.min(CW - PLAYER_W, x - PLAYER_W / 2));
     }, { passive: false });
 
     const btnStart = document.getElementById('btn-invaders-start');

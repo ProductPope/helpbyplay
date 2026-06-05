@@ -96,6 +96,7 @@ function startGame() {
         facingRight: true,
         runFrame: 0,
         runTick: 0,
+        lives: 3,
     };
 
     camY       = 0;
@@ -242,9 +243,9 @@ function updatePlayer(dt, ts) {
     const heightPx = -player.y;
     if (heightPx > maxHeightPx) maxHeightPx = heightPx;
 
-    // Game over — fell below camera bottom
+    // Fell below camera bottom — lose a life
     if (player.y - camY > CH + 80) {
-        gameOver();
+        loseLife();
     }
 }
 
@@ -459,11 +460,9 @@ function drawHUDCanvas(heightM) {
     ctx.textAlign = 'right';
     ctx.fillText('BEST ' + hs + ' m', CW - 8, 19);
 
-    if (comboMult > 1) {
-        ctx.fillStyle = '#f8d800';
-        ctx.textAlign = 'left';
-        ctx.fillText('x' + comboMult, 8, 19);
-    }
+    ctx.fillStyle = '#ff5577';
+    ctx.textAlign = 'left';
+    ctx.fillText('♥'.repeat(Math.max(0, player ? player.lives : 0)), 8, 19);
 
     ctx.textAlign    = 'left';
     ctx.textBaseline = 'alphabetic';
@@ -482,6 +481,37 @@ function updateHUD() {
     const m  = Math.round(maxHeightPx / PX_PER_METER);
     if (sc) sc.textContent = m;
     if (hs) hs.textContent = parseInt(localStorage.getItem(HS_KEY) || '0', 10);
+}
+
+// ── Lose life / respawn ───────────────────────────────────────────────────────
+
+function loseLife() {
+    player.lives--;
+    if (player.lives <= 0) { gameOver(); return; }
+
+    // Find platform closest to screen centre that is still in or near viewport
+    const targetY = camY + CH * 0.6;
+    let best = null, bestDist = Infinity;
+    for (const p of platforms) {
+        if (p.y < camY - 80 || p.y > camY + CH + 80) continue;
+        const dist = Math.abs(p.y - targetY);
+        if (dist < bestDist) { bestDist = dist; best = p; }
+    }
+
+    if (!best) {
+        // Fallback: create a platform in the middle of the viewport
+        const nx = CW / 4 + Math.random() * CW / 2;
+        const ny = camY + CH * 0.6;
+        best = makePlat(nx, ny, 100, 'normal');
+        platforms.push(best);
+    }
+
+    player.x  = Math.max(0, Math.min(CW - player.w, best.x + (best.w - player.w) / 2));
+    player.y  = best.y - player.h;
+    player.vx = 0;
+    player.vy = 0;
+    camY      = player.y - CH * 0.5;
+    updateHUD();
 }
 
 // ── Game over ─────────────────────────────────────────────────────────────────

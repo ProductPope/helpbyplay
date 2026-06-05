@@ -306,7 +306,7 @@ document.addEventListener('keydown', e => {
     }, { passive: false });
 
     cvs?.addEventListener('touchmove', e => {
-        e.preventDefault();
+        if (gameOver === false) e.preventDefault();
     }, { passive: false });
 
     cvs?.addEventListener('touchend', e => {

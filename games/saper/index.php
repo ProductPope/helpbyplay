@@ -50,6 +50,10 @@ render_header(
 
             <?php render_ad_slot(); ?>
 
+            <div class="saper-toolbar">
+                <button id="btn-flag-toggle" class="saper-flag-btn" aria-pressed="false" aria-label="<?= htmlspecialchars(t('saper_flag_mode')) ?>">🚩</button>
+            </div>
+
             <div class="saper-wrapper">
                 <div id="saper-board" role="grid" aria-label="<?= t('game_saper_name') ?>"></div>
                 <div id="saper-tutorial" class="saper-tutorial">

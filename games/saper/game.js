@@ -13,12 +13,15 @@ function getCfg() {
         : { rows: 16, cols: 16, mines: 40, hsKey: 'hbp_highscore_saper_16' };
 }
 
-let board, cfg, cellEls, gameState, timerSecs, timerInt, firstClick;
+let board, cfg, cellEls, gameState, timerSecs, timerInt, firstClick, flagMode;
 
 function initGame() {
     cfg        = getCfg();
     firstClick = true;
     gameState  = 'idle';
+    flagMode   = false;
+    const flagBtn = document.getElementById('btn-flag-toggle');
+    if (flagBtn) { flagBtn.classList.remove('active'); flagBtn.setAttribute('aria-pressed', 'false'); }
     timerSecs  = 0;
     clearInterval(timerInt);
     timerInt   = null;
@@ -311,7 +314,8 @@ function setupEvents() {
         if (longFired) { longFired = false; return; }
         const cell = e.target.closest('.saper-cell');
         if (!cell) return;
-        reveal(+cell.dataset.r, +cell.dataset.c);
+        if (flagMode) toggleFlag(+cell.dataset.r, +cell.dataset.c);
+        else reveal(+cell.dataset.r, +cell.dataset.c);
     });
 
     el.addEventListener('contextmenu', function(e) {
@@ -346,6 +350,15 @@ function setupEvents() {
         localStorage.setItem(TUT_KEY, '1');
         document.getElementById('saper-tutorial').classList.remove('active');
     });
+
+    const flagBtn = document.getElementById('btn-flag-toggle');
+    if (flagBtn) {
+        flagBtn.addEventListener('click', function() {
+            flagMode = !flagMode;
+            this.classList.toggle('active', flagMode);
+            this.setAttribute('aria-pressed', flagMode);
+        });
+    }
 
     document.getElementById('btn-restart').addEventListener('click', initGame);
 }
