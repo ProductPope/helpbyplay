@@ -51,7 +51,18 @@ render_header(
 );
 ?>
 
+<?php
+// v0.9 historical data (December 2022 – June 2023)
+$v09_players = 1500;
+$v09_avg     = '15:00';
+$v09_orgs    = 17;
+$v09_pln     = 3030.82;
+$v09_hours   = 5050;
+?>
+
         <h1 class="stats-heading"><?= htmlspecialchars(t('stats_page_title')) ?></h1>
+
+        <p class="stats-era-current-label"><?= htmlspecialchars(t('stats_v10_label')) ?></p>
 
         <div class="stats-grid">
 
@@ -96,6 +107,51 @@ render_header(
                 <div class="stat-row">
                     <span class="stat-value"><?= htmlspecialchars($avg_formatted) ?></span>
                     <span class="stat-label"><?= htmlspecialchars(t('stats_avg_label')) ?></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="stats-era-divider">
+            <div class="stats-era-divider-text">
+                <span class="stats-era-name"><?= htmlspecialchars(t('stats_v09_era_name')) ?></span>
+                <span class="stats-era-period"><?= htmlspecialchars(t('stats_v09_period')) ?></span>
+            </div>
+        </div>
+
+        <p class="stats-v09-note"><?= htmlspecialchars(t('stats_v09_note')) ?></p>
+
+        <div class="stats-grid">
+
+            <div class="stat-card stat-card--legacy">
+                <h2 class="stat-card-period"><?= htmlspecialchars(t('stats_v09_card_players')) ?></h2>
+                <div class="stat-row">
+                    <span class="stat-value"><?= number_format($v09_players, 0, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('stats_players_label')) ?></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-value"><?= htmlspecialchars($v09_avg) ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('stats_avg_label')) ?></span>
+                </div>
+            </div>
+
+            <div class="stat-card stat-card--legacy">
+                <h2 class="stat-card-period"><?= htmlspecialchars(t('stats_v09_card_orgs')) ?></h2>
+                <div class="stat-row">
+                    <span class="stat-value"><?= number_format($v09_orgs, 0, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('stats_orgs_label')) ?></span>
+                </div>
+            </div>
+
+            <div class="stat-card stat-card--legacy stat-card--alltime">
+                <h2 class="stat-card-period"><?= htmlspecialchars(t('stats_v09_card_total')) ?></h2>
+                <div class="stat-row">
+                    <span class="stat-value stat-value--pln"><?= number_format($v09_pln, 2, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('currency')) ?></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-value"><?= number_format($v09_hours, 0, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('stats_hours_label')) ?></span>
                 </div>
             </div>
 

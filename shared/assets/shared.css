@@ -880,6 +880,15 @@ main.container {
     border-color: var(--color-primary-light);
 }
 
+.stat-card--legacy {
+    border-style: dashed;
+    background:   var(--color-background);
+}
+
+.stat-card--legacy.stat-card--alltime {
+    border-color: var(--color-border);
+}
+
 .stat-card-period {
     font-size:      12px;
     font-weight:    700;
@@ -915,6 +924,60 @@ main.container {
     .stats-grid { flex-direction: row; flex-wrap: wrap; }
     .stat-card  { flex: 1; min-width: 180px; }
     .stat-card--alltime { flex-basis: 100%; }
+}
+
+.stats-era-current-label {
+    font-size:      11px;
+    font-weight:    700;
+    color:          var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom:  var(--space-sm);
+}
+
+.stats-era-divider {
+    display:     flex;
+    align-items: center;
+    gap:         var(--space-md);
+    margin:      var(--space-xl) 0 var(--space-md);
+}
+
+.stats-era-divider::before,
+.stats-era-divider::after {
+    content:    '';
+    flex:       1;
+    height:     1px;
+    background: var(--color-border);
+}
+
+.stats-era-divider-text {
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    gap:            2px;
+    flex-shrink:    0;
+}
+
+.stats-era-name {
+    font-size:      11px;
+    font-weight:    700;
+    color:          var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    white-space:    nowrap;
+}
+
+.stats-era-period {
+    font-size:   11px;
+    color:       var(--color-text-muted);
+    white-space: nowrap;
+}
+
+.stats-v09-note {
+    font-size:     13px;
+    color:         var(--color-text-muted);
+    font-style:    italic;
+    margin-bottom: var(--space-md);
 }
 
 /* ===== Sticky status bar + ad on mobile ===== */

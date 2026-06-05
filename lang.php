@@ -87,6 +87,15 @@ $TRANSLATIONS = [
         'stats_players_label'  => 'unikalnych graczy',
         'stats_avg_label'      => 'Śr. czas sesji',
         'stats_link_text'      => 'Statystyki platformy →',
+        'stats_v10_label'      => 'Wersja v1.0 — bieżące dane',
+        'stats_v09_era_name'   => 'Dane historyczne — wersja v0.9',
+        'stats_v09_period'     => 'grudzień 2022 – czerwiec 2023',
+        'stats_v09_note'       => 'Dane z pierwszej wersji platformy. Inna baza kodu, inny system zliczania sesji.',
+        'stats_v09_card_players' => 'Gracze',
+        'stats_v09_card_orgs'    => 'Organizacje',
+        'stats_v09_card_total'   => 'Łącznie',
+        'stats_orgs_label'     => 'organizacji partnerskich',
+        'stats_hours_label'    => 'godzin rozgrywki',
 
         // Game screen
         'game_title'           => 'Graj i pomagaj!',
@@ -268,6 +277,15 @@ $TRANSLATIONS = [
         'stats_players_label'  => 'unique players',
         'stats_avg_label'      => 'Avg. session length',
         'stats_link_text'      => 'Platform statistics →',
+        'stats_v10_label'      => 'Version v1.0 — current data',
+        'stats_v09_era_name'   => 'Historical data — version v0.9',
+        'stats_v09_period'     => 'December 2022 – June 2023',
+        'stats_v09_note'       => 'Data from the first version of the platform. Different codebase, different session tracking system.',
+        'stats_v09_card_players' => 'Players',
+        'stats_v09_card_orgs'    => 'Organisations',
+        'stats_v09_card_total'   => 'Total',
+        'stats_orgs_label'     => 'partner organisations',
+        'stats_hours_label'    => 'hours of gameplay',
 
         // Game screen
         'game_title'           => 'Play and help!',
