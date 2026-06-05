@@ -54,7 +54,7 @@ render_header(
 <?php
 // v0.9 historical data (December 2022 – June 2023)
 $v09_players = 1500;
-$v09_avg     = '15:00';
+$v09_avg     = '18:03';
 $v09_orgs    = 17;
 $v09_pln     = 3030.82;
 $v09_hours   = 5050;
