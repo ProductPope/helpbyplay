@@ -2,8 +2,10 @@
 // Rate: 0.001 PLN per 10 seconds = 0.0001 PLN per second.
 // Pauses after 10s of inactivity. Dispatches auto-end after 600s inactivity.
 // Dispatches heartbeat every 30 active seconds.
-// For AdSense provider: pauses until ad fills (checked every 5s).
-// For other providers (custom, placeholder): counter runs without ad gate.
+// Ad gate per provider:
+//   adsense  — waits for ins.adsbygoogle data-ad-status="filled"
+//   custom   — waits for consent (slot visible) and non-empty HTML
+//   ''       — placeholder only, no real ad → counter never runs
 
 const PLN_PER_SECOND         = 0.0001;
 const INACTIVITY_PAUSE_MS    = 10000;   // 10s  → pause counter + grey display
@@ -21,12 +23,23 @@ let adCheckInterval      = null;
 let adWaitMsgTimer       = null;
 
 function isAdVisible() {
+    // AdSense: wait for filled status
     const ins = document.querySelector('ins.adsbygoogle');
-    if (!ins) return true;  // non-AdSense provider — no ad gate
-    const status = ins.getAttribute('data-ad-status');
-    if (status === 'filled')   return true;
-    if (status === 'unfilled') return false;
-    return false; // AdSense still loading
+    if (ins) {
+        return ins.getAttribute('data-ad-status') === 'filled';
+    }
+
+    // Custom provider: at least one slot must be consented (display != none) and non-empty
+    const customSlots = document.querySelectorAll('.ad-custom-slot');
+    if (customSlots.length > 0) {
+        for (const slot of customSlots) {
+            if (slot.style.display !== 'none' && slot.innerHTML.trim() !== '') return true;
+        }
+        return false;
+    }
+
+    // Placeholder / no provider — no real ad, counter must not run
+    return false;
 }
 
 function setAdWaitMsg(visible) {
