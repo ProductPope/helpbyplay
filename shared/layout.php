@@ -39,7 +39,7 @@ function render_header(
         <div class="container">
             <a href="/index.php" class="header-home">Help By <span class="logo-play">Play</span></a>
             <a href="/statystyki.php" class="header-nav-link"><?= t('nav_stats') ?></a>
-            <a href="/statystyki.php" class="header-stats">👤 <?= number_format($totalSessions + DISPLAY_SESSIONS_OFFSET, 0, ',', ' ') ?> · <?= number_format($totalPln + DISPLAY_PLN_OFFSET, 4, ',', ' ') ?> <?= t('currency') ?></a>
+            <a href="/statystyki.php" class="header-stats">👤 <?= number_format($totalSessions + DISPLAY_SESSIONS_OFFSET, 0, ',', ' ') ?> · <?= number_format($totalPln + DISPLAY_PLN_OFFSET, 0, ',', ' ') ?> <?= t('currency') ?></a>
         </div>
     </header>
 
