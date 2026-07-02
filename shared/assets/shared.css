@@ -1,6 +1,6 @@
 /* ===== Design tokens ===== */
 :root {
-    --font-primary:      'Inter', system-ui, sans-serif;
+    --font-primary:      system-ui, sans-serif;
 
     --color-primary:       #1565C0;
     --color-primary-light: #1976D2;

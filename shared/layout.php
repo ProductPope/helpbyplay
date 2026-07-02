@@ -20,14 +20,12 @@ function render_header(
 <html lang="<?= htmlspecialchars($lang) ?>">
 <head>
 <?php if (defined('AD_PROVIDER') && AD_PROVIDER === 'adsense' && defined('ADSENSE_CLIENT') && ADSENSE_CLIENT !== ''): ?>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<?= htmlspecialchars(ADSENSE_CLIENT) ?>" crossorigin="anonymous"></script>
+    <!-- adsbygoogle.js is injected by cookie-consent.js only after consent -->
+    <script>window.HBP_ADSENSE_CLIENT = <?= json_encode(ADSENSE_CLIENT) ?>;</script>
 <?php endif; ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/shared/assets/shared.css?v=<?= $sharedCssVer ?>">
 <?php if ($extraCssHref !== ''): ?>
     <link rel="stylesheet" href="<?= htmlspecialchars($extraCssHref) ?>?v=<?= $extraCssVersion ?>">

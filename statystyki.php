@@ -39,7 +39,8 @@ try {
     $avg_formatted  = sprintf('%d:%02d', intdiv($avg_s, 60), $avg_s % 60);
 
 } catch (PDOException $e) {
-    // Silently degrade — zeros shown
+    // Degrade gracefully — zeros shown
+    error_log('HBP statystyki: ' . $e->getMessage());
 }
 
 render_header(

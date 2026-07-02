@@ -33,6 +33,7 @@ try {
 
     echo json_encode(['session_id' => $sessionId]);
 } catch (PDOException $e) {
+    error_log('HBP session_start: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['error' => 'Database error']);
 }

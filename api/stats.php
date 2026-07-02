@@ -20,6 +20,7 @@ try {
         'total_pln'      => (float)$row['total_pln'] + DISPLAY_PLN_OFFSET,
     ]);
 } catch (PDOException $e) {
+    error_log('HBP stats: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['error' => 'Database error']);
 }

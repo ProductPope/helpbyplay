@@ -18,6 +18,19 @@
         });
     }
 
+    // AdSense script is only loaded after consent (GDPR) — layout.php sets
+    // HBP_ADSENSE_CLIENT instead of embedding the script tag in <head>.
+    function loadAdsScript() {
+        if (!window.HBP_ADSENSE_CLIENT) return;
+        if (document.querySelector('script[src*="adsbygoogle.js"]')) return;
+        var s = document.createElement('script');
+        s.async = true;
+        s.crossOrigin = 'anonymous';
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='
+              + encodeURIComponent(window.HBP_ADSENSE_CLIENT);
+        document.head.appendChild(s);
+    }
+
     function pushAds() {
         document.querySelectorAll('ins.adsbygoogle').forEach(function (ins) {
             ins.style.display = 'block';
@@ -89,6 +102,7 @@
 
         btnAccept.addEventListener('click', function () {
             setConsent('accepted');
+            loadAdsScript();
             pushAds();
             hideBanner(banner);
         });
@@ -109,9 +123,11 @@
 
     var consent = getConsent();
 
-    if (consent === 'rejected') {
+    if (consent === 'accepted') {
+        loadAdsScript();
+    } else if (consent === 'rejected') {
         hideAds();
-    } else if (consent !== 'accepted') {
+    } else {
         showBanner();
     }
 }());

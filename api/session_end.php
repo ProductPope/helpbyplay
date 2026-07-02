@@ -21,15 +21,11 @@ $sessionId   = isset($body['session_id'])   ? (int)    $body['session_id']   : 0
 $durationSec = isset($body['duration_sec']) ? (int)    $body['duration_sec'] : 0;
 $type        = isset($body['type'])         ? (string) $body['type']         : 'end';
 
-$durationSec = min($durationSec, 3600);
-
 if ($sessionId <= 0 || $durationSec < 0) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid parameters']);
     exit;
 }
-
-$earnedPln = round($durationSec * 0.0001, 4);
 
 try {
     $pdo = new PDO(
@@ -39,9 +35,25 @@ try {
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 
+    // Server-side cap: claimed duration can never exceed real elapsed time
+    // since session start — prevents counter inflation via forged requests
+    $stmt = $pdo->prepare('SELECT TIMESTAMPDIFF(SECOND, started_at, NOW()) FROM sessions WHERE id = :id');
+    $stmt->execute([':id' => $sessionId]);
+    $elapsed = $stmt->fetchColumn();
+
+    if ($elapsed === false) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid parameters']);
+        exit;
+    }
+
+    $durationSec = min($durationSec, max((int) $elapsed, 0), 3600);
+    $earnedPln   = round($durationSec * 0.0001, 4);
+
     if ($type === 'heartbeat') {
-        // Save progress only — no ended_at, no global stats update
-        $stmt = $pdo->prepare('UPDATE sessions SET duration_sec = :dur WHERE id = :id');
+        // Save progress only — no ended_at, no global stats update.
+        // ended_at IS NULL guard: a late heartbeat must not mutate an ended session
+        $stmt = $pdo->prepare('UPDATE sessions SET duration_sec = :dur WHERE id = :id AND ended_at IS NULL');
         $stmt->execute([':dur' => $durationSec, ':id' => $sessionId]);
         echo json_encode(['ok' => true]);
         exit;
@@ -99,6 +111,7 @@ try {
     ]);
 } catch (PDOException $e) {
     if (isset($pdo) && $pdo->inTransaction()) $pdo->rollBack();
+    error_log('HBP session_end: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['error' => 'Database error']);
 }

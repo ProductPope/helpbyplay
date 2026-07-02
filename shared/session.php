@@ -18,5 +18,6 @@ try {
         $totalPln      = (float) $row['total_pln'];
     }
 } catch (PDOException $e) {
-    // Silently degrade — header stats show 0
+    // Degrade gracefully — header stats show 0
+    error_log('HBP session.php: ' . $e->getMessage());
 }
