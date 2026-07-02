@@ -10,7 +10,7 @@ Help By Play is a gaming platform for charities. Players play free mini-games on
 
 1. The charity joins the platform (see: How to join)
 2. A player visits `play.yourcharity.org`, clicks "Play and help"
-3. They play Candy Crush — free, no registration required
+3. They pick one of ten mini-games and play — free, no registration required
 4. AdSense ads are displayed during gameplay
 5. A public counter shows the total amount raised since the instance launched
 
@@ -45,9 +45,9 @@ Once both steps are complete, the platform owner configures the instance and the
 
 ## What the player sees
 
-- **Home screen** — charity name and description, global earnings counter, "Play and help" button
-- **Game screen** — 6×6 Candy Crush board, session earnings counter, end session button
-- **Summary screen** — amount raised in this session, all-time total for the charity, option to play again
+- **Home screen** — charity name and description, global earnings counter, tiles with ten mini-games (match-3, 2048, snake, memory, minesweeper, platformer, jumper, invaders, bricks, runner)
+- **Game screen** — the chosen game with a live session earnings counter
+- **Stats page** — sessions and amounts raised today, this week, and all-time
 
 Interface available in Polish and English (player toggles with a button).
 Designed mobile-first — works on any screen size.
@@ -86,7 +86,9 @@ Stack: PHP 8.1 · Vanilla JS · Plain CSS · MariaDB 10.4. No frameworks, intent
 
 ## Contact
 
-Want to join the platform or self-host an instance? [Open an issue](https://github.com/ProductPope/helpbyplay/issues) or visit [helpbyplay.com](https://helpbyplay.com).
+Want to join the platform? [Open an issue](https://github.com/ProductPope/helpbyplay/issues) or visit [helpbyplay.com](https://helpbyplay.com).
+
+Want to self-host your own instance? Follow the step-by-step guide in [INSTALL.md](INSTALL.md).
 
 ---
 

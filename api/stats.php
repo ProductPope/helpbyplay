@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 header('Cache-Control: no-cache');
 
 require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../shared/display_offset.php'; // remove for new NGO instances
+require_once __DIR__ . '/../shared/display_offset.php'; // offsets are 0 on new NGO instances
 
 try {
     $pdo = new PDO(

@@ -3,7 +3,7 @@
 // Requires config.php and lang.php loaded before calling.
 
 require_once __DIR__ . '/ads.php';
-require_once __DIR__ . '/display_offset.php'; // remove for new NGO instances
+require_once __DIR__ . '/display_offset.php'; // offsets are 0 on new NGO instances
 
 function render_header(
     string $pageTitle,

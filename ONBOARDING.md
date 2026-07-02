@@ -2,133 +2,67 @@
 
 Steps the platform owner takes when adding a new charity to Help By Play.
 
+For the generic server installation steps (database, config.php, upload, verification), follow [INSTALL.md](INSTALL.md) — this document covers only what is specific to onboarding a charity onto the central platform.
+
 ---
 
 ## Prerequisites
 
-- The charity has completed both their steps: DNS record added, AdSense account created
-- Access to the Cyberfolks server (SSH or FTP + DirectAdmin panel)
-- Charity's AdSense publisher ID (`ca-pub-XXXXXXXXXXXXXXXX`) and ad slot ID
+- The charity has completed both their steps:
+  - DNS record added (`play.charity.org` → platform server, or a `charity.helpbyplay.com` subdomain)
+  - Google AdSense account created for the game domain
+- Access to the Cyberfolks server (FTP + DirectAdmin panel)
+- Charity's AdSense publisher ID (`ca-pub-XXXXXXXXXXXXXXXX`) and ad slot ID — may arrive later, after AdSense approval
 
 ---
 
-## Step 1 — Create a database for the charity
+## Step 1 — Domain in DirectAdmin
 
-1. Log in to DirectAdmin → **MySQL Management**
-2. Click **Create new database**
-3. Note down:
-   - Database name (e.g. `user123_charity_abc`)
-   - Database username
-   - Password
+Add the charity's domain as an addon domain in DirectAdmin, with its document root pointing at the new instance directory (e.g. `domains/play.charity.org/public_html/`).
+
+Each charity gets its own directory and its own database — instances are fully independent.
 
 ---
 
-## Step 2 — Import the database schema
+## Step 2 — Install the instance
 
-1. Open **phpMyAdmin** in DirectAdmin
-2. Select the newly created database
-3. Go to **Import** tab → select `db/init.sql` → click **Go**
+Follow [INSTALL.md](INSTALL.md) steps 2–7 inside the instance directory:
 
-Verify that two tables were created: `sessions` and `stats`.
-
----
-
-## Step 3 — Create the instance directory on the server
-
-Each charity gets its own directory inside `public_html`, served via a virtual host or Apache subdirectory directive.
-
-Example structure:
-
-```
-public_html/
-├── charity-abc/           ← this charity's instance directory
-│   ├── index.php
-│   ├── game.php
-│   ├── config.php         ← filled with this charity's data
-│   ├── lang.php
-│   ├── api/
-│   ├── assets/
-│   └── db/
-```
-
-Copy all project files into the new directory (without `config.php` — you'll create that next).
+1. Create the database in DirectAdmin → MySQL Management, import `db/init.sql` via phpMyAdmin
+2. Create `config.php` with this charity's data (name, description, logo, language)
+3. Set both constants in `shared/display_offset.php` to `0` (the offset is for core.helpbyplay.com only)
+4. Replace `ads.txt` with the charity's own publisher line (or remove until AdSense is approved)
+5. Upload files via FTP, run the verification checklist
 
 ---
 
-## Step 4 — Create config.php for this charity
+## Step 3 — Activate AdSense
 
-Create `config.php` in the instance directory:
-
-```php
-<?php
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'user123_charity_abc');   // database from step 1
-define('DB_USER', 'user123_abc');
-define('DB_PASS', 'database_password');
-
-define('FOUNDATION_NAME', 'Full Charity Name');
-define('FOUNDATION_DESC', 'Short mission description shown on the home screen.');
-define('FOUNDATION_LOGO', '');               // logo URL or leave empty
-
-define('DEFAULT_LANG', 'pl');
-
-define('ADSENSE_CLIENT', 'ca-pub-XXXXXXXXXXXXXXXX');   // from charity
-define('ADSENSE_SLOT',   '1234567890');                // from AdSense slot
-```
-
----
-
-## Step 5 — Configure the subdomain (virtual host)
-
-Add a virtual host in DirectAdmin or server config pointing:
-
-- **Subdomain:** `play.charity.org`
-- **Document root:** path to the instance directory (`public_html/charity-abc/`)
-
-After DNS propagation (up to 24h) the subdomain will be live.
-
----
-
-## Step 6 — Activate AdSense
-
-Once the charity's AdSense account is approved by Google:
+Once Google approves the charity's AdSense account:
 
 1. Open `config.php` in the instance directory
-2. Fill in the two AdSense constants (already present from Step 4):
+2. Set the ad constants:
    ```php
-   define('ADSENSE_CLIENT', 'ca-pub-XXXXXXXXXXXXXXXX');  // publisher ID from AdSense
-   define('ADSENSE_SLOT',   '1234567890');               // ad unit slot ID from AdSense
+   define('AD_PROVIDER', 'adsense');
+   define('ADSENSE_CLIENT', 'ca-pub-XXXXXXXXXXXXXXXX');  // publisher ID from charity
+   define('ADSENSE_SLOT',   '1234567890');               // ad unit slot ID
    ```
-3. Save the file — ads are injected automatically by PHP, no template changes needed.
+3. Make sure `ads.txt` at the domain root contains the charity's publisher line
+4. Save — ads render automatically via `shared/ads.php`, no template changes needed
 
-The ad unit appears at the `<!-- ADSENSE_PLACEHOLDER -->` location in each page.
-
----
-
-## Step 7 — Final verification
-
-Run through the full flow on the new subdomain:
-
-- [ ] Home screen loads with charity name and description
-- [ ] Global counter visible (0.0000 PLN at launch)
-- [ ] "Play and help" opens the game screen
-- [ ] Candy Crush board renders correctly
-- [ ] Session counter increments every second
-- [ ] Ending the session shows the summary screen with earned amount
-- [ ] Global counter on the home screen increased after the session
-- [ ] PL/EN language switcher works on both screens
-- [ ] Page works correctly on mobile (360px viewport)
+Ads only display after the player accepts cookie consent; until then the placeholder is shown.
 
 ---
 
 ## Onboarding checklist
 
 ```
+[ ] DNS record added by charity and propagated
+[ ] Addon domain configured in DirectAdmin
 [ ] Database created and schema imported
-[ ] Instance directory with project files in place
-[ ] config.php filled with charity data and AdSense IDs
-[ ] Virtual host / subdomain configured
-[ ] DNS propagated and subdomain resolves correctly
-[ ] Final verification passed
-[ ] AdSense active (or scheduled once account is approved)
+[ ] config.php filled with charity data
+[ ] display_offset.php constants set to 0
+[ ] ads.txt replaced with charity's publisher line
+[ ] Files uploaded, verification checklist from INSTALL.md passed
+[ ] AdSense activated (or scheduled once account is approved)
 ```
