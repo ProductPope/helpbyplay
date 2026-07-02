@@ -900,6 +900,7 @@ main.container {
 
 .stat-row {
     display:     flex;
+    flex-wrap:   wrap;
     align-items: baseline;
     gap:         8px;
     margin-top:  6px;
@@ -910,6 +911,8 @@ main.container {
     font-weight: 700;
     color:       var(--color-text);
     line-height: 1;
+    /* space-separated thousands ("3 030,82") must not break mid-number */
+    white-space: nowrap;
 }
 
 .stat-value--pln { color: var(--color-primary); }
