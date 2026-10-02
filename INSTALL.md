@@ -37,7 +37,7 @@ or download the ZIP from GitHub and unpack it.
 
 Verify two tables exist: `sessions` and `stats`. The `stats` table must contain one row with `id = 1` (created automatically by the script).
 
-> `db/migrate_001_device_id.sql` is only for upgrading old installations — skip it for a fresh install.
+> The `db/migrate_*.sql` files are only for upgrading old installations — skip them for a fresh install.
 
 ---
 
@@ -150,7 +150,8 @@ No template changes needed — `shared/ads.php` renders the right variant automa
 ## Updating an existing installation
 
 1. Upload the changed files over the old ones — **never overwrite `config.php`, `ads.txt`, or `shared/display_offset.php`**.
-2. If the release notes mention a new file in `db/` named `migrate_*.sql`, run it once via phpMyAdmin.
+2. Run every `db/migrate_*.sql` newer than your installation once via phpMyAdmin, in numeric order, **before** uploading the PHP files (the new code expects the new columns).
+   - `migrate_002_session_token.sql` — session tokens, per-IP rate limiting, automatic closing of abandoned sessions. Required by the session API from this version on.
 3. Re-run the verification checklist from step 7.
 
 ---

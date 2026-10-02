@@ -13,11 +13,7 @@ $players        = 0;
 $avg_formatted  = '0:00';
 
 try {
-    $pdo = new PDO(
-        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
-        DB_USER, DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    $pdo = hbp_db();
 
     $row = $pdo->query("
         SELECT

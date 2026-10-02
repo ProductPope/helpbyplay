@@ -162,6 +162,7 @@ $TRANSLATIONS = [
 
         // SEO game info section
         'other_games'              => 'Inne gry',
+        'btn_end_session'          => 'Zakończ i zobacz podsumowanie',
         'how_to_play'              => 'Jak grać?',
         'game_memory_about'        => 'Klasyczna gra pamięciowa ze zwierzętami. Odkrywaj karty i znajdź wszystkie pasujące pary. Im mniej ruchów tym lepszy wynik.',
         'game_memory_tutorial'     => 'Dotknij kartę aby ją odkryć. Odkryj dwie jednakowe karty aby je dopasować. Zapamiętaj pozycje odkrytych kart. Znajdź wszystkie pary w jak najkrótszym czasie!',
@@ -352,6 +353,7 @@ $TRANSLATIONS = [
 
         // SEO game info section
         'other_games'              => 'Other games',
+        'btn_end_session'          => 'Finish and see summary',
         'how_to_play'              => 'How to play?',
         'game_memory_about'        => 'Classic memory game with animals. Flip cards and find all matching pairs. Fewer moves means a better score.',
         'game_memory_tutorial'     => 'Tap a card to flip it. Flip two matching cards to pair them. Remember the positions of revealed cards. Find all pairs as fast as possible!',

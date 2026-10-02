@@ -1,12 +1,13 @@
 <?php
 header('Content-Type: application/json');
+header('Cache-Control: no-store');
 
 require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../shared/db.php';
+require_once __DIR__ . '/../shared/display_offset.php'; // offsets are 0 on new NGO instances
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
-    exit;
+    hbp_json_error(405, 'Method not allowed');
 }
 
 // Accept JSON (fetch) or form-encoded (sendBeacon with URLSearchParams)
@@ -18,42 +19,39 @@ if (strpos($contentType, 'application/json') !== false) {
 }
 
 $sessionId   = isset($body['session_id'])   ? (int)    $body['session_id']   : 0;
+$token       = isset($body['token'])        ? (string) $body['token']        : '';
 $durationSec = isset($body['duration_sec']) ? (int)    $body['duration_sec'] : 0;
 $type        = isset($body['type'])         ? (string) $body['type']         : 'end';
 
-if ($sessionId <= 0 || $durationSec < 0) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid parameters']);
-    exit;
+if ($sessionId <= 0 || $durationSec < 0 || $token === '') {
+    hbp_json_error(400, 'Invalid parameters');
 }
 
 try {
-    $pdo = new PDO(
-        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
-        DB_USER,
-        DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    $pdo = hbp_db();
+
+    $stmt = $pdo->prepare(
+        'SELECT token, TIMESTAMPDIFF(SECOND, started_at, NOW()) AS elapsed
+           FROM sessions WHERE id = :id'
     );
+    $stmt->execute([':id' => $sessionId]);
+    $session = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$session || $session['token'] === null || !hash_equals($session['token'], $token)) {
+        hbp_json_error(403, 'Invalid session');
+    }
 
     // Server-side cap: claimed duration can never exceed real elapsed time
     // since session start — prevents counter inflation via forged requests
-    $stmt = $pdo->prepare('SELECT TIMESTAMPDIFF(SECOND, started_at, NOW()) FROM sessions WHERE id = :id');
-    $stmt->execute([':id' => $sessionId]);
-    $elapsed = $stmt->fetchColumn();
-
-    if ($elapsed === false) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid parameters']);
-        exit;
-    }
-
-    $durationSec = min($durationSec, max((int) $elapsed, 0), 3600);
-    $earnedPln   = round($durationSec * 0.0001, 4);
+    $durationSec = min($durationSec, max((int) $session['elapsed'], 0), HBP_MAX_SESSION_SEC);
 
     if ($type === 'heartbeat') {
         // Save progress only — no ended_at, no global stats update.
         // ended_at IS NULL guard: a late heartbeat must not mutate an ended session
-        $stmt = $pdo->prepare('UPDATE sessions SET duration_sec = :dur WHERE id = :id AND ended_at IS NULL');
+        $stmt = $pdo->prepare(
+            'UPDATE sessions SET duration_sec = :dur, last_seen_at = NOW()
+              WHERE id = :id AND ended_at IS NULL'
+        );
         $stmt->execute([':dur' => $durationSec, ':id' => $sessionId]);
         echo json_encode(['ok' => true]);
         exit;
@@ -61,57 +59,22 @@ try {
 
     // type = 'end' or 'beacon': finalize session
     $pdo->beginTransaction();
-
-    // Guard: only update if not already ended — prevents double-counting
-    // when beacon fires after a normal end or when both end+beacon race
-    $stmt = $pdo->prepare(
-        'UPDATE sessions
-            SET ended_at     = NOW(),
-                duration_sec = :dur,
-                earned_pln   = :earned
-          WHERE id = :id
-            AND ended_at IS NULL'
-    );
-    $stmt->execute([':dur' => $durationSec, ':earned' => $earnedPln, ':id' => $sessionId]);
-
-    if ($stmt->rowCount() > 0) {
-        // stats.total_sessions = count of unique devices with at least one completed session
-        // (NOT total session count — incremented once per device_id)
-        $isFirstCompletion = false;
-        $row2 = $pdo->prepare('SELECT device_id FROM sessions WHERE id = :id');
-        $row2->execute([':id' => $sessionId]);
-        $deviceId = $row2->fetchColumn();
-
-        if ($deviceId) {
-            $chk = $pdo->prepare(
-                'SELECT COUNT(*) FROM sessions WHERE device_id = :did AND ended_at IS NOT NULL'
-            );
-            $chk->execute([':did' => $deviceId]);
-            $isFirstCompletion = ((int) $chk->fetchColumn() === 1);
-        }
-
-        $stmt = $pdo->prepare(
-            'UPDATE stats
-                SET total_sessions = total_sessions + :first_completion,
-                    total_pln      = total_pln + :earned
-              WHERE id = 1'
-        );
-        $stmt->execute([':first_completion' => $isFirstCompletion ? 1 : 0, ':earned' => $earnedPln]);
-    }
-
+    hbp_finalize_session($pdo, $sessionId, $durationSec);
+    // Report what was actually recorded — a repeated end must not claim new earnings
+    $stmt = $pdo->prepare('SELECT earned_pln FROM sessions WHERE id = :id');
+    $stmt->execute([':id' => $sessionId]);
+    $earned = (float) $stmt->fetchColumn();
     $row = $pdo->query('SELECT total_sessions, total_pln FROM stats WHERE id = 1')
-                ->fetch(PDO::FETCH_ASSOC);
-
+               ->fetch(PDO::FETCH_ASSOC);
     $pdo->commit();
 
     echo json_encode([
-        'session_earned' => $earnedPln,
-        'total_sessions' => (int)   $row['total_sessions'],
-        'total_pln'      => (float) $row['total_pln'],
+        'session_earned' => $earned,
+        'total_sessions' => (int) $row['total_sessions'] + DISPLAY_SESSIONS_OFFSET,
+        'total_pln'      => round((float) $row['total_pln'] + DISPLAY_PLN_OFFSET, 4),
     ]);
 } catch (PDOException $e) {
     if (isset($pdo) && $pdo->inTransaction()) $pdo->rollBack();
     error_log('HBP session_end: ' . $e->getMessage());
-    http_response_code(500);
-    echo json_encode(['error' => 'Database error']);
+    hbp_json_error(500, 'Database error');
 }

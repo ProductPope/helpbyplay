@@ -1,7 +1,6 @@
 // Client-side session earnings counter.
 // Rate: 0.001 PLN per 10 seconds = 0.0001 PLN per second.
 // Pauses after 10s of inactivity. Dispatches auto-end after 600s inactivity.
-// Dispatches heartbeat every 30 active seconds.
 // Ad gate per provider:
 //   adsense  — waits for ins.adsbygoogle data-ad-status="filled"
 //   custom   — waits for consent (slot visible) and non-empty HTML
@@ -104,11 +103,6 @@ function tick() {
     if (paused || !adPresentCache) return;
     sessionSeconds++;
     refreshDisplay();
-    if (sessionSeconds % 30 === 0) {
-        document.dispatchEvent(new CustomEvent('counter:heartbeat', {
-            detail: { seconds: sessionSeconds },
-        }));
-    }
 }
 
 function resetInactivityTimer() {

@@ -1014,3 +1014,10 @@ main.container {
     .btn-end-session { width: auto; }
     .summary-card    { padding: var(--space-xl); }
 }
+
+/* ===== End-session button (below every game) ===== */
+.end-session-wrap {
+    display:         flex;
+    justify-content: center;
+    margin:          var(--space-md) 0;
+}

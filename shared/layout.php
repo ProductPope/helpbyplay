@@ -78,6 +78,10 @@ function render_below_game(string $game_id = ''): void {
     $other_games = array_filter($all_games, fn($key) => $key !== $game_id);
 ?>
 <?php if ($game_id !== ''): ?>
+    <div class="end-session-wrap">
+        <button id="btn-end-session" type="button" class="btn-secondary"><?= htmlspecialchars(t('btn_end_session')) ?></button>
+    </div>
+
     <section class="game-info">
         <h2><?= htmlspecialchars(t('game_' . $game_id . '_name')) ?></h2>
         <p><?= htmlspecialchars(t('game_' . $game_id . '_about')) ?></p>
@@ -129,6 +133,53 @@ function render_below_game(string $game_id = ''): void {
         <p><?= htmlspecialchars(t('recommend_text')) ?></p>
         <a href="https://helpbyplay.com" target="_blank" rel="noopener noreferrer"><?= htmlspecialchars(t('recommend_link')) ?></a>
     </section>
+<?php
+}
+
+// Summary, error and inactivity screens shared by every game page.
+// session.js switches between them and fills in the summary values.
+function render_session_screens(string $game_id): void {
+    $playAgain = '/games/' . rawurlencode($game_id) . '/';
+?>
+        <section id="screen-summary" class="screen hidden">
+            <div class="summary-card">
+                <h1 class="summary-title"><?= t('summary_title') ?></h1>
+
+                <dl class="summary-stats">
+                    <dt><?= t('summary_duration') ?></dt>
+                    <dd id="sum-duration">—</dd>
+
+                    <dt><?= t('summary_earned') ?></dt>
+                    <dd id="sum-earned" class="sum-earned-value">—</dd>
+
+                    <dt><?= t('summary_global') ?></dt>
+                    <dd id="sum-global">—</dd>
+                </dl>
+
+                <p class="summary-thanks"><?= t('summary_thanks_msg') ?></p>
+
+                <div class="summary-actions">
+                    <a href="<?= $playAgain ?>" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
+                </div>
+            </div>
+        </section>
+
+        <div id="screen-error" class="screen hidden">
+            <p class="error-msg"><?= t('error_session') ?></p>
+            <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
+        </div>
+
+        <section id="screen-inactivity" class="screen hidden">
+            <div class="summary-card">
+                <h1 class="summary-title"><?= t('inactivity_title') ?></h1>
+                <p class="summary-thanks"><?= t('inactivity_msg') ?></p>
+                <div class="summary-actions">
+                    <a href="<?= $playAgain ?>" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
+                </div>
+            </div>
+        </section>
 <?php
 }
 
