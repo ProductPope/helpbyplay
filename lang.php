@@ -205,10 +205,11 @@ $TRANSLATIONS = [
         'game_runner_tutorial'     => 'Dotknij ekran lub naciśnij Spację aby skoczyć. Możesz skoczyć dwa razy z rzędu. Unikaj czerwonych bloków. Im dłużej grasz tym szybciej się poruszasz!',
 
         // Cookie consent
-        'cookie_consent_text'  => 'Ta strona używa plików cookie do wyświetlania reklam. Więcej informacji w <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce Prywatności Help By Play</a>.',
+        'cookie_consent_text'  => 'Ta strona używa plików cookie do wyświetlania reklam. Więcej informacji w <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce Prywatności Help By Play</a>. Bez zgody możesz grać, ale reklamy się nie wyświetlą i Twoja gra nie zbierze środków dla fundacji.',
         'cookie_accept'        => 'Akceptuję',
         'cookie_decline'       => 'Odrzucam',
         'privacy_policy'       => 'Polityka Prywatności',
+        'cookie_settings'      => 'Ustawienia cookies',
     ],
 
     'en' => [
@@ -413,10 +414,11 @@ $TRANSLATIONS = [
         'game_runner_tutorial'     => 'Tap the screen or press Space to jump. You can jump twice in a row. Avoid red blocks. The longer you play, the faster it gets!',
 
         // Cookie consent
-        'cookie_consent_text'  => 'This site uses cookies to display ads. Learn more in the <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Help By Play Privacy Policy</a>.',
+        'cookie_consent_text'  => 'This site uses cookies to display ads. Learn more in the <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener">Help By Play Privacy Policy</a>. You can play without consent, but no ads will be shown and your play will not raise money for the charity.',
         'cookie_accept'        => 'Accept',
         'cookie_decline'       => 'Decline',
         'privacy_policy'       => 'Privacy Policy',
+        'cookie_settings'      => 'Cookie settings',
     ],
 ];
 

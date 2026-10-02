@@ -292,6 +292,21 @@ main.container {
 
 .site-footer a { color: var(--color-primary); text-decoration: none; }
 
+/* Footer action that looks like a link (opens cookie settings) */
+.footer-link-btn {
+    background:   none;
+    border:       none;
+    padding:      0;
+    font:         inherit;
+    color:        var(--color-primary);
+    cursor:       pointer;
+    touch-action: manipulation;
+}
+.footer-link-btn:focus-visible {
+    outline:        2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
 /* ===== Screen utility ===== */
 .screen { width: 100%; }
 .hidden { display: none !important; }

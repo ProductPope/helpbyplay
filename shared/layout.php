@@ -45,6 +45,10 @@ function render_header(
 <?php
 }
 
+// Single source of truth for the game list (home page tiles + "other games" carousel).
+// Each key maps to /games/<key>/ and to lang keys game_<key>_name, _desc, _about, _tutorial.
+const HBP_GAMES = ['cards', '2048', 'snake', 'memory', 'saper', 'platformer', 'jumper', 'invaders', 'bricks', 'runner'];
+
 function game_thumbnail_svg(string $key, int $size = 44): string {
     $w = $size; $h = $size;
     switch ($key) {
@@ -74,8 +78,7 @@ function game_thumbnail_svg(string $key, int $size = 44): string {
 }
 
 function render_below_game(string $game_id = ''): void {
-    $all_games = ['cards', '2048', 'snake', 'saper', 'platformer', 'jumper', 'invaders', 'memory', 'bricks', 'runner'];
-    $other_games = array_filter($all_games, fn($key) => $key !== $game_id);
+    $other_games = array_filter(HBP_GAMES, fn($key) => $key !== $game_id);
 ?>
 <?php if ($game_id !== ''): ?>
     <div class="end-session-wrap">
@@ -198,6 +201,8 @@ function render_footer(string $lang): void {
                 <a href="/statystyki.php"><?= t('nav_stats') ?></a>
                 &middot;
                 <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener"><?= t('privacy_policy') ?></a>
+                &middot;
+                <button type="button" class="footer-link-btn" onclick="hbpOpenCookieSettings()"><?= t('cookie_settings') ?></button>
             </p>
             <div class="lang-switcher">
                 <button onclick="switchLang('pl')" class="<?= $lang === 'pl' ? 'active' : '' ?>"><?= t('lang_pl') ?></button>

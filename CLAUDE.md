@@ -6,7 +6,7 @@
 **Name:** Help By Play
 **Type:** Full-stack (PHP + Vanilla JS)
 **Purpose:** Gaming platform for charities — players play mini-games, AdSense ad revenue goes to the selected charity
-**Status:** Early prototype (MVP)
+**Status:** MVP — 10 games live on core.helpbyplay.com
 **Platform URL:** `core.helpbyplay.com` — main platform install on Cyberfolks
 **Main site:** `helpbyplay.com` — separate marketing website, independent from this project
 
@@ -28,30 +28,35 @@
 
 ```
 public_html/
-├── index.php             # Home screen: foundation info + global counter
-├── game.php              # Game screen + post-session summary screen
+├── index.php             # Home screen: foundation info, stats bar, game tiles
+├── statystyki.php        # Public stats page (today / week / all time, optional v0.9 history)
 ├── config.php            # PRIVATE — never committed to git (.gitignore)
-├── config.example.php    # Template for config.php with empty values
-├── lang.php              # All PL/EN translations as PHP arrays
-├── .gitignore            # Excludes config.php
-├── LICENSE               # GPL v3
-├── README.md             # Platform description for charities wanting to join
-├── ONBOARDING.md         # Steps for adding a new charity — for platform owner
+├── config.example.php    # Template for config.php (DB, foundation, ads, display offsets)
+├── lang.php              # All PL/EN translations; t(), t_js(), get_lang()
+├── ads.txt               # Per-instance AdSense publisher line (not overwritten on upgrade)
+├── .htaccess             # Security headers, access rules, static asset caching
+├── LICENSE / README.md / INSTALL.md / ONBOARDING.md
 ├── api/
-│   ├── session_start.php # Records session start to database
-│   ├── session_end.php   # Records session end + atomically updates global total
+│   ├── session_start.php # Creates a session (+ secret token), per-IP rate limit, stale sweep
+│   ├── session_end.php   # Heartbeat / end / beacon — requires token, updates global total
 │   └── stats.php         # Returns global counter as JSON
 ├── db/
-│   └── init.sql          # MySQL table creation script
-└── assets/
-    ├── game.js           # Candy Crush mini-game logic (6x6 board, tiles)
-    ├── counter.js        # Simulated earnings counter, increments in real time
-    ├── lang.js           # Client-side PL/EN language switcher
-    └── style.css         # Global styles, mobile-first responsive
+│   ├── init.sql          # Schema for fresh installs
+│   └── migrate_NNN_*.sql # Upgrades for existing installs, run in order
+├── shared/               # Include-only PHP (direct HTTP access denied by shared/.htaccess)
+│   ├── db.php            # hbp_db(), hbp_finalize_session(), stale sweep, limits/constants
+│   ├── layout.php        # render_header/footer, render_session_screens, render_below_game, HBP_GAMES
+│   ├── ads.php           # render_ad_slot() — provider switch, contains ADSENSE_PLACEHOLDER
+│   ├── session.php       # Loads $totalSessions / $totalPln for the header
+│   ├── display_offset.php# 0/false fallbacks for DISPLAY_* / SHOW_V09_HISTORY config
+│   └── assets/           # shared.css, counter.js, session.js, cookie-consent.js, lang.js
+├── assets/style.css      # Home page styles
+└── games/<key>/          # One directory per game: index.php, game.js, game.css
 ```
 
 **Entry point:** `index.php`
-**Main file:** `game.php` (most game and session logic lives here)
+**Game list:** `HBP_GAMES` in `shared/layout.php` — the single source for home tiles and the "other games" carousel. A new game needs a `games/<key>/` directory, lang keys `game_<key>_name/_desc/_about/_tutorial`, and a case in `game_thumbnail_svg()`.
+**Game page contract:** `game.js` defines `initGame()`; script order is `counter.js → game.js → session.js`. Game strings needed in JS go into `lang.php` as `js_*` keys and are read with `hbpT('js_...')`.
 
 ---
 
@@ -80,7 +85,11 @@ public_html/
 **Border radius:** sm: 4px, md: 8px, lg: 16px
 
 **Key reusable components already built:**
-- [fill in as components are built]
+- `render_header()` / `render_footer()` — page shell, header stats, footer, cookie banner
+- `render_ad_slot()` — the one ad location per page
+- `render_session_screens($key)` — summary / error / inactivity screens for game pages
+- `render_below_game($key)` — "Finish" button, game info, other-games carousel, charity card
+- `.btn-play`, `.btn-secondary`, `.summary-card`, `.stat-card` (shared.css)
 
 ---
 
@@ -111,7 +120,7 @@ public_html/
 
 **Non-goals (MVP):**
 - No user registration or accounts
-- No real AdSense integration (placeholder only)
+- No ad network other than AdSense / a custom creative (see `AD_PROVIDER`)
 - No admin panel
 - No multi-charity support per instance
 - No payout system
@@ -129,20 +138,26 @@ public_html/
 ## DEVELOPMENT COMMANDS
 
 ```bash
-# Local development (optional, requires XAMPP)
-# Start XAMPP, put files in htdocs/helpbyplay
-# Open: http://localhost/helpbyplay
+# Local development — all URLs are root-relative (/api/, /games/), so the
+# project must be served from the web root, not a subdirectory
+cp config.example.php config.php   # fill in local DB credentials
+php -S localhost:8000              # or XAMPP with htdocs = project root
+# Open: http://localhost:8000  (.htaccess rules need Apache to take effect)
+
+# Repository checks (also run by CI on every push)
+php .github/scripts/check.php      # PL/EN key parity, unknown t() keys, Polish text outside lang.php
 
 # Deploy to Cyberfolks
 # 1. Upload all files via FTP to public_html (except config.php)
 # 2. Upload config.php separately by hand
-# 3. Import db/init.sql via phpMyAdmin in DirectAdmin panel
+# 3. Fresh install: import db/init.sql via phpMyAdmin in DirectAdmin panel
+#    Upgrade: run new db/migrate_NNN_*.sql files BEFORE uploading PHP (see INSTALL.md)
 
 # Post-deploy verification
 # Open the charity's domain → check home screen loads
 # Click "Play" → check game launches
 # Play for 30 seconds → check session counter increments
-# End session → check global counter updated
+# Click "Finish and see summary" → check global counter updated
 # Check PL/EN switcher works on both screens
 ```
 
@@ -154,33 +169,29 @@ Open the charity subdomain, run the full flow: home screen → game → summary.
 ## CURRENT FOCUS
 
 **Active task / sprint goal:**
-Build complete MVP: one charity, one Candy Crush mini-game, simulated counter, PL/EN bilingual UI, AdSense placeholder, platform onboarding documentation
+Stabilise the multi-game MVP: trustworthy counter (no inflation, no lost mobile sessions), GDPR-compliant ads, clean per-instance configuration, onboarding documentation.
 
 **Known issues / blockers:**
 - Charity config values (name, description, logo) must be filled in by platform owner when creating config.php
 - Cyberfolks MySQL credentials filled in per-instance in config.php
 - AdSense IDs provided by charity after account approval — placeholder until then
+- EEA ads require a Google-certified CMP (TCF v2.2); the built-in cookie banner covers consent storage only
 
 **What NOT to touch right now:**
 - Do not add user registration
 - Do not build an admin panel
-- Do not integrate real AdSense (placeholder div only)
-- Do not add more than one game in this iteration
+- Do not add external JS libraries
 
 ---
 
 ## ADSENSE PLACEHOLDER
 
-Every page layout must contain exactly one location marked:
+Every page layout contains exactly one ad location, rendered by `render_ad_slot()` in `shared/ads.php`. It always starts with the marker comment `<!-- ADSENSE_PLACEHOLDER -->`.
 
-```html
-<!-- ADSENSE_PLACEHOLDER -->
-<div id="ad-container" style="width:728px; max-width:100%; height:90px; margin:0 auto; background:#f0f0f0; display:flex; align-items:center; justify-content:center; color:#999; font-size:12px;">
-  Advertisement
-</div>
-```
-
-Once the charity's AdSense account is approved, replace this div with the AdSense ad unit code. No other code changes are needed.
+`AD_PROVIDER` in config.php selects what is rendered:
+- `''` — grey placeholder only; the session counter never runs (no real ad, no revenue)
+- `'adsense'` — `<ins class="adsbygoogle">` with `ADSENSE_CLIENT` / `ADSENSE_SLOT`; the AdSense script loads only after cookie consent
+- `'custom'` — raw HTML from `AD_CUSTOM_HTML_MOBILE` / `_DESKTOP`, shown only after consent
 
 ---
 
@@ -201,14 +212,18 @@ Files that NEVER go to GitHub (covered by .gitignore):
 
 ## SIMULATED COUNTER LOGIC
 
-Rate: 0.001 PLN per 10 seconds of play.
-The counter visible to the player increments in real time on the client side (JavaScript).
-When the session ends, the actual duration is sent to `api/session_end.php`, which:
-1. Saves the session to the `sessions` table
-2. Atomically updates the total in the `stats` table (within a transaction)
-3. Returns the updated global counter
+Rate: 0.001 PLN per 10 seconds of play (`HBP_PLN_PER_SECOND` in shared/db.php, `PLN_PER_SECOND` in counter.js).
+The counter visible to the player increments client-side, only while an ad is visible and the player is active (pauses after 10 s idle, auto-ends after 10 min idle).
 
-The global counter on the home screen is fetched from `api/stats.php` on each page load.
+Session lifecycle (`shared/assets/session.js` ↔ `api/`):
+1. `session_start.php` creates the row and returns `session_id` + secret `token`; it also enforces the per-IP limits and closes stale sessions
+2. Every 30 s (tab visible) and on tab hide, a heartbeat saves `duration_sec` and `last_seen_at`
+3. The session ends via the "Finish" button (summary screen), inactivity auto-end, or a `pagehide` beacon
+4. `session_end.php` caps the duration to real elapsed time and `HBP_MAX_SESSION_SEC`, then `hbp_finalize_session()` sets `ended_at` and adds to `stats` in one transaction (guarded by `ended_at IS NULL`, so it counts once)
+5. Sessions with no heartbeat for 15 min are closed by the server sweep using their last saved duration
+
+Metrics: `stats.total_sessions` = unique devices with at least one completed session ("players" in the header). The stats page counts sessions with `duration_sec > 0`.
+Public totals add `DISPLAY_SESSIONS_OFFSET` / `DISPLAY_PLN_OFFSET` from config.php (non-zero on core.helpbyplay.com only).
 
 ---
 

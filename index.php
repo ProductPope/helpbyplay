@@ -6,19 +6,6 @@ require_once __DIR__ . '/shared/layout.php';
 
 $LANG = get_lang();
 
-$games = [
-    ['key' => 'cards',       'url' => '/games/cards/', 'active' => true],
-    ['key' => '2048',        'url' => '/games/2048/', 'active' => true],
-    ['key' => 'snake',       'url' => '/games/snake/', 'active' => true],
-    ['key' => 'memory',      'url' => '/games/memory/', 'active' => true],
-    ['key' => 'saper',       'url' => '/games/saper/', 'active' => true],
-    ['key' => 'platformer',  'url' => '/games/platformer/', 'active' => true],
-    ['key' => 'jumper',      'url' => '/games/jumper/', 'active' => true],
-    ['key' => 'invaders',    'url' => '/games/invaders/', 'active' => true],
-    ['key' => 'bricks',      'url' => '/games/bricks/', 'active' => true],
-    ['key' => 'runner',      'url' => '/games/runner/', 'active' => true],
-];
-
 render_header(
     t('site_title'),
     'page-index',
@@ -46,21 +33,16 @@ render_header(
             <h2 class="game-selector-title"><?= t('games_section_title') ?></h2>
             <div class="game-tiles">
 
-<?php foreach ($games as $g):
-    $tag    = $g['active'] ? 'a' : 'div';
-    $href   = $g['active'] ? ' href="' . htmlspecialchars($g['url']) . '"' : '';
-    $cls    = 'game-tile' . ($g['active'] ? '' : ' game-tile--coming-soon');
-    $nameKey = 'game_' . $g['key'] . '_name';
-?>
-                <<?= $tag ?><?= $href ?> class="<?= $cls ?>">
+<?php foreach (HBP_GAMES as $key): ?>
+                <a href="/games/<?= htmlspecialchars($key) ?>/" class="game-tile">
                     <div class="game-tile-preview">
-                    <?= game_thumbnail_svg($g['key'], 52) ?>
+                    <?= game_thumbnail_svg($key, 52) ?>
                     </div>
                     <div class="game-tile-info">
-                        <span class="game-tile-name"><?= t($nameKey) ?></span>
-                        <span class="game-tile-action"><?= $g['active'] ? t('btn_play_game') : t('coming_soon') ?></span>
+                        <span class="game-tile-name"><?= t('game_' . $key . '_name') ?></span>
+                        <span class="game-tile-action"><?= t('btn_play_game') ?></span>
                     </div>
-                </<?= $tag ?>>
+                </a>
 <?php endforeach; ?>
 
             </div>
