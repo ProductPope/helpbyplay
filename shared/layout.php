@@ -3,7 +3,7 @@
 // Requires config.php and lang.php loaded before calling.
 
 require_once __DIR__ . '/ads.php';
-require_once __DIR__ . '/display_offset.php'; // offsets are 0 on new NGO instances
+require_once __DIR__ . '/display_offset.php'; // defaults for offsets not set in config.php
 
 function render_header(
     string $pageTitle,
@@ -45,6 +45,10 @@ function render_header(
 <?php
 }
 
+// Single source of truth for the game list (home page tiles + "other games" carousel).
+// Each key maps to /games/<key>/ and to lang keys game_<key>_name, _desc, _about, _tutorial.
+const HBP_GAMES = ['cards', '2048', 'snake', 'memory', 'saper', 'platformer', 'jumper', 'invaders', 'bricks', 'runner'];
+
 function game_thumbnail_svg(string $key, int $size = 44): string {
     $w = $size; $h = $size;
     switch ($key) {
@@ -74,10 +78,13 @@ function game_thumbnail_svg(string $key, int $size = 44): string {
 }
 
 function render_below_game(string $game_id = ''): void {
-    $all_games = ['cards', '2048', 'snake', 'saper', 'platformer', 'jumper', 'invaders', 'memory', 'bricks', 'runner'];
-    $other_games = array_filter($all_games, fn($key) => $key !== $game_id);
+    $other_games = array_filter(HBP_GAMES, fn($key) => $key !== $game_id);
 ?>
 <?php if ($game_id !== ''): ?>
+    <div class="end-session-wrap">
+        <button id="btn-end-session" type="button" class="btn-secondary"><?= htmlspecialchars(t('btn_end_session')) ?></button>
+    </div>
+
     <section class="game-info">
         <h2><?= htmlspecialchars(t('game_' . $game_id . '_name')) ?></h2>
         <p><?= htmlspecialchars(t('game_' . $game_id . '_about')) ?></p>
@@ -86,7 +93,7 @@ function render_below_game(string $game_id = ''): void {
 
         <h3 class="other-games-heading"><?= htmlspecialchars(t('other_games')) ?></h3>
         <div class="other-games-wrap">
-            <button class="other-games-arrow other-games-arrow--prev" aria-label="Poprzednia">&#8249;</button>
+            <button class="other-games-arrow other-games-arrow--prev" aria-label="<?= htmlspecialchars(t('aria_prev')) ?>">&#8249;</button>
             <div class="other-games-scroll" id="other-games-scroll">
 <?php foreach ($other_games as $key): ?>
                 <a href="/games/<?= htmlspecialchars($key) ?>/" class="other-games-tile">
@@ -95,7 +102,7 @@ function render_below_game(string $game_id = ''): void {
                 </a>
 <?php endforeach; ?>
             </div>
-            <button class="other-games-arrow other-games-arrow--next" aria-label="Następna">&#8250;</button>
+            <button class="other-games-arrow other-games-arrow--next" aria-label="<?= htmlspecialchars(t('aria_next')) ?>">&#8250;</button>
         </div>
         <script>
         (function(){
@@ -132,6 +139,53 @@ function render_below_game(string $game_id = ''): void {
 <?php
 }
 
+// Summary, error and inactivity screens shared by every game page.
+// session.js switches between them and fills in the summary values.
+function render_session_screens(string $game_id): void {
+    $playAgain = '/games/' . rawurlencode($game_id) . '/';
+?>
+        <section id="screen-summary" class="screen hidden">
+            <div class="summary-card">
+                <h1 class="summary-title"><?= t('summary_title') ?></h1>
+
+                <dl class="summary-stats">
+                    <dt><?= t('summary_duration') ?></dt>
+                    <dd id="sum-duration">—</dd>
+
+                    <dt><?= t('summary_earned') ?></dt>
+                    <dd id="sum-earned" class="sum-earned-value">—</dd>
+
+                    <dt><?= t('summary_global') ?></dt>
+                    <dd id="sum-global">—</dd>
+                </dl>
+
+                <p class="summary-thanks"><?= t('summary_thanks_msg') ?></p>
+
+                <div class="summary-actions">
+                    <a href="<?= $playAgain ?>" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
+                </div>
+            </div>
+        </section>
+
+        <div id="screen-error" class="screen hidden">
+            <p class="error-msg"><?= t('error_session') ?></p>
+            <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
+        </div>
+
+        <section id="screen-inactivity" class="screen hidden">
+            <div class="summary-card">
+                <h1 class="summary-title"><?= t('inactivity_title') ?></h1>
+                <p class="summary-thanks"><?= t('inactivity_msg') ?></p>
+                <div class="summary-actions">
+                    <a href="<?= $playAgain ?>" class="btn-play"><?= t('btn_play_again') ?></a>
+                    <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
+                </div>
+            </div>
+        </section>
+<?php
+}
+
 function render_footer(string $lang): void {
 ?>
     </main>
@@ -147,6 +201,8 @@ function render_footer(string $lang): void {
                 <a href="/statystyki.php"><?= t('nav_stats') ?></a>
                 &middot;
                 <a href="https://helpbyplay.com/polityka-prywatnosci.html" target="_blank" rel="noopener"><?= t('privacy_policy') ?></a>
+                &middot;
+                <button type="button" class="footer-link-btn" onclick="hbpOpenCookieSettings()"><?= t('cookie_settings') ?></button>
             </p>
             <div class="lang-switcher">
                 <button onclick="switchLang('pl')" class="<?= $lang === 'pl' ? 'active' : '' ?>"><?= t('lang_pl') ?></button>
@@ -154,7 +210,11 @@ function render_footer(string $lang): void {
             </div>
         </div>
     </footer>
-    <script>window.HBP_CONSENT_STRINGS={text:<?= json_encode(t('cookie_consent_text')) ?>,accept:<?= json_encode(t('cookie_accept')) ?>,decline:<?= json_encode(t('cookie_decline')) ?>};</script>
+    <script>
+    window.HBP_CONSENT_STRINGS={text:<?= json_encode(t('cookie_consent_text')) ?>,accept:<?= json_encode(t('cookie_accept')) ?>,decline:<?= json_encode(t('cookie_decline')) ?>,label:<?= json_encode(t('cookie_banner_label')) ?>};
+    window.HBP_STRINGS=<?= json_encode(t_js(), JSON_UNESCAPED_UNICODE) ?>;
+    function hbpT(key,vars){var s=window.HBP_STRINGS[key]||key;for(var k in vars||{})s=s.replace('{'+k+'}',vars[k]);return s;}
+    </script>
     <script src="/shared/assets/cookie-consent.js?v=<?= @filemtime(__DIR__ . '/assets/cookie-consent.js') ?>"></script>
 <?php
 }

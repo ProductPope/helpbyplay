@@ -52,6 +52,7 @@
 
     function injectStyles() {
         var style = document.createElement('style');
+        style.id = 'hbp-cookie-style';
         style.textContent =
             '#hbp-cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#fff;' +
             'box-shadow:0 -2px 8px rgba(0,0,0,.15);padding:16px 24px;z-index:9999;}' +
@@ -70,15 +71,19 @@
         document.head.appendChild(style);
     }
 
-    function showBanner() {
+    // reloadOnChoice: opened from the footer link — ads may already be loaded,
+    // so reload to apply the new choice cleanly
+    function showBanner(reloadOnChoice) {
         var strings = window.HBP_CONSENT_STRINGS || {};
+        var existing = document.getElementById('hbp-cookie-banner');
+        if (existing) existing.remove();
 
-        injectStyles();
+        if (!document.getElementById('hbp-cookie-style')) injectStyles();
 
         var banner = document.createElement('div');
         banner.id = 'hbp-cookie-banner';
         banner.setAttribute('role', 'dialog');
-        banner.setAttribute('aria-label', 'Cookie consent');
+        banner.setAttribute('aria-label', strings.label || '');
 
         var inner = document.createElement('div');
         inner.id = 'hbp-cookie-inner';
@@ -102,6 +107,7 @@
 
         btnAccept.addEventListener('click', function () {
             setConsent('accepted');
+            if (reloadOnChoice) { location.reload(); return; }
             loadAdsScript();
             pushAds();
             hideBanner(banner);
@@ -109,6 +115,7 @@
 
         btnDecline.addEventListener('click', function () {
             setConsent('rejected');
+            if (reloadOnChoice) { location.reload(); return; }
             hideAds();
             hideBanner(banner);
         });
@@ -120,6 +127,8 @@
         banner.appendChild(inner);
         document.body.appendChild(banner);
     }
+
+    window.hbpOpenCookieSettings = function () { showBanner(true); };
 
     var consent = getConsent();
 

@@ -28,3 +28,11 @@ define('ADSENSE_SLOT',   '');    // e.g. '1234567890'
 // Paste the raw HTML snippet from the advertiser. Mobile: 320x100. Desktop: 728x90.
 define('AD_CUSTOM_HTML_MOBILE',  '');
 define('AD_CUSTOM_HTML_DESKTOP', '');
+
+// --- Historical data (core.helpbyplay.com only) ---
+// A new charity instance keeps these at 0 / false.
+// core.helpbyplay.com adds its v0.9 totals (Dec 2022 – Jun 2023):
+//   DISPLAY_SESSIONS_OFFSET = 1500, DISPLAY_PLN_OFFSET = 3030.82, SHOW_V09_HISTORY = true
+define('DISPLAY_SESSIONS_OFFSET', 0);
+define('DISPLAY_PLN_OFFSET',      0);
+define('SHOW_V09_HISTORY',        false); // show the v0.9 section on the stats page

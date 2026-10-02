@@ -9,34 +9,29 @@ $LANG = get_lang();
 // Per-period stats from sessions table
 $today_sessions = 0; $today_pln = 0.0;
 $week_sessions  = 0; $week_pln  = 0.0;
-$players        = 0;
-$avg_formatted  = '0:00';
+$alltime_sessions = 0;
 
 try {
-    $pdo = new PDO(
-        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
-        DB_USER, DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    $pdo = hbp_db();
 
     $row = $pdo->query("
         SELECT
-            SUM(started_at >= CURDATE()) AS today_s,
+            COALESCE(SUM(started_at >= CURDATE()), 0) AS today_s,
             COALESCE(SUM(CASE WHEN started_at >= CURDATE() THEN earned_pln END), 0) AS today_pln,
-            SUM(started_at >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)) AS week_s,
+            COALESCE(SUM(started_at >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)), 0) AS week_s,
             COALESCE(SUM(CASE WHEN started_at >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY) THEN earned_pln END), 0) AS week_pln,
-            COUNT(DISTINCT device_id) AS players,
-            COALESCE(AVG(NULLIF(duration_sec, 0)), 0) AS avg_sec
+            COUNT(*) AS alltime_s
         FROM sessions
+        -- A counted session is one in which the counter actually ran (ad shown,
+        -- player active). Page loads that never earned anything are excluded.
+        WHERE duration_sec > 0
     ")->fetch(PDO::FETCH_ASSOC);
 
     $today_sessions = (int)   $row['today_s'];
     $today_pln      = (float) $row['today_pln'];
     $week_sessions  = (int)   $row['week_s'];
     $week_pln       = (float) $row['week_pln'];
-    $players        = (int)   $row['players'];
-    $avg_s          = (int)   $row['avg_sec'];
-    $avg_formatted  = sprintf('%d:%02d', intdiv($avg_s, 60), $avg_s % 60);
+    $alltime_sessions = (int) $row['alltime_s'];
 
 } catch (PDOException $e) {
     // Degrade gracefully — zeros shown
@@ -53,7 +48,7 @@ render_header(
 ?>
 
 <?php
-// v0.9 historical data (December 2022 – June 2023)
+// v0.9 historical data (December 2022 – June 2023) — shown only on core.helpbyplay.com
 $v09_players = 1500;
 $v09_avg     = '18:03';
 $v09_orgs    = 17;
@@ -94,7 +89,7 @@ $v09_hours   = 5050;
             <div class="stat-card stat-card--alltime">
                 <h2 class="stat-card-period"><?= htmlspecialchars(t('stats_alltime')) ?></h2>
                 <div class="stat-row">
-                    <span class="stat-value"><?= number_format($players, 0, ',', ' ') ?></span>
+                    <span class="stat-value"><?= number_format($alltime_sessions, 0, ',', ' ') ?></span>
                     <span class="stat-label"><?= htmlspecialchars(t('stats_sessions_label')) ?></span>
                 </div>
                 <div class="stat-row">
@@ -105,6 +100,7 @@ $v09_hours   = 5050;
 
         </div>
 
+<?php if (SHOW_V09_HISTORY): ?>
         <div class="stats-era-divider">
             <div class="stats-era-divider-text">
                 <span class="stats-era-name"><?= htmlspecialchars(t('stats_v09_era_name')) ?></span>
@@ -149,6 +145,7 @@ $v09_hours   = 5050;
             </div>
 
         </div>
+<?php endif; ?>
 
 <?php render_footer($LANG); ?>
 

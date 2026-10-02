@@ -37,7 +37,7 @@ or download the ZIP from GitHub and unpack it.
 
 Verify two tables exist: `sessions` and `stats`. The `stats` table must contain one row with `id = 1` (created automatically by the script).
 
-> `db/migrate_001_device_id.sql` is only for upgrading old installations — skip it for a fresh install.
+> The `db/migrate_*.sql` files are only for upgrading old installations — skip them for a fresh install.
 
 ---
 
@@ -73,16 +73,15 @@ define('AD_CUSTOM_HTML_DESKTOP', '');
 
 ## Step 4 — Reset the historical display offset
 
-The repository ships with a display offset used only by the original `core.helpbyplay.com` instance (it adds historical v0.9 platform data to the public counters).
-
-For your own instance, open `shared/display_offset.php` and set both constants to zero:
+The original `core.helpbyplay.com` instance adds historical v0.9 platform data to its public counters. This is configured at the bottom of `config.php`:
 
 ```php
-const DISPLAY_SESSIONS_OFFSET = 0;
-const DISPLAY_PLN_OFFSET      = 0;
+define('DISPLAY_SESSIONS_OFFSET', 0);
+define('DISPLAY_PLN_OFFSET',      0);
+define('SHOW_V09_HISTORY',        false);
 ```
 
-Do **not** delete the file — the constants are used by `shared/layout.php`, `index.php`, and `api/stats.php`.
+For your own instance keep these at `0` / `false` (the values from `config.example.php`). If the lines are missing, the same defaults apply.
 
 ---
 
@@ -149,8 +148,10 @@ No template changes needed — `shared/ads.php` renders the right variant automa
 
 ## Updating an existing installation
 
-1. Upload the changed files over the old ones — **never overwrite `config.php`, `ads.txt`, or `shared/display_offset.php`**.
-2. If the release notes mention a new file in `db/` named `migrate_*.sql`, run it once via phpMyAdmin.
+1. Upload the changed files over the old ones — **never overwrite `config.php` or `ads.txt`**.
+   - Upgrading from a version where the offset lived in `shared/display_offset.php`: copy the `DISPLAY_*` / `SHOW_V09_HISTORY` block from `config.example.php` into your `config.php` **before** uploading, with your old values (core.helpbyplay.com: `1500`, `3030.82`, `true`). Otherwise the public counters drop to the raw totals.
+2. Run every `db/migrate_*.sql` newer than your installation once via phpMyAdmin, in numeric order, **before** uploading the PHP files (the new code expects the new columns).
+   - `migrate_002_session_token.sql` — session tokens, per-IP rate limiting, automatic closing of abandoned sessions. Required by the session API from this version on.
 3. Re-run the verification checklist from step 7.
 
 ---

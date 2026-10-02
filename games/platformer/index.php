@@ -54,58 +54,17 @@ render_header(
             <!-- Mobile controls (hidden on desktop via CSS) -->
             <div class="plat-mobile-controls" id="plat-mobile-controls">
                 <div class="plat-ctrl-left">
-                    <button id="btn-plat-left"  class="plat-ctrl-btn" aria-label="Left">◀</button>
-                    <button id="btn-plat-right" class="plat-ctrl-btn" aria-label="Right">▶</button>
+                    <button id="btn-plat-left"  class="plat-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_left')) ?>">◀</button>
+                    <button id="btn-plat-right" class="plat-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_right')) ?>">▶</button>
                 </div>
-                <button id="btn-plat-jump" class="plat-ctrl-btn plat-ctrl-jump" aria-label="Jump">▲</button>
+                <button id="btn-plat-jump" class="plat-ctrl-btn plat-ctrl-jump" aria-label="<?= htmlspecialchars(t('aria_jump')) ?>">▲</button>
             </div>
 
             <?php render_below_game('platformer'); ?>
 
         </section>
 
-        <!-- ===== SUMMARY SCREEN ===== -->
-        <section id="screen-summary" class="screen hidden">
-
-            <div class="summary-card">
-                <h1 class="summary-title"><?= t('summary_title') ?></h1>
-
-                <dl class="summary-stats">
-                    <dt><?= t('summary_duration') ?></dt>
-                    <dd id="sum-duration">—</dd>
-
-                    <dt><?= t('summary_earned') ?></dt>
-                    <dd id="sum-earned" class="sum-earned-value">—</dd>
-
-                    <dt><?= t('summary_global') ?></dt>
-                    <dd id="sum-global">—</dd>
-                </dl>
-
-                <p class="summary-thanks"><?= t('summary_thanks_msg') ?></p>
-
-                <div class="summary-actions">
-                    <a href="/games/platformer/" class="btn-play"><?= t('btn_play_again') ?></a>
-                    <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
-                </div>
-            </div>
-
-        </section>
-
-        <div id="screen-error" class="screen hidden">
-            <p class="error-msg"><?= t('error_session') ?></p>
-            <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
-        </div>
-
-        <section id="screen-inactivity" class="screen hidden">
-            <div class="summary-card">
-                <h1 class="summary-title"><?= t('inactivity_title') ?></h1>
-                <p class="summary-thanks"><?= t('inactivity_msg') ?></p>
-                <div class="summary-actions">
-                    <a href="/games/platformer/" class="btn-play"><?= t('btn_play_again') ?></a>
-                    <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
-                </div>
-            </div>
-        </section>
+        <?php render_session_screens('platformer'); ?>
 
         <div id="new-record-badge" class="new-record-badge" aria-live="polite" aria-atomic="true"><?= t('new_record') ?></div>
 

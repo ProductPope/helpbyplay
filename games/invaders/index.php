@@ -52,57 +52,16 @@ render_header(
 
             <!-- Mobile controls (hidden on desktop via CSS) -->
             <div class="invaders-mobile-controls" id="invaders-mobile-controls">
-                <button id="btn-inv-left"  class="inv-ctrl-btn" aria-label="Left">◀</button>
-                <button id="btn-inv-fire"  class="inv-ctrl-btn inv-ctrl-fire" aria-label="Fire">▲</button>
-                <button id="btn-inv-right" class="inv-ctrl-btn" aria-label="Right">▶</button>
+                <button id="btn-inv-left"  class="inv-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_left')) ?>">◀</button>
+                <button id="btn-inv-fire"  class="inv-ctrl-btn inv-ctrl-fire" aria-label="<?= htmlspecialchars(t('aria_fire')) ?>">▲</button>
+                <button id="btn-inv-right" class="inv-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_right')) ?>">▶</button>
             </div>
 
             <?php render_below_game('invaders'); ?>
 
         </section>
 
-        <!-- ===== SUMMARY SCREEN ===== -->
-        <section id="screen-summary" class="screen hidden">
-
-            <div class="summary-card">
-                <h1 class="summary-title"><?= t('summary_title') ?></h1>
-
-                <dl class="summary-stats">
-                    <dt><?= t('summary_duration') ?></dt>
-                    <dd id="sum-duration">—</dd>
-
-                    <dt><?= t('summary_earned') ?></dt>
-                    <dd id="sum-earned" class="sum-earned-value">—</dd>
-
-                    <dt><?= t('summary_global') ?></dt>
-                    <dd id="sum-global">—</dd>
-                </dl>
-
-                <p class="summary-thanks"><?= t('summary_thanks_msg') ?></p>
-
-                <div class="summary-actions">
-                    <a href="/games/invaders/" class="btn-play"><?= t('btn_play_again') ?></a>
-                    <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
-                </div>
-            </div>
-
-        </section>
-
-        <div id="screen-error" class="screen hidden">
-            <p class="error-msg"><?= t('error_session') ?></p>
-            <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
-        </div>
-
-        <section id="screen-inactivity" class="screen hidden">
-            <div class="summary-card">
-                <h1 class="summary-title"><?= t('inactivity_title') ?></h1>
-                <p class="summary-thanks"><?= t('inactivity_msg') ?></p>
-                <div class="summary-actions">
-                    <a href="/games/invaders/" class="btn-play"><?= t('btn_play_again') ?></a>
-                    <a href="/index.php" class="btn-secondary"><?= t('btn_back_home') ?></a>
-                </div>
-            </div>
-        </section>
+        <?php render_session_screens('invaders'); ?>
 
         <div id="new-record-badge" class="new-record-badge" aria-live="polite" aria-atomic="true"><?= t('new_record') ?></div>
 

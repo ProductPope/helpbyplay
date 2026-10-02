@@ -1,15 +1,29 @@
 # Help By Play — Apache config (shared hosting)
 
-# Block direct download of SQL schema/migration files
-<FilesMatch "\.sql$">
+# No directory listings (/db/, /shared/, /games/...)
+Options -Indexes
+
+# Block files that are not meant to be served: SQL schema/migrations,
+# repository docs, the config template, and PHP includes that only make
+# sense when required by another script
+<FilesMatch "\.(sql|md)$">
     Require all denied
 </FilesMatch>
+<FilesMatch "^(config|config\.example|lang)\.php$">
+    Require all denied
+</FilesMatch>
+
+# Never expose version control metadata if it is uploaded by mistake
+RedirectMatch 404 /\.git
 
 # Security headers
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
+    # HSTS only on HTTPS responses, without includeSubDomains — charity
+    # domains may still serve other subdomains over plain HTTP
+    Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
 </IfModule>
 
 # Long cache for static assets — safe because every asset URL is versioned

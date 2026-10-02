@@ -30,7 +30,7 @@ Follow [INSTALL.md](INSTALL.md) steps 2–7 inside the instance directory:
 
 1. Create the database in DirectAdmin → MySQL Management, import `db/init.sql` via phpMyAdmin
 2. Create `config.php` with this charity's data (name, description, logo, language)
-3. Set both constants in `shared/display_offset.php` to `0` (the offset is for core.helpbyplay.com only)
+3. Keep `DISPLAY_SESSIONS_OFFSET` / `DISPLAY_PLN_OFFSET` at `0` and `SHOW_V09_HISTORY` at `false` in `config.php` (they are for core.helpbyplay.com only)
 4. Replace `ads.txt` with the charity's own publisher line (or remove until AdSense is approved)
 5. Upload files via FTP, run the verification checklist
 
@@ -61,7 +61,7 @@ Ads only display after the player accepts cookie consent; until then the placeho
 [ ] Addon domain configured in DirectAdmin
 [ ] Database created and schema imported
 [ ] config.php filled with charity data
-[ ] display_offset.php constants set to 0
+[ ] DISPLAY_* offsets 0 and SHOW_V09_HISTORY false in config.php
 [ ] ads.txt replaced with charity's publisher line
 [ ] Files uploaded, verification checklist from INSTALL.md passed
 [ ] AdSense activated (or scheduled once account is approved)
