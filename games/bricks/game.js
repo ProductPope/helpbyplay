@@ -75,10 +75,6 @@ let touchX    = null;
 let keysLeft  = false;
 let keysRight = false;
 
-function getLang() {
-    const m = document.cookie.match(/(?:^|;\s*)lang=(\w+)/);
-    return (m && m[1] === 'en') ? 'en' : 'pl';
-}
 
 // ── Init (called by session.js) ───────────────────────────────────────────────
 function initGame() {
@@ -375,10 +371,7 @@ function triggerLevelClear(now) {
 
     const titleEl = document.getElementById('bricks-level-text');
     if (titleEl) {
-        const lang = getLang();
-        titleEl.textContent = lang === 'pl'
-            ? 'Poziom ' + level + ' ukończony!'
-            : 'Level ' + level + ' complete!';
+        titleEl.textContent = hbpT('js_bricks_level_complete', { n: level });
     }
     const cdEl = document.getElementById('bricks-countdown');
     if (cdEl) cdEl.textContent = '3';
@@ -505,7 +498,6 @@ function drawFrame() {
 }
 
 function drawHUD() {
-    const lang = getLang();
     ctx.save();
     ctx.textBaseline = 'alphabetic';
 
@@ -513,11 +505,11 @@ function drawHUD() {
     ctx.font      = '10px system-ui,sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.45)';
     ctx.textAlign = 'left';
-    ctx.fillText(lang === 'pl' ? 'POZIOM' : 'LEVEL', 10, 14);
+    ctx.fillText(hbpT('js_bricks_level'), 10, 14);
     ctx.textAlign = 'center';
-    ctx.fillText(lang === 'pl' ? 'WYNIK' : 'SCORE', CW / 2, 14);
+    ctx.fillText(hbpT('js_bricks_score'), CW / 2, 14);
     ctx.textAlign = 'right';
-    ctx.fillText(lang === 'pl' ? 'REKORD' : 'BEST', CW - 56, 14);
+    ctx.fillText(hbpT('js_bricks_best'), CW - 56, 14);
 
     // Value row
     ctx.font      = 'bold 20px system-ui,sans-serif';
@@ -627,9 +619,8 @@ function drawParticles() {
 }
 
 function drawPrompt() {
-    const lang = getLang();
-    const line1 = lang === 'pl' ? 'Kliknij / Dotknij / Spacja' : 'Click / Tap / Space';
-    const line2 = lang === 'pl' ? 'aby wypuścić piłkę' : 'to launch the ball';
+    const line1 = hbpT('js_bricks_launch_1');
+    const line2 = hbpT('js_bricks_launch_2');
     ctx.save();
     ctx.font         = '13px system-ui,sans-serif';
     ctx.fillStyle    = 'rgba(255,255,255,0.65)';

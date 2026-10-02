@@ -54,10 +54,10 @@ render_header(
             <!-- Mobile controls (hidden on desktop via CSS) -->
             <div class="plat-mobile-controls" id="plat-mobile-controls">
                 <div class="plat-ctrl-left">
-                    <button id="btn-plat-left"  class="plat-ctrl-btn" aria-label="Left">◀</button>
-                    <button id="btn-plat-right" class="plat-ctrl-btn" aria-label="Right">▶</button>
+                    <button id="btn-plat-left"  class="plat-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_left')) ?>">◀</button>
+                    <button id="btn-plat-right" class="plat-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_right')) ?>">▶</button>
                 </div>
-                <button id="btn-plat-jump" class="plat-ctrl-btn plat-ctrl-jump" aria-label="Jump">▲</button>
+                <button id="btn-plat-jump" class="plat-ctrl-btn plat-ctrl-jump" aria-label="<?= htmlspecialchars(t('aria_jump')) ?>">▲</button>
             </div>
 
             <?php render_below_game('platformer'); ?>

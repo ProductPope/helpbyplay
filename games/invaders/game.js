@@ -53,8 +53,7 @@ const AUTOFIRE_MS = 320;
 
 // ── Language helper ───────────────────────────────────────────────────────────
 function getFiringFasterMsg() {
-    const m = document.cookie.match(/(?:^|;\s*)lang=(\w+)/);
-    return (m && m[1] === 'en') ? 'Firing faster!' : 'Strzelają szybciej!';
+    return hbpT('js_invaders_faster');
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────

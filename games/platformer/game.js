@@ -44,10 +44,6 @@ const mob  = { left: false, right: false, jump: false };
 let prevJump = false;
 
 // ── Language helper ────────────────────────────────────────────────────────────
-function getLang() {
-    const m = document.cookie.match(/(?:^|;\s*)lang=(\w+)/);
-    return (m && m[1] === 'en') ? 'en' : 'pl';
-}
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 function initGame() {
@@ -405,7 +401,7 @@ function drawEndOverlay() {
     ctx.fillText('GAME OVER', CW / 2, CH * 0.26);
 
     const distM    = Math.round(playerTotalX / 10);
-    const savedLbl = getLang() === 'en' ? 'SAVED: ' : 'URATOWANO: ';
+    const savedLbl = hbpT('js_platformer_saved');
     ctx.font      = Math.round(CW * 0.033) + 'px monospace';
     ctx.fillStyle = '#fff';
     ctx.fillText(savedLbl + String(player.score).padStart(5, '0'), CW / 2, CH * 0.40);
@@ -594,7 +590,7 @@ function drawHUD() {
         ctx.fillText('♥', 8 + i * (fontSize + 4), 18);
     }
 
-    const savedLbl = getLang() === 'en' ? 'SAVED: ' : 'URATOWANO: ';
+    const savedLbl = hbpT('js_platformer_saved');
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'center';
     ctx.fillText(savedLbl + String(player.score).padStart(5, '0'), CW / 2, 18);

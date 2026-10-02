@@ -52,9 +52,9 @@ render_header(
 
             <!-- Mobile controls (hidden on desktop via CSS) -->
             <div class="invaders-mobile-controls" id="invaders-mobile-controls">
-                <button id="btn-inv-left"  class="inv-ctrl-btn" aria-label="Left">◀</button>
-                <button id="btn-inv-fire"  class="inv-ctrl-btn inv-ctrl-fire" aria-label="Fire">▲</button>
-                <button id="btn-inv-right" class="inv-ctrl-btn" aria-label="Right">▶</button>
+                <button id="btn-inv-left"  class="inv-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_left')) ?>">◀</button>
+                <button id="btn-inv-fire"  class="inv-ctrl-btn inv-ctrl-fire" aria-label="<?= htmlspecialchars(t('aria_fire')) ?>">▲</button>
+                <button id="btn-inv-right" class="inv-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_right')) ?>">▶</button>
             </div>
 
             <?php render_below_game('invaders'); ?>

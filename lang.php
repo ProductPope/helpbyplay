@@ -163,6 +163,23 @@ $TRANSLATIONS = [
         // SEO game info section
         'other_games'              => 'Inne gry',
         'btn_end_session'          => 'Zakończ i zobacz podsumowanie',
+        'aria_prev'                => 'Poprzednie',
+        'aria_next'                => 'Następne',
+        'aria_left'                => 'W lewo',
+        'aria_right'               => 'W prawo',
+        'aria_jump'                => 'Skok',
+        'aria_fire'                => 'Strzał',
+        'cookie_banner_label'      => 'Zgoda na pliki cookie',
+
+        // Strings used inside game.js — exposed to JS as window.HBP_STRINGS (prefix js_)
+        'js_bricks_level_complete' => 'Poziom {n} ukończony!',
+        'js_bricks_level'          => 'POZIOM',
+        'js_bricks_score'          => 'WYNIK',
+        'js_bricks_best'           => 'REKORD',
+        'js_bricks_launch_1'       => 'Kliknij / Dotknij / Spacja',
+        'js_bricks_launch_2'       => 'aby wypuścić piłkę',
+        'js_invaders_faster'       => 'Strzelają szybciej!',
+        'js_platformer_saved'      => 'URATOWANO: ',
         'how_to_play'              => 'Jak grać?',
         'game_memory_about'        => 'Klasyczna gra pamięciowa ze zwierzętami. Odkrywaj karty i znajdź wszystkie pasujące pary. Im mniej ruchów tym lepszy wynik.',
         'game_memory_tutorial'     => 'Dotknij kartę aby ją odkryć. Odkryj dwie jednakowe karty aby je dopasować. Zapamiętaj pozycje odkrytych kart. Znajdź wszystkie pary w jak najkrótszym czasie!',
@@ -354,6 +371,23 @@ $TRANSLATIONS = [
         // SEO game info section
         'other_games'              => 'Other games',
         'btn_end_session'          => 'Finish and see summary',
+        'aria_prev'                => 'Previous',
+        'aria_next'                => 'Next',
+        'aria_left'                => 'Left',
+        'aria_right'               => 'Right',
+        'aria_jump'                => 'Jump',
+        'aria_fire'                => 'Fire',
+        'cookie_banner_label'      => 'Cookie consent',
+
+        // Strings used inside game.js — exposed to JS as window.HBP_STRINGS (prefix js_)
+        'js_bricks_level_complete' => 'Level {n} complete!',
+        'js_bricks_level'          => 'LEVEL',
+        'js_bricks_score'          => 'SCORE',
+        'js_bricks_best'           => 'BEST',
+        'js_bricks_launch_1'       => 'Click / Tap / Space',
+        'js_bricks_launch_2'       => 'to launch the ball',
+        'js_invaders_faster'       => 'Firing faster!',
+        'js_platformer_saved'      => 'SAVED: ',
         'how_to_play'              => 'How to play?',
         'game_memory_about'        => 'Classic memory game with animals. Flip cards and find all matching pairs. Fewer moves means a better score.',
         'game_memory_tutorial'     => 'Tap a card to flip it. Flip two matching cards to pair them. Remember the positions of revealed cards. Find all pairs as fast as possible!',
@@ -389,6 +423,16 @@ $TRANSLATIONS = [
 function t(string $key): string {
     global $TRANSLATIONS, $LANG;
     return $TRANSLATIONS[$LANG][$key] ?? $TRANSLATIONS['pl'][$key] ?? $key;
+}
+
+// All js_* strings for the current language, for use in game.js via hbpT('js_...')
+function t_js(): array {
+    global $TRANSLATIONS;
+    $out = [];
+    foreach (array_keys($TRANSLATIONS['pl']) as $key) {
+        if (str_starts_with($key, 'js_')) $out[$key] = t($key);
+    }
+    return $out;
 }
 
 function get_lang(): string {

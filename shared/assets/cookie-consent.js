@@ -78,7 +78,7 @@
         var banner = document.createElement('div');
         banner.id = 'hbp-cookie-banner';
         banner.setAttribute('role', 'dialog');
-        banner.setAttribute('aria-label', 'Cookie consent');
+        banner.setAttribute('aria-label', strings.label || '');
 
         var inner = document.createElement('div');
         inner.id = 'hbp-cookie-inner';

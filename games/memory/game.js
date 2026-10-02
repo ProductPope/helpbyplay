@@ -16,11 +16,6 @@ let cards, flipped, moves, matchedPairs;
 let startTime, timerInterval;
 let lockBoard, gameStarted, gameEnded;
 
-function getLang() {
-    const m = document.cookie.match(/(?:^|;\s*)lang=(\w+)/);
-    return (m && m[1] === 'en') ? 'en' : 'pl';
-}
-
 // ── Init (called by session.js) ───────────────────────────────────────────────
 function initGame() {
     gridSize     = window.innerWidth >= 768 ? 6 : 4;

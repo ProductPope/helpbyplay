@@ -1,0 +1,5 @@
+# shared/*.php are includes only — never callable directly over HTTP.
+# shared/assets/ (CSS/JS) stays public.
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>

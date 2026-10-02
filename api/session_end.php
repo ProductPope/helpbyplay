@@ -4,7 +4,7 @@ header('Cache-Control: no-store');
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../shared/db.php';
-require_once __DIR__ . '/../shared/display_offset.php'; // offsets are 0 on new NGO instances
+require_once __DIR__ . '/../shared/display_offset.php'; // defaults for offsets not set in config.php
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     hbp_json_error(405, 'Method not allowed');

@@ -3,7 +3,7 @@
 // Requires config.php and lang.php loaded before calling.
 
 require_once __DIR__ . '/ads.php';
-require_once __DIR__ . '/display_offset.php'; // offsets are 0 on new NGO instances
+require_once __DIR__ . '/display_offset.php'; // defaults for offsets not set in config.php
 
 function render_header(
     string $pageTitle,
@@ -90,7 +90,7 @@ function render_below_game(string $game_id = ''): void {
 
         <h3 class="other-games-heading"><?= htmlspecialchars(t('other_games')) ?></h3>
         <div class="other-games-wrap">
-            <button class="other-games-arrow other-games-arrow--prev" aria-label="Poprzednia">&#8249;</button>
+            <button class="other-games-arrow other-games-arrow--prev" aria-label="<?= htmlspecialchars(t('aria_prev')) ?>">&#8249;</button>
             <div class="other-games-scroll" id="other-games-scroll">
 <?php foreach ($other_games as $key): ?>
                 <a href="/games/<?= htmlspecialchars($key) ?>/" class="other-games-tile">
@@ -99,7 +99,7 @@ function render_below_game(string $game_id = ''): void {
                 </a>
 <?php endforeach; ?>
             </div>
-            <button class="other-games-arrow other-games-arrow--next" aria-label="Następna">&#8250;</button>
+            <button class="other-games-arrow other-games-arrow--next" aria-label="<?= htmlspecialchars(t('aria_next')) ?>">&#8250;</button>
         </div>
         <script>
         (function(){
@@ -205,7 +205,11 @@ function render_footer(string $lang): void {
             </div>
         </div>
     </footer>
-    <script>window.HBP_CONSENT_STRINGS={text:<?= json_encode(t('cookie_consent_text')) ?>,accept:<?= json_encode(t('cookie_accept')) ?>,decline:<?= json_encode(t('cookie_decline')) ?>};</script>
+    <script>
+    window.HBP_CONSENT_STRINGS={text:<?= json_encode(t('cookie_consent_text')) ?>,accept:<?= json_encode(t('cookie_accept')) ?>,decline:<?= json_encode(t('cookie_decline')) ?>,label:<?= json_encode(t('cookie_banner_label')) ?>};
+    window.HBP_STRINGS=<?= json_encode(t_js(), JSON_UNESCAPED_UNICODE) ?>;
+    function hbpT(key,vars){var s=window.HBP_STRINGS[key]||key;for(var k in vars||{})s=s.replace('{'+k+'}',vars[k]);return s;}
+    </script>
     <script src="/shared/assets/cookie-consent.js?v=<?= @filemtime(__DIR__ . '/assets/cookie-consent.js') ?>"></script>
 <?php
 }

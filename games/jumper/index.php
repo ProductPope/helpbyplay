@@ -52,8 +52,8 @@ render_header(
 
             <!-- Mobile controls (hidden on desktop via CSS) -->
             <div class="jumper-mobile-controls" id="jumper-mobile-controls">
-                <button id="btn-jumper-left"  class="jumper-ctrl-btn" aria-label="Left">◀</button>
-                <button id="btn-jumper-right" class="jumper-ctrl-btn" aria-label="Right">▶</button>
+                <button id="btn-jumper-left"  class="jumper-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_left')) ?>">◀</button>
+                <button id="btn-jumper-right" class="jumper-ctrl-btn" aria-label="<?= htmlspecialchars(t('aria_right')) ?>">▶</button>
             </div>
 
             <?php render_below_game('jumper'); ?>
