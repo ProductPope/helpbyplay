@@ -39,7 +39,7 @@ public_html/
 ├── api/
 │   ├── session_start.php # Creates a session (+ secret token), per-IP rate limit, stale sweep
 │   ├── session_end.php   # Heartbeat / end / beacon — requires token, updates global total
-│   └── stats.php         # Returns global counter as JSON
+│   └── stats.php         # Public counter as JSON + own_* totals read by the hub sync
 ├── db/
 │   ├── init.sql          # Schema for fresh installs
 │   └── migrate_NNN_*.sql # Upgrades for existing installs, run in order
@@ -48,8 +48,11 @@ public_html/
 │   ├── layout.php        # render_header/footer, render_session_screens, render_below_game, HBP_GAMES
 │   ├── ads.php           # render_ad_slot() — provider switch, contains ADSENSE_PLACEHOLDER
 │   ├── session.php       # Loads $totalSessions / $totalPln for the header
-│   ├── display_offset.php# 0/false fallbacks for DISPLAY_* / SHOW_V09_HISTORY config
+│   ├── display_offset.php# 0/false fallbacks for DISPLAY_* / SHOW_V09_HISTORY / HBP_IS_HUB config
+│   ├── hub.php           # hbp_display_sessions/pln(): own totals + v0.9 offset + instances (hub only)
 │   └── assets/           # shared.css, counter.js, session.js, cookie-consent.js, lang.js
+├── cron/
+│   └── sync_instances.php# Hub only: pulls own_* totals of every instance into the instances table
 ├── assets/style.css      # Home page styles
 └── games/<key>/          # One directory per game: index.php, game.js, game.css
 ```

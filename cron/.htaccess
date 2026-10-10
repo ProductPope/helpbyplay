@@ -1,0 +1,2 @@
+# cron/*.php run from the command line only (DirectAdmin cron) — never over HTTP.
+Require all denied

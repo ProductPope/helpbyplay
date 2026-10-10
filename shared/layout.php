@@ -3,7 +3,7 @@
 // Requires config.php and lang.php loaded before calling.
 
 require_once __DIR__ . '/ads.php';
-require_once __DIR__ . '/display_offset.php'; // defaults for offsets not set in config.php
+require_once __DIR__ . '/hub.php'; // display totals: offsets + other instances on the hub
 
 function render_header(
     string $pageTitle,
@@ -37,7 +37,7 @@ function render_header(
         <div class="container">
             <a href="/index.php" class="header-home">Help By <span class="logo-play">Play</span></a>
             <a href="/statystyki.php" class="header-nav-link"><?= t('nav_stats') ?></a>
-            <a href="/statystyki.php" class="header-stats">👤 <?= number_format($totalSessions + DISPLAY_SESSIONS_OFFSET, 0, ',', ' ') ?> · <?= number_format($totalPln + DISPLAY_PLN_OFFSET, 0, ',', ' ') ?> <?= t('currency') ?></a>
+            <a href="/statystyki.php" class="header-stats">👤 <?= number_format(hbp_display_sessions($totalSessions), 0, ',', ' ') ?> · <?= number_format(hbp_display_pln($totalPln), 0, ',', ' ') ?> <?= t('currency') ?></a>
         </div>
     </header>
 

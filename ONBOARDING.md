@@ -36,6 +36,19 @@ Follow [INSTALL.md](INSTALL.md) steps 2–7 inside the instance directory:
 
 ---
 
+## Step 2b — Add the instance to the main counter
+
+`core.helpbyplay.com` is the hub: its public counter sums its own totals, the v0.9 offset and every charity instance. To include the new instance, run in phpMyAdmin **on the core database**:
+
+```sql
+INSERT INTO instances (name, stats_url)
+VALUES ('Charity Name', 'https://play.charity.org/api/stats.php');
+```
+
+The core cron (`cron/sync_instances.php`, every 5 minutes) picks it up on its next run. Check `last_ok_at` / `last_error` in the `instances` table after a few minutes. To pause an instance without losing its row: `UPDATE instances SET active = 0 WHERE id = ...`.
+
+---
+
 ## Step 3 — Activate AdSense
 
 Once Google approves the charity's AdSense account:
@@ -64,5 +77,6 @@ Ads only display after the player accepts cookie consent; until then the placeho
 [ ] DISPLAY_* offsets 0 and SHOW_V09_HISTORY false in config.php
 [ ] ads.txt replaced with charity's publisher line
 [ ] Files uploaded, verification checklist from INSTALL.md passed
+[ ] Instance added to the instances table on core, last_ok_at filled after sync
 [ ] AdSense activated (or scheduled once account is approved)
 ```
