@@ -36,3 +36,8 @@ define('AD_CUSTOM_HTML_DESKTOP', '');
 define('DISPLAY_SESSIONS_OFFSET', 0);
 define('DISPLAY_PLN_OFFSET',      0);
 define('SHOW_V09_HISTORY',        false); // show the v0.9 section on the stats page
+
+// --- Hub counter (core.helpbyplay.com only) ---
+// true = the public counter also sums every charity instance listed in the
+// instances table (filled by cron/sync_instances.php). Keep false elsewhere.
+define('HBP_IS_HUB', false);
