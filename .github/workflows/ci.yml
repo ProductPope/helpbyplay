@@ -2,11 +2,21 @@ name: CI
 
 on:
   push:
+    branches: [main]
+    paths-ignore: ['**.txt', 'LICENSE', 'assets/**/*.png', 'assets/**/*.jpg', 'assets/**/*.svg']
   pull_request:
+    paths-ignore: ['**.txt', 'LICENSE', 'assets/**/*.png', 'assets/**/*.jpg', 'assets/**/*.svg']
+  workflow_dispatch:
+
+# A newer push to the same branch/PR cancels the run still in progress
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
