@@ -277,7 +277,14 @@ function move(dir) {
         animating = false;
 
         if (!won && checkWin()) { won = true; showWinBadge(); }
-        if (isGameOver()) { gameOver = true; setTimeout(showGameOver, 300); }
+        if (isGameOver()) {
+            gameOver = true;
+
+            if (typeof setGameIdle === 'function')
+                setGameIdle(true);
+
+            setTimeout(showGameOver, 300);
+        }
     }, 110);
 }
 
@@ -291,8 +298,8 @@ function isGameOver() {
     for (let r = 0; r < BOARD_SIZE; r++) {
         for (let c = 0; c < BOARD_SIZE; c++) {
             if (!board[r][c]) return false;
-            if (r + 1 < BOARD_SIZE && board[r][c].value === board[r + 1][c].value) return false;
-            if (c + 1 < BOARD_SIZE && board[r][c].value === board[r][c + 1].value) return false;
+            if (r + 1 < BOARD_SIZE && board[r][c].value === board[r + 1][c]?.value) return false;
+            if (c + 1 < BOARD_SIZE && board[r][c].value === board[r][c + 1]?.value) return false;
         }
     }
     return true;
@@ -354,6 +361,8 @@ function initGame() {
     board     = Array.from({ length: BOARD_SIZE }, () => Array(BOARD_SIZE).fill(null));
     score     = 0;
     gameOver  = false;
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
     won       = false;
     animating = false;
 
@@ -381,8 +390,8 @@ function initGame() {
 }
 
 function restartGame() {
-    initGame();
     if (typeof showScreen === 'function') showScreen('screen-game');
+    initGame();
 }
 
 // ── Input ─────────────────────────────────────────────────────────────────────
