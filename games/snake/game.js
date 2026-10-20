@@ -152,8 +152,38 @@ function drawSnake(t) {
         ctx.shadowBlur  = isHead ? 14 : 7;
         rrect(pos.x * c + pad, pos.y * c + pad, c - pad * 2, c - pad * 2, r);
         ctx.fill();
+        if (isHead) {
+            ctx.shadowBlur = 0;
+            drawEyes(pos, c);
+        }
     }
     ctx.shadowBlur = 0;
+}
+
+function drawEyes(pos, c) {
+    const cx = pos.x * c + c / 2;              // środek głowy
+    const cy = pos.y * c + c / 2;
+    const side = { x: -dir.y, y: dir.x };      // kierunek "w bok" od ruchu
+
+    const fwd    = c * 0.15;                   // jak bardzo oczy są wysunięte do przodu
+    const apart  = c * 0.2;                    // odległość oka od środka na boki
+    const eyeR   = Math.max(1.5, c * 0.13);
+    const pupilR = Math.max(1, c * 0.065);
+
+    for (const s of [-1, 1]) {                 // lewe i prawe oko
+        const ex = cx + dir.x * fwd + side.x * apart * s;
+        const ey = cy + dir.y * fwd + side.y * apart * s;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(ex, ey, eyeR, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#000000';
+        ctx.beginPath();
+        ctx.arc(ex + dir.x * eyeR * 0.4, ey + dir.y * eyeR * 0.4, pupilR, 0, Math.PI * 2);
+        ctx.fill();
+    }
 }
 
 function drawGameOver(ts) {
@@ -193,12 +223,11 @@ function drawGameOver(ts) {
 // ── Loop ──────────────────────────────────────────────────────────────────────
 
 function loop(ts) {
-    const elapsed = ts - lastStepTime;
-    if (!gameOver && elapsed >= speed) {
+    if (!gameOver && ts - lastStepTime >= speed) {
         step();
         lastStepTime = ts;
     }
-    const t = gameOver ? 1 : Math.min(elapsed / speed, 1);
+    const t = gameOver ? 1 : Math.min((ts - lastStepTime) / speed, 1);
 
     drawBg();
     drawApple(ts);
