@@ -76,12 +76,21 @@ function startCounter() {
     adPresentCache  = isAdVisible();
     tickInterval    = setInterval(tick, 1000);
     adCheckInterval = setInterval(updateAdCheck, AD_CHECK_INTERVAL_MS);
-    if (!adPresentCache) scheduleAdWaitMsg();
-    resetInactivityTimer();
+    if (!adPresentCache)
+        scheduleAdWaitMsg();
+
+    if (document.hasFocus())
+        resetInactivityTimer();
+    else
+        pauseNow();
+
     document.addEventListener('click',      resetInactivityTimer, { passive: true });
     document.addEventListener('touchstart', resetInactivityTimer, { passive: true });
     document.addEventListener('mousemove',  resetInactivityTimer, { passive: true });
     document.addEventListener('keydown',    resetInactivityTimer, { passive: true });
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    window.addEventListener('blur', pauseNow);
 }
 
 function stopCounter() {
@@ -96,6 +105,10 @@ function stopCounter() {
     document.removeEventListener('touchstart', resetInactivityTimer);
     document.removeEventListener('mousemove',  resetInactivityTimer);
     document.removeEventListener('keydown',    resetInactivityTimer);
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+
+    window.removeEventListener('blur', pauseNow);
+
     setPaused(false);
 }
 
@@ -106,9 +119,15 @@ function tick() {
 }
 
 function resetInactivityTimer() {
-    if (paused) setPaused(false);
+    if (!document.hasFocus())
+        return;
+
+    if (paused)
+        setPaused(false);
+
     clearTimeout(inactivityPauseTimer);
     clearTimeout(inactivityEndTimer);
+
     inactivityPauseTimer = setTimeout(() => setPaused(true), INACTIVITY_PAUSE_MS);
     inactivityEndTimer   = setTimeout(
         () => document.dispatchEvent(new CustomEvent('counter:inactivity-timeout')),
@@ -127,6 +146,14 @@ function setPaused(val) {
         // became active again but still no ad: restart wait msg timer
         scheduleAdWaitMsg();
     }
+}
+
+function pauseNow() {
+    setPaused(true);
+}
+
+function onVisibilityChange() {
+    if (document.visibilityState === 'hidden') pauseNow();
 }
 
 function refreshDisplay() {
