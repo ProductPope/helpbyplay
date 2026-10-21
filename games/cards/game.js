@@ -1,23 +1,22 @@
-// Candy Crush — 7x7 grid, match-3, gravity, cascade
+// Collapse — 7x7 grid, tap a group of 3+ matching symbols, gravity
 // Rate: 0.001 PLN per 10 seconds (handled by counter.js)
 
 const GAME_CONFIG = {
-    id: 'cards',
-    nameKey: 'game_cards_name',
+    id:          'cards',
+    nameKey:     'game_cards_name',
     hasEndState: false,
     scoringType: 'squared',
 };
 
-const GRID_SIZE = 7;
-const CANDY_TYPES = 6;
+const GRID_SIZE     = 7;
+const CANDY_TYPES   = 6;
 const CANDY_SYMBOLS = ['♥', '♦', '♣', '♠', '★', '●'];
-const HS_KEY = 'hbp_highscore_' + GAME_CONFIG.id;
+const HS_KEY        = 'hbp_highscore_' + GAME_CONFIG.id;
 
-let grid = [];
-let selected = null;
-let busy = false;
-let touchOrigin = null;
-let sessionScore = 0;
+let grid                      = [];
+let busy                      = false;
+let touchOrigin               = null;
+let sessionScore              = 0;
 let newRecordShownThisSession = false;
 
 // ---------- Init ----------
@@ -32,9 +31,8 @@ function initGame() {
 }
 
 function restartGame() {
-    selected = null;
-    busy = false;
-    touchOrigin = null;
+    busy         = false;
+    touchOrigin  = null;
     sessionScore = 0;
     do {
         grid = buildRandomGrid();
@@ -45,8 +43,8 @@ function restartGame() {
 }
 
 function buildRandomGrid() {
-    return Array.from({length: GRID_SIZE}, () =>
-        Array.from({length: GRID_SIZE}, () => randCandy())
+    return Array.from({ length: GRID_SIZE }, () =>
+        Array.from({ length: GRID_SIZE }, () => randCandy())
     );
 }
 
@@ -99,27 +97,19 @@ function renderGrid(fallingCells = new Set()) {
     return new Promise(resolve => {
         requestAnimationFrame(() => {
             const container = document.getElementById('game-grid');
-            if (!container) {
-                resolve();
-
-                return;
-            }
+            if (!container) { resolve(); return; }
 
             const frag = document.createDocumentFragment();
 
             for (let r = 0; r < GRID_SIZE; r++) {
                 for (let c = 0; c < GRID_SIZE; c++) {
                     const cell = document.createElement('button');
-                    cell.className = 'candy candy-' + grid[r][c];
+                    cell.className   = 'candy candy-' + grid[r][c];
                     cell.textContent = CANDY_SYMBOLS[grid[r][c]];
                     cell.dataset.row = r;
                     cell.dataset.col = c;
                     cell.setAttribute('aria-label',
                         'candy ' + (grid[r][c] + 1) + ' row ' + (r + 1) + ' col ' + (c + 1));
-
-                    if (selected && selected.row === r && selected.col === c) {
-                        cell.classList.add('selected');
-                    }
 
                     if (fallingCells.has(r + ',' + c)) {
                         cell.style.setProperty('--fall-delay', (r * 25) + 'ms');
@@ -127,8 +117,8 @@ function renderGrid(fallingCells = new Set()) {
                     }
 
                     cell.addEventListener('click', () => onCellClick(r, c));
-                    cell.addEventListener('touchstart', (e) => onTouchStart(e, r, c), {passive: false});
-                    cell.addEventListener('touchend', (e) => onTouchEnd(e, r, c), {passive: true});
+                    cell.addEventListener('touchstart', (e) => onTouchStart(e, r, c), { passive: false });
+                    cell.addEventListener('touchend',   (e) => onTouchEnd(e, r, c),   { passive: true });
 
                     frag.appendChild(cell);
                 }
@@ -156,8 +146,8 @@ function markRemoving(positions) {
             document.querySelectorAll('.candy').forEach(cell => {
                 const key = cell.dataset.row + ',' + cell.dataset.col;
                 if (positions.has(key)) {
-                    cell.style.setProperty('--tx', (Math.random() * 80 - 40) + 'px');
-                    cell.style.setProperty('--ty', (Math.random() * 80 - 40) + 'px');
+                    cell.style.setProperty('--tx',  (Math.random() * 80 - 40) + 'px');
+                    cell.style.setProperty('--ty',  (Math.random() * 80 - 40) + 'px');
                     cell.style.setProperty('--rot', (Math.random() * 90 - 45) + 'deg');
                     cell.classList.add('candy-removing');
                 }
@@ -170,20 +160,8 @@ function markRemoving(positions) {
 // ---------- Mouse input ----------
 
 function onCellClick(row, col) {
-    if (busy)
-        return;
-
-    const group = findGroup(row, col);
-    if (group.length < 3)
-        return;
-
-    busy = true;
-    removeGroup(group)
-        .then(
-            () => {
-                busy = false;
-            }
-        );
+    if (busy) return;
+    handleTap(row, col);
 }
 
 // ---------- Touch input ----------
@@ -201,83 +179,37 @@ function onTouchStart(e, row, col) {
 function onTouchEnd(e, row, col) {
     if (busy || !touchOrigin) return;
 
-    const dx = e.changedTouches[0].clientX - touchOrigin.x;
-    const dy = e.changedTouches[0].clientY - touchOrigin.y;
+    const dx   = e.changedTouches[0].clientX - touchOrigin.x;
+    const dy   = e.changedTouches[0].clientY - touchOrigin.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
-    if (dist < 12) {
-        handleSelect(touchOrigin.row, touchOrigin.col);
-    } else {
-        let targetRow = touchOrigin.row;
-        let targetCol = touchOrigin.col;
-
-        if (Math.abs(dx) > Math.abs(dy)) {
-            targetCol += dx > 0 ? 1 : -1;
-        } else {
-            targetRow += dy > 0 ? 1 : -1;
-        }
-
-        if (
-            targetRow >= 0 && targetRow < GRID_SIZE &&
-            targetCol >= 0 && targetCol < GRID_SIZE
-        ) {
-            selected = null;
-            busy = true;
-            doSwap(touchOrigin.row, touchOrigin.col, targetRow, targetCol)
-                .then(() => {
-                    busy = false;
-                });
-        }
-    }
+    // Tap only — a swipe is ignored, there is nothing to swap in this game
+    if (dist < 12) handleTap(touchOrigin.row, touchOrigin.col);
 
     touchOrigin = null;
 }
 
-// ---------- Shared select logic ----------
+// ---------- Shared tap logic ----------
 
-function handleSelect(row, col) {
-    if (selected === null) {
-        selected = {row, col};
-        renderGrid();
-        return;
-    }
+function handleTap(row, col) {
+    const group = findGroup(row, col);
+    if (group.length < 3) return;
 
-    if (selected.row === row && selected.col === col) {
-        selected = null;
-        renderGrid();
-        return;
-    }
-
-    if (isAdjacent(selected.row, selected.col, row, col)) {
-        const r1 = selected.row, c1 = selected.col;
-        selected = null;
-        busy = true;
-        doSwap(r1, c1, row, col).then(() => {
-            busy = false;
-        });
-    } else {
-        selected = {row, col};
-        renderGrid();
-    }
+    busy = true;
+    removeGroup(group).then(() => { busy = false; });
 }
 
-function isAdjacent(r1, c1, r2, c2) {
-    return Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1;
-}
-
-// ---------- Swap & match ----------
+// ---------- Group removal ----------
 
 async function removeGroup(group) {
     addScore(group.length);
 
-    const removingKeys = new Set(group.map(({row, col}) => row + ',' + col));
+    const removingKeys = new Set(group.map(({ row, col }) => row + ',' + col));
 
     markSelected(removingKeys);
     await wait(300);
 
-    group.forEach(({row, col}) => {
-        grid[row][col] = -1;
-    });
+    group.forEach(({ row, col }) => { grid[row][col] = -1; });
 
     await markRemoving(removingKeys);
     await wait(200);
@@ -286,78 +218,33 @@ async function removeGroup(group) {
     await renderGrid(removingKeys);
     await wait(300 + (GRID_SIZE - 1) * 25);
 
+    // No group of 3+ left — deal a fresh board, the game never ends
     if (!hasAnyGroup()) {
         do {
             grid = buildRandomGrid();
         } while (!hasAnyGroup());
-
         await renderGrid();
     }
 }
 
-async function doSwap(r1, c1, r2, c2) {
-    swapCells(r1, c1, r2, c2);
-    await renderGrid();
+// ---------- Group detection ----------
 
-    if (findMatches().length === 0) {
-        await wait(150);
-        swapCells(r1, c1, r2, c2);
-        await renderGrid();
-        return;
-    }
-
-    await processMatchCascade();
-}
-
-function swapCells(r1, c1, r2, c2) {
-    const tmp = grid[r1][c1];
-    grid[r1][c1] = grid[r2][c2];
-    grid[r2][c2] = tmp;
-}
-
-async function processMatchCascade() {
-    let matches = findMatches();
-    while (matches.length > 0) {
-        addScore(matches.length);
-
-        const removingKeys = new Set(matches.map(({row, col}) => row + ',' + col));
-        matches.forEach(({row, col}) => {
-            grid[row][col] = -1;
-        });
-
-        await markRemoving(removingKeys);
-        await wait(200);
-
-        const fallingCells = new Set();
-        for (let r = 0; r < GRID_SIZE; r++)
-            for (let c = 0; c < GRID_SIZE; c++)
-                if (grid[r][c] === -1) fallingCells.add(r + ',' + c);
-
-        applyGravity();
-        await renderGrid(fallingCells);
-        await wait(300 + (GRID_SIZE - 1) * 25);
-
-        matches = findMatches();
-    }
-}
-
-// ---------- Match detection ----------
-
+// Flood fill: every cell of the same type connected (up/down/left/right) to (row, col)
 function findGroup(row, col) {
-    const type = grid[row][col];
+    const type    = grid[row][col];
     const visited = new Set([row + ',' + col]);
-    const queue = [{row, col}];
-    const group = [];
+    const queue   = [{ row, col }];
+    const group   = [];
 
     while (queue.length > 0) {
         const cur = queue.shift();
         group.push(cur);
 
         const neighbours = [
-            {row: cur.row - 1, col: cur.col},
-            {row: cur.row + 1, col: cur.col},
-            {row: cur.row, col: cur.col - 1},
-            {row: cur.row, col: cur.col + 1},
+            { row: cur.row - 1, col: cur.col },
+            { row: cur.row + 1, col: cur.col },
+            { row: cur.row,     col: cur.col - 1 },
+            { row: cur.row,     col: cur.col + 1 },
         ];
 
         for (const n of neighbours) {
@@ -380,45 +267,6 @@ function hasAnyGroup() {
         }
     }
     return false;
-}
-
-function findMatches() {
-    const matched = new Set();
-
-    for (let r = 0; r < GRID_SIZE; r++) {
-        let run = 1;
-        for (let c = 1; c <= GRID_SIZE; c++) {
-            const same = c < GRID_SIZE && grid[r][c] !== -1 && grid[r][c] === grid[r][c - 1];
-            if (same) {
-                run++;
-            } else {
-                if (run >= 3) {
-                    for (let k = c - run; k < c; k++) matched.add(r + ',' + k);
-                }
-                run = 1;
-            }
-        }
-    }
-
-    for (let c = 0; c < GRID_SIZE; c++) {
-        let run = 1;
-        for (let r = 1; r <= GRID_SIZE; r++) {
-            const same = r < GRID_SIZE && grid[r][c] !== -1 && grid[r][c] === grid[r - 1][c];
-            if (same) {
-                run++;
-            } else {
-                if (run >= 3) {
-                    for (let k = r - run; k < r; k++) matched.add(k + ',' + c);
-                }
-                run = 1;
-            }
-        }
-    }
-
-    return Array.from(matched).map(s => {
-        const [row, col] = s.split(',').map(Number);
-        return {row, col};
-    });
 }
 
 // ---------- Gravity ----------
