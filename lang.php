@@ -179,7 +179,19 @@ $TRANSLATIONS = [
         'js_bricks_launch_1'       => 'Kliknij / Dotknij / Spacja',
         'js_bricks_launch_2'       => 'aby wypuścić piłkę',
         'js_invaders_faster'       => 'Strzelają szybciej!',
+        'js_invaders_rows'         => 'DODANE RZĘDY: {n}',
         'js_platformer_saved'      => 'URATOWANO: ',
+        /* PLATFORMER */
+        'js_platformer_dist'       => 'DYSTANS: ',
+        /* SNAKE */
+        'js_game_over'             => 'KONIEC GRY',
+        'js_score'                 => 'WYNIK',
+        'js_best'                  => 'REKORD',
+        'js_play_again'            => 'JESZCZE RAZ',
+        /* RUNNER */
+        'js_new_best'              => 'NOWY REKORD!',
+        'js_runner_start'          => 'DOTKNIJ lub SPACJA, aby zacząć',
+        'js_runner_double_jump'    => 'Możesz skoczyć dwa razy!',
         'how_to_play'              => 'Jak grać?',
         'game_memory_about'        => 'Klasyczna gra pamięciowa ze zwierzętami. Odkrywaj karty i znajdź wszystkie pasujące pary. Im mniej ruchów tym lepszy wynik.',
         'game_memory_tutorial'     => 'Dotknij kartę aby ją odkryć. Odkryj dwie jednakowe karty aby je dopasować. Zapamiętaj pozycje odkrytych kart. Znajdź wszystkie pary w jak najkrótszym czasie!',
@@ -388,7 +400,19 @@ $TRANSLATIONS = [
         'js_bricks_launch_1'       => 'Click / Tap / Space',
         'js_bricks_launch_2'       => 'to launch the ball',
         'js_invaders_faster'       => 'Firing faster!',
+        'js_invaders_rows'         => 'ROWS ADDED: {n}',
         'js_platformer_saved'      => 'SAVED: ',
+        /* PLATFORMER */
+        'js_platformer_dist'       => 'DIST: ',
+        /* SNAKE */
+        'js_game_over'             => 'GAME OVER',
+        'js_score'                 => 'SCORE',
+        'js_best'                  => 'BEST',
+        'js_play_again'            => 'PLAY AGAIN',
+        /* RUNNER */
+        'js_new_best'              => 'NEW BEST!',
+        'js_runner_start'          => 'TAP or SPACE to start',
+        'js_runner_double_jump'    => 'Double jump available!',
         'how_to_play'              => 'How to play?',
         'game_memory_about'        => 'Classic memory game with animals. Flip cards and find all matching pairs. Fewer moves means a better score.',
         'game_memory_tutorial'     => 'Tap a card to flip it. Flip two matching cards to pair them. Remember the positions of revealed cards. Find all pairs as fast as possible!',

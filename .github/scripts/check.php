@@ -18,7 +18,7 @@ foreach (array_diff($en, $pl) as $k) $errors[] = "lang.php: key '$k' missing in 
 $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS));
 foreach ($files as $file) {
     $path = $file->getPathname();
-    $rel  = substr($path, strlen($root) + 1);
+    $rel  = str_replace('\\', '/', substr($path, strlen($root) + 1));
     if (str_starts_with($rel, '.git/') || $rel === 'config.php' || $rel === '.github/scripts/check.php') continue;
     if (!preg_match('/\.(php|js|css|md|sql)$/', $rel)) continue;
 
