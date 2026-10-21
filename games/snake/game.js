@@ -69,7 +69,6 @@ function step() {
     if (snake.slice(0, -1).some(s => s.x === nx && s.y === ny)) {
         gameOver     = true;
         gameOverTime = performance.now();
-        unlockScroll();
         if (score > highScore) {
             highScore = score;
             localStorage.setItem(HS_KEY, highScore);
@@ -267,13 +266,9 @@ function initGame() {
     }
 }
 
-function lockScroll()   { document.body.style.overflow = 'hidden'; }
-function unlockScroll() { document.body.style.overflow = ''; }
-
 function startSnake() {
     resetState();
     updateHUD();
-    lockScroll();
     startLoop();
 }
 
@@ -374,11 +369,6 @@ document.getElementById('btn-snake-start')?.addEventListener('click', () => {
 // ── Restart button (HTML, not canvas) ────────────────────────────────────────
 
 document.getElementById('btn-restart')?.addEventListener('click', restartGame);
-
-// ── Scroll lock cleanup ───────────────────────────────────────────────────────
-
-window.addEventListener('pagehide',    unlockScroll);
-window.addEventListener('beforeunload', unlockScroll);
 
 // ── Resize ────────────────────────────────────────────────────────────────────
 
