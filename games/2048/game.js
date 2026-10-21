@@ -333,12 +333,16 @@ function showWinBadge() {
 
 function showNewRecord() {
     const badge = document.getElementById('new-record-badge');
-    if (!badge) return;
-    badge.classList.remove('show');
+    const showClassName = 'new-record-show';
+
+    if (!badge)
+        return;
+
+    badge.classList.remove(showClassName);
     void badge.offsetWidth;
-    badge.classList.add('show');
+    badge.classList.add(showClassName);
     clearTimeout(badge._t);
-    badge._t = setTimeout(() => badge.classList.remove('show'), 2000);
+    badge._t = setTimeout(() => badge.classList.remove(showClassName), 2000);
 }
 
 // ── Tutorial ──────────────────────────────────────────────────────────────────

@@ -111,7 +111,6 @@ function showTutorial() {
     const btnStart = document.getElementById('btn-bricks-start');
     if (btnStart) {
         btnStart.onclick = function() {
-            console.log('[Bricks] START clicked');
             localStorage.setItem(TUT_KEY, '1');
             startNewGame();
         };

@@ -217,12 +217,14 @@ function updateHUD() {
 
 function showNewRecord() {
     const b = document.getElementById('new-record-badge');
+    const showClassName = 'new-record-show';
+
     if (!b) return;
-    b.classList.remove('show');
+    b.classList.remove(showClassName);
     void b.offsetWidth;
-    b.classList.add('show');
+    b.classList.add(showClassName);
     clearTimeout(b._t);
-    b._t = setTimeout(() => b.classList.remove('show'), 2000);
+    b._t = setTimeout(() => b.classList.remove(showClassName), 2000);
 }
 
 // ── Draw ─────────────────────────────────────────────────────────────────────
