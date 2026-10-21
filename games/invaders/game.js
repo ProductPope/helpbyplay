@@ -93,6 +93,9 @@ function startGame() {
     newRowMsgTs = 0;
     gameState   = 'playing';
 
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
+
     buildWave();
     lastTs = null;
     rafId  = requestAnimationFrame(loop);
@@ -383,6 +386,10 @@ function hitPlayer() {
 
 function triggerGameOver() {
     gameState = 'over';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(true);
+
     clearTimeout(fireTimeout);
     clearTimeout(ufoTimeout);
     cancelAnimationFrame(rafId);

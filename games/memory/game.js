@@ -53,6 +53,10 @@ function startGame() {
     startTime    = null;
     gameStarted  = false;
     gameEnded    = false;
+
+     if (typeof setGameIdle === 'function')
+        setGameIdle(false);
+
     flipped      = [];
     lockBoard    = false;
 
@@ -162,6 +166,9 @@ function checkMatch() {
 function gameWon() {
     clearInterval(timerInterval);
     gameEnded = true;
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(true);
 
     const elapsedS  = Math.round((Date.now() - startTime) / 1000);
     const threshold = Math.ceil(totalPairs * 1.1);
