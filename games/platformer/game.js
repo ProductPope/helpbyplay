@@ -79,6 +79,10 @@ function startGame() {
     spawnPlayer();
     camX      = 0;
     gameState = 'playing';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
+
     lastTs    = null;
     prevJump  = false;
     restartBtn = null;
@@ -371,6 +375,10 @@ function playerHit() {
 // ── Game over ──────────────────────────────────────────────────────────────────
 function gameLost() {
     gameState = 'over';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(true);
+
     cancelAnimationFrame(rafId);
 
     const distM    = Math.round(playerTotalX / 10);

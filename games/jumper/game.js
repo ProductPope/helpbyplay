@@ -102,6 +102,10 @@ function startGame() {
     camY       = 0;
     maxHeightPx = 0;
     gameState  = 'playing';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
+
     lastTs     = null;
     rafId = requestAnimationFrame(loop);
 }
@@ -518,6 +522,10 @@ function loseLife() {
 
 function gameOver() {
     gameState = 'over';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(true);
+
     cancelAnimationFrame(rafId);
 
     const heightM = Math.round(maxHeightPx / PX_PER_METER);

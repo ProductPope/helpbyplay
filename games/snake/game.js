@@ -68,6 +68,10 @@ function step() {
     // Exclude tail — it vacates its spot this tick
     if (snake.slice(0, -1).some(s => s.x === nx && s.y === ny)) {
         gameOver     = true;
+
+        if (typeof setGameIdle === 'function')
+            setGameIdle(true);
+
         gameOverTime = performance.now();
         if (score > highScore) {
             highScore = score;
@@ -270,6 +274,8 @@ function startSnake() {
     resetState();
     updateHUD();
     startLoop();
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
 }
 
 function restartGame() {

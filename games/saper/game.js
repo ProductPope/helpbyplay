@@ -19,6 +19,10 @@ function initGame() {
     cfg        = getCfg();
     firstClick = true;
     gameState  = 'idle';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
+
     flagMode   = false;
     const flagBtn = document.getElementById('btn-flag-toggle');
     if (flagBtn) { flagBtn.classList.remove('active'); flagBtn.setAttribute('aria-pressed', 'false'); }
@@ -138,6 +142,10 @@ function reveal(r, c) {
         cell.revealed = true;
         cell.isHit    = true;
         gameState     = 'lost';
+
+        if (typeof setGameIdle === 'function')
+            setGameIdle(true);
+
         stopTimer();
         for (let rr = 0; rr < cfg.rows; rr++) {
             for (let cc = 0; cc < cfg.cols; cc++) {
@@ -198,6 +206,10 @@ function checkWin() {
         }
     }
     gameState = 'won';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(true);
+
     stopTimer();
     for (let r = 0; r < cfg.rows; r++) {
         for (let c = 0; c < cfg.cols; c++) {
