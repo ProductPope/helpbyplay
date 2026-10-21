@@ -329,12 +329,24 @@ function drawIdleOverlay() {
     ctx.fillText('FLAPPY RUNNER', W / 2, H / 2 - 26);
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.font      = '13px monospace';
-    ctx.fillText('TAP  or  SPACE  to start', W / 2, H / 2 + 8);
-    ctx.fillText('Double jump available!',   W / 2, H / 2 + 28);
+    ctx.fillText(
+        hbpT('js_runner_start'),
+        W / 2,
+        H / 2 + 8
+    );
+    ctx.fillText(
+        hbpT('js_runner_double_jump'),
+        W / 2,
+        H / 2 + 28
+    );
     if (highScore > 0) {
         ctx.fillStyle = '#ffd700';
         ctx.font      = '12px monospace';
-        ctx.fillText('BEST: ' + highScore,   W / 2, H / 2 + 55);
+        ctx.fillText(
+            hbpT('js_best') + ': ' + highScore,
+            W / 2,
+            H / 2 + 55
+        );
     }
     ctx.textAlign = 'left';
 }
@@ -344,14 +356,26 @@ function drawDeadOverlay() {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#ff4455';
     ctx.font      = 'bold 28px monospace';
-    ctx.fillText('GAME OVER', W / 2, H / 2 - 38);
+    ctx.fillText(
+        hbpT('js_game_over'),
+        W / 2,
+        H / 2 - 38
+    );
     ctx.fillStyle = 'rgba(255,255,255,0.85)';
     ctx.font      = '16px monospace';
-    ctx.fillText('Score: ' + score, W / 2, H / 2 - 10);
+    ctx.fillText(
+        hbpT('js_score') + ': ' + score,
+        W / 2,
+        H / 2 - 10
+    );
     if (newBest) {
         ctx.fillStyle = '#ffd700';
         ctx.font      = '13px monospace';
-        ctx.fillText('NEW BEST!', W / 2, H / 2 + 14);
+        ctx.fillText(
+            hbpT('js_new_best'),
+            W / 2,
+            H / 2 + 14
+        );
     }
     const bW = 112, bH = 40, bX = W / 2 - 56, bY = H / 2 + 30;
     ctx.fillStyle = '#e74c3c';
@@ -359,7 +383,11 @@ function drawDeadOverlay() {
     ctx.fill();
     ctx.fillStyle = '#ffffff';
     ctx.font      = 'bold 14px monospace';
-    ctx.fillText('RETRY', W / 2, bY + bH / 2 + 5);
+    ctx.fillText(
+        hbpT('js_play_again'),
+        W / 2,
+        bY + bH / 2 + 5
+    );
     ctx.textAlign = 'left';
 }
 

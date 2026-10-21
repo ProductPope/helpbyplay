@@ -406,14 +406,22 @@ function drawEndOverlay() {
 
     ctx.font      = 'bold ' + Math.round(CW * 0.056) + 'px monospace';
     ctx.fillStyle = '#ff4444';
-    ctx.fillText('GAME OVER', CW / 2, CH * 0.26);
+    ctx.fillText(
+        hbpT('js_game_over'),
+        CW / 2,
+        CH * 0.26
+    );
 
     const distM    = Math.round(playerTotalX / 10);
     const savedLbl = hbpT('js_platformer_saved');
     ctx.font      = Math.round(CW * 0.033) + 'px monospace';
     ctx.fillStyle = '#fff';
     ctx.fillText(savedLbl + String(player.score).padStart(5, '0'), CW / 2, CH * 0.40);
-    ctx.fillText('DIST:  ' + distM + ' m',                         CW / 2, CH * 0.50);
+    ctx.fillText(
+        hbpT('js_platformer_dist') + distM + ' m',
+        CW / 2,
+        CH * 0.50
+    );
 
     const bw = Math.round(CW * 0.42), bh = 44;
     const bx = CW / 2 - bw / 2, by = CH * 0.64;
@@ -422,7 +430,11 @@ function drawEndOverlay() {
     ctx.strokeRect(bx, by, bw, bh);
     ctx.fillStyle   = '#fff';
     ctx.font        = Math.round(CW * 0.031) + 'px monospace';
-    ctx.fillText('[ PLAY AGAIN ]', CW / 2, by + bh / 2);
+    ctx.fillText(
+        '[ ' + hbpT('js_play_again') + ' ]',
+        CW / 2,
+        by + bh / 2
+    );
     ctx.textAlign    = 'left';
     ctx.textBaseline = 'alphabetic';
 
@@ -625,6 +637,7 @@ function loop(ts) {
     const dt = lastTs ? Math.min((ts - lastTs) / 16.667, 3) : 1;
     lastTs = ts;
     update(dt, ts);
+    if (gameState !== 'playing') return;
     drawFrame(ts);
     rafId = requestAnimationFrame(loop);
 }

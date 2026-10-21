@@ -202,15 +202,27 @@ function drawGameOver(ts) {
         ctx.fillStyle   = C_SNAKE;
         ctx.font        = `bold ${Math.floor(c * 2.1)}px monospace`;
         ctx.textAlign   = 'center';
-        ctx.fillText('GAME OVER', w / 2, h * 0.30);
+        ctx.fillText(
+            hbpT('js_game_over'),
+            w / 2,
+            h * 0.30
+        );
     }
 
     ctx.shadowBlur = 0;
     ctx.fillStyle  = C_SNAKE;
     ctx.textAlign  = 'center';
     ctx.font       = `${Math.floor(c * 1.05)}px monospace`;
-    ctx.fillText('SCORE: ' + score,     w / 2, h * 0.47);
-    ctx.fillText('BEST:  ' + highScore, w / 2, h * 0.57);
+    ctx.fillText(
+        hbpT('js_score') + ': ' + score,
+        w / 2,
+        h * 0.47
+    );
+    ctx.fillText(
+        hbpT('js_best') + ': ' + highScore,
+        w / 2,
+        h * 0.57
+    );
 
     const bw = c * 9, bh = c * 2.2;
     const bx = (w - bw) / 2, by = h * 0.67;
@@ -219,7 +231,11 @@ function drawGameOver(ts) {
     ctx.strokeRect(bx, by, bw, bh);
     ctx.fillStyle   = C_SNAKE;
     ctx.font        = `${Math.floor(c * 0.95)}px monospace`;
-    ctx.fillText('[ RESTART ]', w / 2, by + bh * 0.67);
+    ctx.fillText(
+        '[ '+ hbpT('js_play_again') + ' ]',
+        w / 2,
+        by + bh * 0.67
+    );
     restartBtnRect = { x: bx, y: by, w: bw, h: bh };
 }
 
