@@ -291,8 +291,8 @@ function isGameOver() {
     for (let r = 0; r < BOARD_SIZE; r++) {
         for (let c = 0; c < BOARD_SIZE; c++) {
             if (!board[r][c]) return false;
-            if (r + 1 < BOARD_SIZE && board[r][c].value === board[r + 1][c].value) return false;
-            if (c + 1 < BOARD_SIZE && board[r][c].value === board[r][c + 1].value) return false;
+            if (r + 1 < BOARD_SIZE && board[r][c].value === board[r + 1][c]?.value) return false;
+            if (c + 1 < BOARD_SIZE && board[r][c].value === board[r][c + 1]?.value) return false;
         }
     }
     return true;
