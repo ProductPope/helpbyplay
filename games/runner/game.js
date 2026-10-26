@@ -72,6 +72,10 @@ function initGame() {
 function restartGame() {
     if (!state) return;
     state        = 'playing';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
+
     py           = GROUND - PH;
     pvy          = 0;
     grounded     = true;
@@ -195,6 +199,10 @@ function update() {
 
 function die() {
     state = 'dead';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(true);
+
     updateHUD();
 }
 

@@ -277,7 +277,14 @@ function move(dir) {
         animating = false;
 
         if (!won && checkWin()) { won = true; showWinBadge(); }
-        if (isGameOver()) { gameOver = true; setTimeout(showGameOver, 300); }
+        if (isGameOver()) {
+            gameOver = true;
+
+            if (typeof setGameIdle === 'function')
+                setGameIdle(true);
+
+            setTimeout(showGameOver, 300);
+        }
     }, 110);
 }
 
@@ -358,6 +365,8 @@ function initGame() {
     board     = Array.from({ length: BOARD_SIZE }, () => Array(BOARD_SIZE).fill(null));
     score     = 0;
     gameOver  = false;
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
     won       = false;
     animating = false;
 
@@ -385,8 +394,8 @@ function initGame() {
 }
 
 function restartGame() {
-    initGame();
     if (typeof showScreen === 'function') showScreen('screen-game');
+    initGame();
 }
 
 // ── Input ─────────────────────────────────────────────────────────────────────

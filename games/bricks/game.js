@@ -118,6 +118,9 @@ function showTutorial() {
 }
 
 function startNewGame() {
+    if (typeof setGameIdle === 'function')
+        setGameIdle(false);
+
     lives          = 3;
     level          = 1;
     score          = 0;
@@ -382,6 +385,10 @@ function triggerLevelClear(now) {
 
 function triggerGameOver() {
     gameState = 'game_over';
+
+    if (typeof setGameIdle === 'function')
+        setGameIdle(true);
+
     stopLoop();
 
     const isNew = score > highScore;

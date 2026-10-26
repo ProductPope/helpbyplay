@@ -20,6 +20,7 @@ let inactivityEndTimer   = null;
 let adPresentCache       = false;
 let adCheckInterval      = null;
 let adWaitMsgTimer       = null;
+let gameIdle = false;
 
 function isAdVisible() {
     // AdSense: wait for filled status
@@ -109,10 +110,13 @@ function stopCounter() {
     window.removeEventListener('blur', pauseNow);
 
     setPaused(false);
+    gameIdle = false;
 }
 
 function tick() {
-    if (paused || !adPresentCache) return;
+    if (paused || gameIdle || !adPresentCache)
+        return;
+
     sessionSeconds++;
     refreshDisplay();
 }
@@ -137,7 +141,7 @@ function resetInactivityTimer() {
 function setPaused(val) {
     paused = val;
     const el = document.getElementById('session-counter');
-    if (el) el.classList.toggle('counter-paused', val);
+    if (el) el.classList.toggle('counter-paused', val || gameIdle);
     if (val) {
         // inactivity pause: hide ad-wait-msg (different pause reason)
         cancelAdWaitMsg();
@@ -177,4 +181,10 @@ function getSessionSeconds() {
 
 function getSessionEarned() {
     return parseFloat((sessionSeconds * PLN_PER_SECOND).toFixed(4));
+}
+
+function setGameIdle(val) {
+    gameIdle = val;
+    const el = document.getElementById('session-counter');
+    if (el) el.classList.toggle('counter-paused', paused || gameIdle);
 }
