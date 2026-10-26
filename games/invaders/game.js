@@ -433,11 +433,19 @@ function drawHUDCanvas() {
 
     ctx.fillStyle = '#33ff33';
     ctx.textAlign = 'left';
-    ctx.fillText('SCORE ' + String(score).padStart(5, '0'), 6, 5);
+    ctx.fillText(
+        hbpT('js_score') + ' ' + String(score).padStart(5, '0'),
+        6,
+        5
+    );
 
     const hs = parseInt(localStorage.getItem(HS_KEY) || '0', 10);
     ctx.textAlign = 'center';
-    ctx.fillText('HI ' + String(hs).padStart(5, '0'), CW / 2, 5);
+    ctx.fillText(
+        hbpT('js_best') + ' ' + String(hs).padStart(5, '0'),
+        CW / 2,
+        5
+    );
 
     ctx.textAlign = 'right';
     ctx.fillText('♥'.repeat(Math.max(0, lives)), CW - 6, 5);
@@ -531,7 +539,11 @@ function drawGameOverOverlay() {
 
     ctx.font      = 'bold ' + Math.round(CW * 0.068) + 'px monospace';
     ctx.fillStyle = '#ff3333';
-    ctx.fillText('GAME OVER', CW / 2, CH * 0.26);
+    ctx.fillText(
+        hbpT('js_game_over'),
+        CW / 2,
+        CH * 0.26
+    );
 
     ctx.font      = 'bold ' + Math.round(CW * 0.052) + 'px monospace';
     ctx.fillStyle = '#33ff33';
@@ -540,11 +552,19 @@ function drawGameOverOverlay() {
     const hs = parseInt(localStorage.getItem(HS_KEY) || '0', 10);
     ctx.font      = Math.round(CW * 0.032) + 'px monospace';
     ctx.fillStyle = (score >= hs && score > 0) ? '#f8d800' : '#557755';
-    ctx.fillText('BEST ' + String(hs).padStart(5, '0'), CW / 2, CH * 0.50);
+    ctx.fillText(
+        hbpT('js_best') + ' ' + String(hs).padStart(5, '0'),
+        CW / 2,
+        CH * 0.50
+    );
 
     ctx.font      = Math.round(CW * 0.028) + 'px monospace';
     ctx.fillStyle = '#aaffaa';
-    ctx.fillText('+' + rowsAdded + ' ROWS', CW / 2, CH * 0.58);
+    ctx.fillText(
+        hbpT('js_invaders_rows', { n: rowsAdded }),
+        CW / 2,
+        CH * 0.58
+    );
 
     const bw = Math.round(CW * 0.62), bh = 46;
     const bx = CW / 2 - bw / 2, by = CH * 0.68;
@@ -552,7 +572,7 @@ function drawGameOverOverlay() {
     ctx.strokeRect(bx, by, bw, bh);
     ctx.fillStyle = '#33ff33';
     ctx.font      = Math.round(CW * 0.036) + 'px monospace';
-    ctx.fillText('[ PLAY AGAIN ]', CW / 2, by + bh / 2);
+    ctx.fillText('[ ' + hbpT('js_play_again') + ' ]', CW / 2, by + bh / 2);
     ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
 
     restartBtn = { x: bx, y: by, w: bw, h: bh };
@@ -572,6 +592,7 @@ function loop(ts) {
     const dt = lastTs ? Math.min((ts - lastTs) / 16.667, 3) : 1;
     lastTs = ts;
     update(dt, ts);
+    if (gameState !== 'playing') return;
     drawFrame();
     rafId = requestAnimationFrame(loop);
 }
