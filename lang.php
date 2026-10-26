@@ -96,6 +96,9 @@ $TRANSLATIONS = [
         'stats_v09_card_total'   => 'Łącznie',
         'stats_orgs_label'     => 'organizacji partnerskich',
         'stats_hours_label'    => 'godzin rozgrywki',
+        'stats_hub_title'      => 'Cała inicjatywa Help By Play',
+        'stats_hub_note'       => 'Suma wszystkich fundacji grających z Help By Play. Dane fundacji odświeżane co kilka minut.',
+        'stats_hub_total'      => 'Łącznie',
 
         // Game screen
         'game_title'           => 'Graj i pomagaj!',
@@ -317,6 +320,9 @@ $TRANSLATIONS = [
         'stats_v09_card_total'   => 'Total',
         'stats_orgs_label'     => 'partner organisations',
         'stats_hours_label'    => 'hours of gameplay',
+        'stats_hub_title'      => 'The whole Help By Play initiative',
+        'stats_hub_note'       => 'Combined totals of all charities playing with Help By Play. Charity figures refresh every few minutes.',
+        'stats_hub_total'      => 'Total',
 
         // Game screen
         'game_title'           => 'Play and help!',

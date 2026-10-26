@@ -30,3 +30,18 @@ CREATE TABLE IF NOT EXISTS stats (
 
 -- Single stats row — always exists
 INSERT IGNORE INTO stats (id, total_sessions, total_pln) VALUES (1, 0, 0.0000);
+
+-- Hub counter (core.helpbyplay.com only): last known totals of every charity instance,
+-- filled by cron/sync_instances.php. Stays empty on a regular instance.
+CREATE TABLE IF NOT EXISTS instances (
+    id            INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    name          VARCHAR(255)  NOT NULL,
+    stats_url     VARCHAR(255)  NOT NULL,
+    active        TINYINT(1)    NOT NULL DEFAULT 1,
+    last_sessions INT UNSIGNED  NOT NULL DEFAULT 0,
+    last_pln      DECIMAL(14,4) NOT NULL DEFAULT 0.0000,
+    last_ok_at    DATETIME      NULL,
+    last_error    VARCHAR(255)  NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_stats_url (stats_url)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

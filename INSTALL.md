@@ -83,6 +83,8 @@ define('SHOW_V09_HISTORY',        false);
 
 For your own instance keep these at `0` / `false` (the values from `config.example.php`). If the lines are missing, the same defaults apply.
 
+Likewise keep `HBP_IS_HUB` at `false`. Only the hub (`core.helpbyplay.com`) sets it to `true`; see "Hub counter" below.
+
 ---
 
 ## Step 5 — Replace ads.txt
@@ -159,3 +161,23 @@ No template changes needed — `shared/ads.php` renders the right variant automa
 ## License
 
 GPL v3 — any charity may fork and self-host. See [LICENSE](LICENSE).
+
+---
+
+## Hub counter (core.helpbyplay.com only)
+
+The hub's public counter is the main counter of the whole initiative: its own totals + the v0.9 offset + the last known totals of every charity instance. Each instance keeps showing only its own counter.
+
+One-time setup on the hub:
+
+1. Run `db/migrate_003_instances.sql` in phpMyAdmin on the hub database (fresh installs already have the table from `init.sql`).
+2. In `config.php` set `define('HBP_IS_HUB', true);`
+3. DirectAdmin → Cron Jobs → add, every 5 minutes:
+   ```
+   */5 * * * * /usr/local/bin/php /home/USER/domains/core.helpbyplay.com/public_html/cron/sync_instances.php
+   ```
+   (adjust the PHP binary and path to the hosting account). `cron/` is blocked over HTTP.
+4. Add one row per instance to `instances` (see ONBOARDING.md, step 2b).
+
+The sync reads each instance's `/api/stats.php` (fields `own_sessions` / `own_pln`), so instances must run a version that returns them. An unreachable instance keeps its last known totals, and the error is stored in `last_error`.
+

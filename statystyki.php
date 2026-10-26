@@ -38,6 +38,18 @@ try {
     error_log('HBP statystyki: ' . $e->getMessage());
 }
 
+// Hub only: per-instance breakdown of the main counter
+$hub_instances = [];
+if (HBP_IS_HUB) {
+    try {
+        $hub_instances = hbp_db()->query(
+            'SELECT name, last_sessions, last_pln FROM instances WHERE active = 1 ORDER BY last_pln DESC, name'
+        )->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log('HBP statystyki hub: ' . $e->getMessage());
+    }
+}
+
 render_header(
     t('stats_page_title') . ' — ' . t('site_title'),
     'page-stats',
@@ -99,6 +111,46 @@ $v09_hours   = 5050;
             </div>
 
         </div>
+
+<?php if (HBP_IS_HUB): ?>
+        <div class="stats-era-divider">
+            <div class="stats-era-divider-text">
+                <span class="stats-era-name"><?= htmlspecialchars(t('stats_hub_title')) ?></span>
+            </div>
+        </div>
+
+        <p class="stats-v09-note"><?= htmlspecialchars(t('stats_hub_note')) ?></p>
+
+        <div class="stats-grid">
+
+            <div class="stat-card stat-card--alltime">
+                <h2 class="stat-card-period"><?= htmlspecialchars(t('stats_hub_total')) ?></h2>
+                <div class="stat-row">
+                    <span class="stat-value"><?= number_format(hbp_display_sessions($totalSessions), 0, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('stats_players_label')) ?></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-value stat-value--pln"><?= number_format(hbp_display_pln($totalPln), 2, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('currency')) ?></span>
+                </div>
+            </div>
+
+<?php foreach ($hub_instances as $inst): ?>
+            <div class="stat-card">
+                <h2 class="stat-card-period"><?= htmlspecialchars($inst['name']) ?></h2>
+                <div class="stat-row">
+                    <span class="stat-value"><?= number_format((int) $inst['last_sessions'], 0, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('stats_players_label')) ?></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-value stat-value--pln"><?= number_format((float) $inst['last_pln'], 2, ',', ' ') ?></span>
+                    <span class="stat-label"><?= htmlspecialchars(t('currency')) ?></span>
+                </div>
+            </div>
+<?php endforeach; ?>
+
+        </div>
+<?php endif; ?>
 
 <?php if (SHOW_V09_HISTORY): ?>
         <div class="stats-era-divider">

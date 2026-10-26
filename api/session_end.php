@@ -4,7 +4,7 @@ header('Cache-Control: no-store');
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../shared/db.php';
-require_once __DIR__ . '/../shared/display_offset.php'; // defaults for offsets not set in config.php
+require_once __DIR__ . '/../shared/hub.php'; // display totals: offsets + other instances on the hub
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     hbp_json_error(405, 'Method not allowed');
@@ -70,8 +70,8 @@ try {
 
     echo json_encode([
         'session_earned' => $earned,
-        'total_sessions' => (int) $row['total_sessions'] + DISPLAY_SESSIONS_OFFSET,
-        'total_pln'      => round((float) $row['total_pln'] + DISPLAY_PLN_OFFSET, 4),
+        'total_sessions' => hbp_display_sessions((int) $row['total_sessions']),
+        'total_pln'      => round(hbp_display_pln((float) $row['total_pln']), 4),
     ]);
 } catch (PDOException $e) {
     if (isset($pdo) && $pdo->inTransaction()) $pdo->rollBack();
