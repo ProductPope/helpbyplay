@@ -28,11 +28,10 @@ function isAdVisible() {
         return ins.getAttribute('data-ad-status') === 'filled';
     }
 
-    // Custom provider: at least one slot must be consented (display != none) and non-empty
     const customSlots = document.querySelectorAll('.ad-custom-slot');
     if (customSlots.length > 0) {
         for (const slot of customSlots) {
-            if (slot.style.display !== 'none' && slot.innerHTML.trim() !== '') return true;
+            if (slot.offsetWidth > 0 && slot.offsetHeight > 0 && slot.innerHTML.trim() !== '') return true;
         }
         return false;
     }
